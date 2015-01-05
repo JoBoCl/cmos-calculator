@@ -1,13 +1,14 @@
 package controller
 
-import _root_.model._
+import model._
 import helper._
 
+import scala.swing.SimpleSwingApplication
 import scala.swing._
 import scala.swing.event._
 
-object Application extends SimpleGUIApplication {
-  private var cmos: Node = Constant(true)
+object Application extends SimpleSwingApplication {
+  private var cmos : Node = Constant(true)
 
   def top = new MainFrame {
     title = "CMOS Calculator"
@@ -42,7 +43,7 @@ object Application extends SimpleGUIApplication {
     listenTo(button, checkboxes)
     for (c <- checkboxes.contents) listenTo(c)
     reactions += {
-      case ButtonClicked(c: CheckBox) => {
+      case ButtonClicked(c : CheckBox) => {
         Variable.setValue(c.text, c.selected)
         output.selected = (cmos.get)
       }

@@ -3,7 +3,7 @@ package helper
 import model.{LogicalFunction, Node, Wire}
 
 object Parser extends LogicalExpression {
-  def cmos(x: String): Option[(Wire, Wire)] =
+  def cmos(x : String) : Option[(Wire, Wire)] =
     NormalForms.cmosify(variableParser(x))
 
   def convertExpressionToMinTerms(expr : Node) : LogicalFunction = {
@@ -11,7 +11,7 @@ object Parser extends LogicalExpression {
     Nil.asInstanceOf[LogicalFunction]
   }
 
-  def main(args: Array[String]) {
+  def main(args : Array[String]) {
     //this.reserved ++= Set(" and ", " or ", "!")
     println("testing parser")
 
@@ -66,7 +66,7 @@ object Parser extends LogicalExpression {
     println("Actual Result: " + variableParser(""))
   }
 
-  def variableParser(x: String): Option[Node] = {
+  def variableParser(x : String) : Option[Node] = {
     val result = parseAll(expr, x)
     if (result.successful)
       Some(LogicalSimplifier.simplify(result.get))

@@ -6,5 +6,5 @@ package model
 abstract class Node {
   var isInNormalForm = false;
 
-  def get(): Boolean
+  def get() : Boolean
 }

@@ -31,15 +31,16 @@ object NormalForms {
   }
   */
 
-  // Pre : has been simplified as far as possible
-  def cmosify(expr: Option[Node]): Option[(Wire, Wire)] = expr match {
+  // Pre : has been converted to sum of minterms form
+  def cmosify(expr : Option[Node]) : Option[(Wire, Wire)] = expr match {
     case Some(x) =>
       Some(Tuple2(convertToCmos(x, true, None), convertToCmos(negate(x), false, None)))
     case None => None
   }
 
-  def convertToCmos(expr : Node, fromSource : Boolean, direction : Option[Direction]) : Wire =
-    expr match {
+  def convertToCmos(expr : Node, fromSource : Boolean, direction : Option[Direction]) : Wire = Nil.asInstanceOf[Wire]
+
+  /*  expr match {
       case And(x, y) => {
         val wire = new WireImpl()
         val cmosx = convertToCmos(x, fromSource, direction)
@@ -66,7 +67,7 @@ object NormalForms {
         Nil.asInstanceOf[Wire]
       }
     }
-
+*/
 
   // if And(a, b) then convert a to CMOS, find its drain, convert b to CMOS, find its source, then stick them both together
   // if Or(a, b) then convert a to CMOS, find its drain, convert b to CMOS, find its drain, and put them both on the same bit of wire
@@ -143,5 +144,5 @@ object NormalForms {
     }
     */
 
-  def negate(expr: Node): Node = LogicalSimplifier.simplify(Not(expr))
+  def negate(expr : Node) : Node = LogicalSimplifier.simplify(Not(expr))
 }

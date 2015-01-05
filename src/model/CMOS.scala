@@ -3,9 +3,9 @@ package model
 /**
  * Created by joshua on 17/12/14.
  */
-case class CMOS(top: Node, bottom: Node) {
+case class CMOS(top : Node, bottom : Node) {
 
-  def get: Potential = {
+  def get : Potential = {
     val highPotentialDriven = getTop(top)
     val lowPotentialDriven = getBottom(bottom)
     // why is this here?  What does it all mean?  Variable.lookup("out")
@@ -16,11 +16,11 @@ case class CMOS(top: Node, bottom: Node) {
     throw new RuntimeException("Cannot determine if driven")
   }
 
-  def getTop(node: Node): Boolean = {
+  def getTop(node : Node) : Boolean = {
     true
   }
 
-  def getBottom(node: Node): Boolean = {
+  def getBottom(node : Node) : Boolean = {
     false
   }
 

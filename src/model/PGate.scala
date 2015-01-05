@@ -10,8 +10,8 @@ import helper.Direction
  * @param source
  * @param drain
  */
-case class PGate(input: Node, source: Wire, drain: Wire) extends Gate {
-  var placement: Option[Direction] = None
+case class PGate(input : Node, source : Wire, drain : Wire) extends Gate {
+  var placement : Option[Direction] = None
 
   def get = if (input.get) source.get() else Undriven()
 

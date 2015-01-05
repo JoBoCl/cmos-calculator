@@ -3,26 +3,18 @@ package model
 /**
  * Created by joshua on 23/12/14.
  */
-class Implicant(val minterm: Int, val tag:Int=1, val group:List[Int]=Nil) {
-  var prime: Boolean = true
+class Implicant(val minterm : Int, val tag : Int = 1, val group : List[Int] = Nil) {
+  var prime : Boolean = true
 
-  def cost(order: Int): Int = {
+  def cost(order : Int) : Int = {
     order - group.size
   }
 
-  def order(): Int = {
+  def order() : Int = {
     return group.length
   }
 
-  def terms() = {
-    var terms: List[Int] = List(minterm)
-    for (difference <- group) {
-      terms = terms ::: terms.map(_ + difference)
-    }
-    terms
-  }
-
-  def canCombine(other: Implicant): Boolean = {
+  def canCombine(other : Implicant) : Boolean = {
     //--- if the other one is less than this, don't bother comparing
     //if (other.minterm < minterm)
     //return false
@@ -35,7 +27,7 @@ class Implicant(val minterm: Int, val tag:Int=1, val group:List[Int]=Nil) {
     if (group != other.group)
       return false
 
-    def bitdist(x: Int, y: Int) = qmm.bitcount(x ^ y)
+    def bitdist(x : Int, y : Int) = qmm.bitcount(x ^ y)
 
     //--- difference needs to be just one bit
     if (bitdist(other.minterm, minterm) != 1)
@@ -44,8 +36,8 @@ class Implicant(val minterm: Int, val tag:Int=1, val group:List[Int]=Nil) {
     return true
   }
 
-  override def equals(that: Any) = that match {
-    case other: Implicant => {
+  override def equals(that : Any) = that match {
+    case other : Implicant => {
       hashCode == other.hashCode
     }
     case _ => false
@@ -53,7 +45,15 @@ class Implicant(val minterm: Int, val tag:Int=1, val group:List[Int]=Nil) {
 
   override def hashCode = terms().hashCode
 
-  def combine(other: Implicant): Implicant = {
+  def terms() = {
+    var terms : List[Int] = List(minterm)
+    for (difference <- group) {
+      terms = terms ::: terms.map(_ + difference)
+    }
+    terms
+  }
+
+  def combine(other : Implicant) : Implicant = {
     val newtag = other.tag & tag;
     val diff = math.abs(other.minterm - minterm)
     val newgroup = (group ::: List(diff)).sorted
@@ -74,7 +74,7 @@ class Implicant(val minterm: Int, val tag:Int=1, val group:List[Int]=Nil) {
     })
   }
 
-  def withVars(vars: List[String]): String = {
+  def withVars(vars : List[String]) : String = {
     val weights = (0 until vars.length).map(1 << _).reverse
     val varByWeight = (weights zip vars).toMap
     //println(varByWeight)

@@ -1,8 +1,13 @@
 package model
 
-/**
- * Created by joshua on 17/12/14.
- */
-class Result extends Wire with Input {
-  override def get(): Potential = null
+object Result extends Wire with Input {
+  override def get() : Potential = {
+    var result : Potential = Undriven()
+    for (gate <- getSources) {
+      if (gate.get != Undriven()) {
+        result = gate.get
+      }
+    }
+    result
+  }
 }
