@@ -1,13 +1,14 @@
 package model
 
+import helper.Parser
+
 /**
  * Represents the current logical expression as a sum of products
  * (sum of minterms)
  */
-class LogicalFunction {
+object LogicalFunction {
   private[this] var minterms = List[List[Variable]]()
   private[this] var satisfying = Set[List[Variable]]()
-  private[this] var numericalValues = List[Int]()
 
   def get() : Boolean = {
     var result = false;
@@ -21,19 +22,20 @@ class LogicalFunction {
     result
   }
 
-  def quineMcCluskey() : Unit = {
+  def quineMcCluskey(expr : Node) : Option[Node] = {
+    Parser.variableParser(convertToMinTerms(expr))
   }
 
-  def findMinimalCoveringMinterms() : Unit = {
-  }
-
-  def convertToMinTerms(expr : Node) : Unit = {
-    val identMap = Variable.getMap
-    val size = 2 ^ identMap.size
+  def convertToMinTerms(expr : Node) : String = {
+    var numericalValues = List[Int]()
+    val tempMap = Variable.getMap
+    val identMap = tempMap - "out"
+    val size = 1 << identMap.size
     var variables = ""
     for (term <- identMap) {
-      variables += term._1
+      variables = term._1 + variables
     }
+    println(variables)
     // iterate over every combination of values (2^n time)
     for (i <- 0 until size) {
       var j = i
@@ -50,9 +52,17 @@ class LogicalFunction {
       if (expr.get) {
         satisfying = satisfying + terms
         numericalValues = i +: numericalValues
+        println(i)
+        println(for (term ← identMap) yield term._1 + ": " + Variable.lookup(term._1))
       }
     }
-    qmm.method(numericalValues, Nil, qmm.letters(variables));
+    return qmm.method(numericalValues, Nil, qmm.letters(variables))
+  }
+
+  def main(args : Array[String]) {
+    //println(convertToMinTerms(Parser.variableParser("(a and b) or (a and !b) or (!a and b)") match { case Some(x) => x }))
+    println(convertToMinTerms(Parser.variableParser("(a and !c) or (!a and b)") match { case Some(x) => x }))
   }
 }
+
 

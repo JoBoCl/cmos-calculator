@@ -6,9 +6,8 @@ object Parser extends LogicalExpression {
   def cmos(x : String) : Option[(Wire, Wire)] =
     NormalForms.cmosify(variableParser(x))
 
-  def convertExpressionToMinTerms(expr : Node) : LogicalFunction = {
-
-    Nil.asInstanceOf[LogicalFunction]
+  def convertExpressionToMinTerms(expr : Node) : Option[Node] = {
+    LogicalFunction.quineMcCluskey(expr)
   }
 
   def main(args : Array[String]) {
@@ -69,7 +68,7 @@ object Parser extends LogicalExpression {
   def variableParser(x : String) : Option[Node] = {
     val result = parseAll(expr, x)
     if (result.successful)
-      Some(LogicalSimplifier.simplify(result.get))
+      Some(result.get)
     else
       None
   }

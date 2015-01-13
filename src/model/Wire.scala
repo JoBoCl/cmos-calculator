@@ -2,6 +2,8 @@ package model
 
 abstract class Wire {
   def get() : Potential
+
+  def clear() : Unit
 }
 
 class WireImpl extends Wire with Input with Output {
@@ -13,5 +15,10 @@ class WireImpl extends Wire with Input with Output {
       }
     }
     res
+  }
+
+  override def clear : Unit = {
+    clearSources
+    clearDrains
   }
 }

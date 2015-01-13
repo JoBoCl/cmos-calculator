@@ -5,4 +5,6 @@ package model
  */
 object Drain extends Wire with Output {
   def get() : Potential = Low()
+
+  override def clear : Unit = clearDrains
 }

@@ -11,4 +11,6 @@ trait Input {
   }
 
   def getSources = sources
+
+  def clearSources : Unit = { sources =  Array[Gate]() }
 }

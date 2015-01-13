@@ -37,7 +37,7 @@ object LogicalSimplifier {
         case Constant(false) => Constant(false)
         case _ => simplify(y)
       }
-      case Not(y) ⇒ Constant(false)
+      case Not(y) => Constant(false)
       case _ => if (y == x) x else And(simplify(x), simplify(y))
     }
   }

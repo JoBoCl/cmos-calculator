@@ -1,11 +1,10 @@
 package controller
 
-import model._
 import helper._
+import model._
 
-import scala.swing.SimpleSwingApplication
-import scala.swing._
 import scala.swing.event._
+import scala.swing.{SimpleSwingApplication, _}
 
 object Application extends SimpleSwingApplication {
   private var cmos : Node = Constant(true)

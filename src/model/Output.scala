@@ -9,4 +9,6 @@ trait Output {
   def addDrain(node : Gate) = {
     drains = node +: drains
   }
+
+  def clearDrains : Unit = { drains =  Array[Gate]() }
 }

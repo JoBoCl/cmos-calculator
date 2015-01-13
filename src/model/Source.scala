@@ -5,4 +5,6 @@ package model
  */
 object Source extends Wire with Output {
   def get() : Potential = High()
+
+  override def clear : Unit = clearDrains
 }

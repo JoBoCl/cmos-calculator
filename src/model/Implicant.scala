@@ -84,13 +84,13 @@ class Implicant(val minterm : Int, val tag : Int = 1, val group : List[Int] = Ni
         if ((minterm & w) != 0) {
           varByWeight(w)
         } else {
-          varByWeight(w) + "'"
+          "!(%s)".format(varByWeight(w))
         }
       } else {
         ""
       }
     }
 
-    expression.filter(_ != "").reduceLeft(_ + _)
+    expression.filter(_ != "").reduceLeft(_ + " and " + _)
   }
 }

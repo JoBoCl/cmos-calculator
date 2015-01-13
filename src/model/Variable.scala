@@ -4,6 +4,8 @@ import scala.collection.mutable.HashMap
 
 case class Variable(val ident : String) extends Node with Atom {
   def get = Variable.lookup(ident)
+
+  override def toString = ident
 }
 
 object Variable {

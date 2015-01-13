@@ -5,4 +5,8 @@ package model
  */
 trait Gate {
   def get() : Potential
+
+  //var wireToSource : Wire = Nil.asInstanceOf[Wire]
+
+  //var wireToDrain : Wire = Nil.asInstanceOf[Wire]
 }

@@ -1,6 +1,6 @@
 package model
 
-object Result extends Wire with Input {
+object Result extends Wire with Input with Output {
   override def get() : Potential = {
     var result : Potential = Undriven()
     for (gate <- getSources) {
@@ -9,5 +9,10 @@ object Result extends Wire with Input {
       }
     }
     result
+  }
+
+  override def clear : Unit = {
+    clearDrains
+    clearSources
   }
 }
