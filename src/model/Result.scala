@@ -8,11 +8,24 @@ object Result extends Wire with Input with Output {
         result = gate.get
       }
     }
-    result
+    if (result == Undriven()) {
+      for (gate <- getDrains) {
+        if (gate.get != Undriven()) {
+          result = gate.get
+        }
+      }
+    }
+    if (result == Undriven()) {
+      throw new RuntimeException("Result is undriven!")
+    } else {
+      result
+    }
   }
 
   override def clear : Unit = {
     clearDrains
     clearSources
   }
+
+  override def toString() = "Result"
 }
