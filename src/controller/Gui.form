@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="controller.Gui">
+  <grid id="27dc6" binding="mainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="558" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="f5630" binding="visPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties>
+          <minimumSize width="400" height="300"/>
+          <preferredSize width="400" height="300"/>
+        </properties>
+        <border type="none" title="CMOS Output"/>
+        <children/>
+      </grid>
+      <grid id="257c6" binding="inputPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="West"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <grid id="5ff5e" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+            <constraints border-constraint="North"/>
+            <properties>
+              <enabled value="true"/>
+            </properties>
+            <border type="none"/>
+            <children>
+              <component id="6b8ce" class="javax.swing.JTextField" binding="textInput">
+                <constraints/>
+                <properties>
+                  <minimumSize width="70" height="26"/>
+                  <preferredSize width="100" height="26"/>
+                  <text value=""/>
+                  <toolTipText value="Enter the text to parse here"/>
+                </properties>
+              </component>
+              <component id="22325" class="javax.swing.JButton" binding="goButton">
+                <constraints/>
+                <properties>
+                  <text value="Parse!"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+          <scrollpane id="37212">
+            <constraints border-constraint="Center"/>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <grid id="be6e3" binding="variableHolder" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
+                <constraints/>
+                <properties/>
+                <border type="none"/>
+                <children>
+                  <component id="fd07f" class="javax.swing.JCheckBox" binding="outputCheckBox">
+                    <constraints/>
+                    <properties>
+                      <actionCommand value=""/>
+                      <enabled value="false"/>
+                      <text value="out"/>
+                    </properties>
+                  </component>
+                </children>
+              </grid>
+            </children>
+          </scrollpane>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>
