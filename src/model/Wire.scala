@@ -1,24 +1,34 @@
 package model
 
-abstract class Wire {
-  def get() : Potential
+abstract class Wire extends Input with Output {
+  private var sources = Array[Gate]()
+  private var drains = Array[Gate]()
 
-  def clear() : Unit
-}
+  def get(): Potential
 
-class WireImpl extends Wire with Input with Output {
-  override def get() : Potential = {
-    var res : Potential = Undriven()
-    for (source <- getSources) {
-      if (source.get != Undriven()) {
-        res = source.get
-      }
-    }
-    res
+  def addSource(node: Gate) = {
+    sources = node +: sources
   }
 
-  override def clear : Unit = {
-    clearSources
-    clearDrains
+  def getSources = sources
+
+  def clearSources: Unit = {
+    sources = Array[Gate]()
+  }
+
+  def clear(): Unit
+
+  def getDrains = drains
+
+  def addDrain(node: Gate) = {
+    drains = node +: drains
+  }
+
+  def clearDrains: Unit = {
+    drains = Array[Gate]()
   }
 }
+
+
+
+
