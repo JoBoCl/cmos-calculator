@@ -1,6 +1,6 @@
 package model
 
-import scala.collection.mutable.HashMap
+import scala.collection.immutable.TreeMap
 
 case class Variable(val ident : String) extends Node with Atom {
   def get = Variable.lookup(ident)
@@ -9,7 +9,14 @@ case class Variable(val ident : String) extends Node with Atom {
 }
 
 object Variable {
-  private val identMap = new HashMap[String, Boolean]
+  def negateAll(expr : Node) : Unit = {
+    for (variable <- identMap) {
+      setValue(variable._1, false)
+    }
+    setValue("out", expr.get())
+  }
+
+  private var identMap = new TreeMap[String, Boolean]
   identMap += Tuple2("out", false)
   private var intermediate = 0;
 
@@ -31,7 +38,7 @@ object Variable {
   def setValue(ident : String, value : Boolean) = identMap += Tuple2(ident, value)
 
   def clear() = {
-    identMap.clear
+    identMap = new TreeMap[String, Boolean]
     identMap += Tuple2("out", false)
     intermediate = 0
   }

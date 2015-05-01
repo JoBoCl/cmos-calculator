@@ -28,14 +28,12 @@ object LogicalFunction {
 
   def convertToMinTerms(expr : Node) : String = {
     var numericalValues = List[Int]()
-    val tempMap = Variable.getMap
-    val identMap = tempMap - "out"
+    val identMap = Variable.getMap - "out"
     val size = 1 << identMap.size
     var variables = ""
     for (term <- identMap) {
       variables = term._1 + variables
     }
-    println(variables)
     // iterate over every combination of values (2^n time)
     for (i <- 0 until size) {
       var j = i
@@ -52,8 +50,6 @@ object LogicalFunction {
       if (expr.get) {
         satisfying = satisfying + terms
         numericalValues = i +: numericalValues
-        println(i)
-        println(for (term ← identMap) yield term._1 + ": " + Variable.lookup(term._1))
       }
     }
     return qmm.method(numericalValues, Nil, qmm.letters(variables))

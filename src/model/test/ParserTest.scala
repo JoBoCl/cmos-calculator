@@ -28,24 +28,4 @@ class ParserTest extends FlatSpec with Matchers {
   }
 }
 
-class QuineMcCluskeyTest extends FlatSpec with Matchers {
-  private val test : String = "(!a and b and !c and !d) or (a and !b and !c and !d) or (a and !b and c and !d) or (a and !b and c and d) or (a and b and !c and !d) or (a and b and c and d)"
 
-  "a and b" should "be reduced to Some(And(a), And(b))" in {
-    val expr = Parser.variableParser("a and b") match {
-      case Some(x) => x
-    }
-    LogicalFunction.quineMcCluskey(expr) should be(Some(
-      And(Variable("a"), Variable("b"))
-    )
-    )
-  }
-
-  test should "be parsed as Some(...)" ignore {
-    LogicalFunction.quineMcCluskey(Parser.variableParser(test) match { case Some(x) => x }) should be(Some(
-      Variable("x")
-    )
-    )
-    Variable.clear()
-  }
-}
