@@ -1,3 +1,5 @@
 package model
 
-trait Potential {}
+trait Potential {
+  def isHigh : Boolean
+}
