@@ -12,7 +12,7 @@ object CMOSLayout {
   private var totalGates = 0
 
   def main(args: Array[String]): Unit = {
-    layout(helper.Parser.variableParser("x and (!y)") match {
+    layout(helper.Parser.variableParser("(x and y) or ((!x) and (!y) and z)") match {
       case Some(v) => {
         println(v); v
       }
@@ -44,6 +44,7 @@ object CMOSLayout {
         throw new RuntimeException("Expression not minimised correctly")
       }
     }
+    Variable.negateAll(expr)
     (totalGates + 2 * negations.size)
   }
 
@@ -123,69 +124,10 @@ object CMOSLayout {
   private def convertToGates(node: Node, buildingTopNetwork: Boolean) = {
     var subNode: model.Node = node
     var currentWire: Wire = Result
-    /*node match {
-      // x ∧ y
-      case And(x, y) => {
-        val wire = new WireImpl();
-        x match {
-          case Not(Variable(v)) => {
-            if (buildingTopNetwork) {
-              val gate = new PGate(Variable(v), wire, Result)
-              wire addDrain gate
-              Result addSource gate
-            } else {
-              val gate = new NGate(x, Result, wire)
-              negations add Variable(v)
-              wire addSource gate
-              Result addDrain gate
-            }
-          }
-          case Variable(v) => {
-            if (buildingTopNetwork) {
-              val gate = new PGate(Not(Variable(v)), wire, Result)
-              negations add Variable(v)
-              wire addDrain gate
-              Result addSource gate
-            } else {
-              val gate = new NGate(Variable(v), Result, wire)
-              wire addSource gate
-              Result addDrain gate
-            }
-          }
-        }
-        currentWire = wire
-        subNode = y
-      }
-      // Create a new gate and finish
-      case Not(Variable(v)) => {
-        if (buildingTopNetwork) {
-          val gate = new PGate(Variable(v), Source, Result)
-          Source addDrain gate
-          Result addSource gate
-        } else {
-          val gate = new NGate(Not(Variable(v)), Result, Drain)
-          negations add Variable(v)
-          Result addDrain gate
-          Drain addSource gate
-        }
-      }
-      case Variable(v) => {
-        if (buildingTopNetwork) {
-          val gate = new PGate(Not(Variable(v)), Source, Result)
-          negations add Variable(v)
-          Source addDrain gate
-          Result addSource gate
-        } else {
-          val gate = new NGate(Variable(v), Result, Drain)
-          Result addDrain gate
-          Drain addSource gate
-        }
-      }
-    }*/
 
     while (subNode != Constant(false)) subNode match {
       case And(x, y) => {
-        val wire = new WireImpl()
+        val wire = if (buildingTopNetwork) { new WireHigh() } else { new WireLow() }
         x match {
           case Not(Variable(v)) => {
             if (buildingTopNetwork) {
