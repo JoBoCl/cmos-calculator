@@ -1,10 +1,15 @@
 package helper
 
-import model.{LogicalFunction, Node, Wire}
+import model.{LogicalFunction, Node}
 
 object Parser extends LogicalExpression {
-  def cmos(x : String) : Option[(Wire, Wire)] =
-    NormalForms.cmosify(variableParser(x))
+  def variableParser(x : String) : Option[Node] = {
+    val result = parseAll(expr, x)
+    if (result.successful)
+      Some(result.get)
+    else
+      None
+  }
 
   def convertExpressionToMinTerms(expr : Node) : Option[Node] = {
     LogicalFunction.quineMcCluskey(expr)
@@ -63,13 +68,5 @@ object Parser extends LogicalExpression {
     println("Actual Result: " + variableParser("a and b and c"))
     println("Expected Result: ")
     println("Actual Result: " + variableParser(""))
-  }
-
-  def variableParser(x : String) : Option[Node] = {
-    val result = parseAll(expr, x)
-    if (result.successful)
-      Some(result.get)
-    else
-      None
   }
 }
