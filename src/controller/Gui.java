@@ -1,12 +1,10 @@
 package controller;
 
-import com.mxgraph.layout.mxFastOrganicLayout;
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxPoint;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 import com.mxgraph.view.mxStylesheet;
@@ -19,7 +17,6 @@ import scala.Option;
 import scala.Tuple2;
 import scala.collection.Iterator;
 import scala.collection.immutable.TreeMap;
-import scala.collection.mutable.DefaultEntry;
 import view.DrawCircuit;
 
 import javax.swing.*;
@@ -69,12 +66,18 @@ public class Gui {
 
                 if (parseResult.isEmpty()) {
                     JOptionPane.showMessageDialog(mainPanel, "Could not parse expression", "Error",
-                                                         JOptionPane.ERROR_MESSAGE);
+                                                  JOptionPane.ERROR_MESSAGE);
                 } else {
                     final Node result = parseResult.get();
                     CMOSLayout.layout(result);
                     final TreeMap<String, Object> map = Variable.getMap();
                     final Iterator<Tuple2<String, Object>> it = map.iterator();
+                    visPanel.setSize(400, 300);
+                    graphComponent = initGraph();
+                    visPanel.add(graphComponent, BorderLayout.CENTER);
+                    mainPanel.updateUI();
+                    mainPanel.validate();
+                    mainPanel.repaint();
                     while (it.hasNext()) {
                         Tuple2<String, Object> value = it.next();
                         String variableName = value._1();
@@ -100,12 +103,6 @@ public class Gui {
                             variableHolder.repaint();
                         }
                     }
-                    visPanel.setSize(400, 300);
-                    graphComponent = initGraph();
-                    visPanel.add(graphComponent, BorderLayout.CENTER);
-                    mainPanel.updateUI();
-                    mainPanel.validate();
-                    mainPanel.repaint();
                 }
                 outputCheckBox.setSelected(parseResult.get().get());
             }
@@ -133,53 +130,53 @@ public class Gui {
      */
     public final mxGraphComponent initGraph () {
         mxGraphComponent localGraphComponent = null;
-        if (graph == null && graphComponent == null) {
-            graph = new mxGraph();
-            localGraphComponent = new mxGraphComponent(graph);
+        //if (graph == null && graphComponent == null) {
+        graph = new mxGraph();
+        localGraphComponent = new mxGraphComponent(graph);
 
-            // Allow negative co-ordinates (makes drawing easier as bottom half can be negatively positioned)
-            graph.setAllowNegativeCoordinates(true);
-            // dangling edges are bad and result in all kinds of nasty things
-            graph.setAllowDanglingEdges(false);
-            // edge source and target are the same
-            graph.setAllowLoops(true);
-            // don't need this
-            graph.setCellsResizable(false);
-            // don't allow movement
-            graph.setCellsMovable(false);
-            // don't allow new connections
-            graph.setConnectableEdges(false);
-            // make editing labels more comfortable
-            localGraphComponent.setEnterStopsCellEditing(true);
-            // antialiasing \o/
-            localGraphComponent.setAntiAlias(true);
-            // set size
-            localGraphComponent.setSize(visPanel.getWidth(), visPanel.getHeight());
+        // Allow negative co-ordinates (makes drawing easier as bottom half can be negatively positioned)
+        graph.setAllowNegativeCoordinates(true);
+        // dangling edges are bad and result in all kinds of nasty things
+        graph.setAllowDanglingEdges(false);
+        // edge source and target are the same
+        graph.setAllowLoops(true);
+        // don't need this
+        graph.setCellsResizable(false);
+        // don't allow movement
+        graph.setCellsMovable(false);
+        // don't allow new connections
+        graph.setConnectableEdges(false);
+        // make editing labels more comfortable
+        localGraphComponent.setEnterStopsCellEditing(true);
+        // antialiasing \o/
+        localGraphComponent.setAntiAlias(true);
+        // set size
+        localGraphComponent.setSize(visPanel.getWidth(), visPanel.getHeight());
 
-            graph.setAutoOrigin(true);
+        graph.setAutoOrigin(true);
 
-            // define a parallel layout for the edges
-            layout = new mxParallelEdgeLayout(graph);
+        // define a parallel layout for the edges
+        layout = new mxParallelEdgeLayout(graph);
 
-            // change the default edge style to rounded
-            mxStylesheet styleSheet = graph.getStylesheet();
-            Map<String, Object> edgeStyle = styleSheet.getDefaultEdgeStyle();
-            edgeStyle.put(mxConstants.STYLE_ROUNDED, true);
-            styleSheet.setDefaultEdgeStyle(edgeStyle);
-            graph.setStylesheet(styleSheet);
+        // change the default edge style to rounded
+        mxStylesheet styleSheet = graph.getStylesheet();
+        Map<String, Object> edgeStyle = styleSheet.getDefaultEdgeStyle();
+        edgeStyle.put(mxConstants.STYLE_ROUNDED, true);
+        styleSheet.setDefaultEdgeStyle(edgeStyle);
+        graph.setStylesheet(styleSheet);
 
-            drawCircuit = new DrawCircuit(graph);
-            drawCircuit.draw();
+        drawCircuit = new DrawCircuit(graph);
+        drawCircuit.draw();
 
-            resizeGraphView(localGraphComponent);
+        resizeGraphView(localGraphComponent);
 
-            //graph.setCollapseToPreferredSize(true);
-        }
-        if (localGraphComponent == null) {
-            return graphComponent;
-        } else {
-            return localGraphComponent;
-        }
+        //graph.setCollapseToPreferredSize(true);
+        //}
+        //if (localGraphComponent == null) {
+        //  return graphComponent;
+        //} else {
+        return localGraphComponent;
+        //}
     }
 
     private void resizeGraphView (mxGraphComponent localGraphComponent) {
