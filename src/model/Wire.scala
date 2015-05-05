@@ -1,30 +1,30 @@
 package model
 
-abstract class Wire extends Input with Output {
+abstract class Wire {
   private var sources = Array[Gate]()
   private var drains = Array[Gate]()
 
-  def get(): Potential
+  def get() : Potential
 
-  def addSource(node: Gate) = {
+  def addSource(node : Gate) = {
     sources = node +: sources
   }
 
   def getSources = sources
 
-  def clearSources: Unit = {
+  def clearSources : Unit = {
     sources = Array[Gate]()
   }
 
-  def clear(): Unit
+  def clear() : Unit
 
   def getDrains = drains
 
-  def addDrain(node: Gate) = {
+  def addDrain(node : Gate) = {
     drains = node +: drains
   }
 
-  def clearDrains: Unit = {
+  def clearDrains : Unit = {
     drains = Array[Gate]()
   }
 }

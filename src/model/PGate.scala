@@ -1,7 +1,5 @@
 package model
 
-import helper.Direction
-
 /**
  * P(g, s, d) = ¬g -> (s <-> d)
  *

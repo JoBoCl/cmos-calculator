@@ -33,7 +33,8 @@ object PITable {
   }
 }
 
-case class PITable(val rows : List[PrimeImplicant], val cols : Set[Int], val results : Set[Implicant], val vars : List[String]) {
+case class PITable(val rows : List[PrimeImplicant], val cols : Set[Int], val results : Set[Implicant], val vars :
+List[String]) {
 
   def cost(order : Int) = {
     results.foldLeft(0) {

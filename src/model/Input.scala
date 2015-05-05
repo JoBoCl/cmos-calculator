@@ -4,5 +4,4 @@ package model
  *
  */
 trait Input {
-
 }

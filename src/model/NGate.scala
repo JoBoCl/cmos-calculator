@@ -1,7 +1,5 @@
 package model
 
-import helper.Direction
-
 /**
  * N(g, s, d) = g -> (s <-> d)
  *

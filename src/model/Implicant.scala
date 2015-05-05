@@ -45,14 +45,6 @@ class Implicant(val minterm : Int, val tag : Int = 1, val group : List[Int] = Ni
 
   override def hashCode = terms().hashCode
 
-  def terms() = {
-    var terms : List[Int] = List(minterm)
-    for (difference <- group) {
-      terms = terms ::: terms.map(_ + difference)
-    }
-    terms
-  }
-
   def combine(other : Implicant) : Implicant = {
     val newtag = other.tag & tag;
     val diff = math.abs(other.minterm - minterm)
@@ -65,6 +57,14 @@ class Implicant(val minterm : Int, val tag : Int = 1, val group : List[Int] = Ni
   override def toString() = terms().mkString("<", ",", ">")
 
   def printTerms() = println(terms().mkString("(", ",", ")"))
+
+  def terms() = {
+    var terms : List[Int] = List(minterm)
+    for (difference <- group) {
+      terms = terms ::: terms.map(_ + difference)
+    }
+    terms
+  }
 
   def print() {
     printf("%d %s tag=%d %s\n", minterm, group.mkString("(", ",", ")"), tag, if (prime) {

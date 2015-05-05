@@ -18,14 +18,6 @@ class ParserTest extends FlatSpec with Matchers {
     Parser.variableParser("a and b") should be(Some(And(Variable("a"), Variable("b"))))
     Variable.clear()
   }
-
-  "a and !a" should "be parsed as Some(And(Variable(a), Not(Variable(a)))) and then simplified to Some(Constant(false))" in {
-    Parser.variableParser("a and !a") should be(Some(And(Variable("a"), Not(Variable("a")))))
-    LogicalSimplifier.simplify(Parser.variableParser("a and !a") match { case Some(x : Node) => x }) should be(
-      Constant(false)
-    )
-    Variable.clear()
-  }
 }
 
 
