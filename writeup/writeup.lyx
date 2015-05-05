@@ -1,0 +1,4220 @@
+#LyX 2.1 created this file. For more info see http://www.lyx.org/
+\lyxformat 474
+\begin_document
+\begin_header
+\textclass scrreprt
+\begin_preamble
+\usepackage{tikz}
+
+\setlength{\unitlength}{0.4cm}
+
+% standard gates are picture (6,6)
+% with connections at (-6,-1), (-6,1) and (0,0)
+% inverters are (5,2) connected at (-5,0) and (0,0)
+% big inverters are (10,4) connected at (-10,0) and (0,0)
+% downward inverters are (2,5) connected at (0,5) and (0,0)
+
+\newcommand\notgate{\begin{picture}(5,2)(5,0)
+        \put(0,0){\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,-1){\line(0,1){2}}
+                \put(2,-1){\line(2,1){2}}
+                \put(2,1){\line(2,-1){2}}
+                \put(4.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(4.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\buffgate{\begin{picture}(5,2)(5,0)
+        \put(0,0){\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,-1){\line(0,1){2}}
+                \put(2,-1){\line(2,1){2}}
+                \put(2,1){\line(2,-1){2}}
+        \end{thicklines}
+        \put(4,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\revnotgate{\begin{picture}(5,2)(0,0)
+        \put(5,0){\line(-1,0){2}}
+        \begin{thicklines}
+                \put(3,-1){\line(-0,1){2}}
+                \put(3,-1){\line(-2,1){2}}
+                \put(3,1){\line(-2,-1){2}}
+                \put(0.75,0){\circle{0.5}}
+        \end{thicklines}
+        \put(0.5,0){\line(-1,0){0.5}}
+\end{picture}}
+
+\newcommand\bignotgate{\begin{picture}(10,2)(10,0)
+        \put(0,0){\line(1,0){4}}
+        \begin{thicklines}
+                \put(4,-2){\line(0,1){4}}
+                \put(4,-2){\line(2,1){4}}
+                \put(4,2){\line(2,-1){4}}
+                \put(8.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(8.5,0){\line(1,0){1.5}}
+\end{picture}}
+
+\newcommand\downnotgate{\begin{picture}(2,5)(0,-5)
+        \put(0,0){\line(0,-1){2}}
+        \begin{thicklines}
+                \put(-1,-2){\line(1,0){2}}
+                \put(-1,-2){\line(1,-2){1}}
+                \put(1,-2){\line(-1,-2){1}}
+                \put(0,-4.25){\circle{0.5}}
+        \end{thicklines}
+        \put(0,-4.5){\line(0,-1){0.5}}
+\end{picture}}
+
+% \newcommand\inverter{\begin{picture}(6,6)
+%       \put(0,-2.25){\line(0,1){4.5}}
+%       \put(0,-2.25){\line(4,3){2.7}}
+%       \put(0,2.25){\line(4,-3){2.7}}
+%       \begin{thicklines}
+%               \put(3,0){\circle{0.75}}
+%       \end{thicklines}
+%       \put(6,0){\line(-1,0){2.625}}
+% \end{picture}}
+
+\newcommand\andgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\rightandgate{\begin{picture}(6,6)(6,0)  
+        \put(0,0){\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\nandgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\orgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(1,2)(3,0)(1,-2)
+                \qbezier(1,2)(4,2)(5,0)
+                \qbezier(1,-2)(4,-2)(5,0)
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\leftorgate{\begin{picture}(6,6)(-6,0)  
+        \multiput(0,-1)(0,2){2}{\line(-1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(-1,2)(-3,0)(-1,-2)
+                \qbezier(-1,2)(-4,2)(-5,0)
+                \qbezier(-1,-2)(-4,-2)(-5,0)
+        \end{thicklines}
+        \put(-5,0){\line(-1,0){1}}
+\end{picture}}
+
+\newcommand\downorgate{\begin{picture}(6,6)(3,0)
+        % \multiput(-1,6)(2,0){2}{\line(0,-1){1.7}}
+        \begin{thicklines}
+                \qbezier(-2,5)(-2,2)(0,1)
+                \qbezier(2,5)(2,2)(0,1)
+                \qbezier(-2,5)(0,3)(2,5)
+        \end{thicklines}
+        \put(0,0){\line(0,1){1}}
+\end{picture}}
+
+\newcommand\norgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(1,2)(3,0)(1,-2)
+                \qbezier(1,2)(4,2)(5,0)
+                \qbezier(1,-2)(4,-2)(5,0)
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\leftnorgate{\begin{picture}(6,6)(-6,0)  
+        \multiput(0,-1)(0,2){2}{\line(-1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(-1,2)(-3,0)(-1,-2)
+                \qbezier(-1,2)(-4,2)(-5,0)
+                \qbezier(-1,-2)(-4,-2)(-5,0)
+                \put(-5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(-5.5,0){\line(-1,0){0.5}}
+\end{picture}}
+
+\newcommand\xnorgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.5}}
+        \begin{thicklines}
+                \qbezier(0.8,1.9)(2.8,0)(0.8,-1.9)
+                \qbezier(1.3,2)(3.0,0)(1.3,-2)
+                \qbezier(1.3,2)(4,2)(5,0)
+                \qbezier(1.3,-2)(4,-2)(5,0)
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\xorgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.5}}
+        \begin{thicklines}
+                \qbezier(0.8,1.9)(2.8,0)(0.8,-1.9)
+                \qbezier(1.3,2)(3.0,0)(1.3,-2)
+                \qbezier(1.3,2)(4,2)(5,0)
+                \qbezier(1.3,-2)(4,-2)(5,0)
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\majgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,1){3}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \multiput(1,-2)(0,4){2}{\line(1,0){3}}
+                \put(4,0){\oval(2,4)[r]}
+        \end{thicklines}
+        \put(3,0){\makebox(0,0){\strut\textit{maj}}}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+
+\newcommand\Celem{\begin{picture}(6,6)(6,0)  
+        \put(0,-1){\line(3,1){1.60}}
+        \put(0,1){\line(3,-1){1.60}}
+        \begin{thicklines} \put(3,0){\circle{3}} \put(3,0){\makebox(0,0){\textsc{c}}} \end{thicklines}
+        \put(6,0){\line(-1,0){1.5}}
+\end{picture}}
+
+\newcommand\Celemup{\begin{picture}(6,6)(0,6)  
+        \put(-1,0){\line(1,3){0.53}}
+        \put(1,0){\line(-1,3){0.53}}
+        \begin{thicklines}
+                \put(0,3){\circle{3}}
+                \put(0,3){\makebox(0,0){\textsc{c}}}
+        \end{thicklines}
+        \put(0,6){\line(0,-1){1.5}}
+\end{picture}}
+
+\newcommand\Celemdown{\begin{picture}(6,6)(0,0)  
+        \put(-1,6){\line(1,-3){0.53}}
+        \put(1,6){\line(-1,-3){0.53}}
+        \begin{thicklines}
+                \put(0,3){\circle{3}}
+                \put(0,3){\makebox(0,0){\textsc{c}}}
+        \end{thicklines}
+        \put(0,0){\line(0,1){1.5}}
+\end{picture}}
+
+% standard flipflops are picture (10,10)
+% with connections at (0,7), (1,3) and at (10,3) and (10,7)
+
+\newcommand\dtype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,3){\makebox(0,0)[l]{$\mskip-2mu>$}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,d}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+\newcommand\ttype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,3){\makebox(0,0)[l]{$\mskip-2mu>$}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,t}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+\newcommand\leveldtype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,2.8){\framebox(0.6,0.4)[l]{}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,d}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+
+
+
+
+% standard transistors are picture (4.5,6)
+% with connections at (0,-3), (0,3) and gate at (-4.5,0)
+
+\newcommand\sntrans{{\begin{picture}(4.5,8)(-4.5, -3)
+        \put(-4.5,0){\line(1,0){2.25}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+        \put(1,-3){$d$}
+        \put(1,3){$s$}
+\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ntrans{{\begin{picture}(4.5,6)(0,0)
+        \put(-4.5,0){\line(1,0){2.25}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+\end{picture}}}
+
+\newcommand\ntransdown{{\begin{picture}(6,4.5)(0,0) 
+        \put(0,-4.5){\line(0,1){2.25}}
+        \put(1.5,-2.25){\line(-1,0){3}}
+        \begin{thicklines}
+                \put(1.5,-1.5){\line(-1,0){3}}
+        \end{thicklines}
+        \put(3,0){\line(-1,0){1.5}}
+        \put(-1.5,0){\line(0,-1){1.5}}
+        \put(1.5,0){\line(0,-1){1.5}}
+        \put(-3,0){\line(1,0){1.5}}
+\put(0,-4){$d$}
+        \put(0,4){$s$}
+\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ntransup{{\begin{picture}(6,4.5)(0,0)
+        \put(0,4.5){\line(0,-1){2.25}}
+        \put(-1.5,2.25){\line(1,0){3}}
+        \begin{thicklines}
+                \put(-1.5,1.5){\line(1,0){3}}
+        \end{thicklines}
+        \put(-3,0){\line(1,0){1.5}}
+        \put(-1.5,0){\line(0,1){1.5}}
+        \put(1.5,0){\line(0,1){1.5}}
+        \put(3,0){\line(-1,0){1.5}}
+\end{picture}}}
+
+\newcommand\sptrans{{\begin{picture}(4.5,6)(-4.5,-3) 
+        \put(-4.5,0){\line(1,0){1.5}}
+        \put(-2.625,0){\circle{0.75}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+\put(1,-3){$d$}
+        \put(1,3){$s$}
+\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ptrans{{\begin{picture}(4.5,6)(0,0) 
+        \put(-4.5,0){\line(1,0){1.5}}
+        \put(-2.625,0){\circle{0.75}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+\end{picture}}}
+
+\newcommand\ptransup{{\begin{picture}(6,4.5)(0,0)
+        \put(0,4.5){\line(0,-1){1.5}}
+        \put(0,2.625){\circle{0.75}}
+        \put(-1.5,2.25){\line(1,0){3}}
+        \begin{thicklines}
+                \put(-1.5,1.5){\line(1,0){3}}
+        \end{thicklines}
+        \put(-3,0){\line(1,0){1.5}}
+        \put(-1.5,0){\line(0,1){1.5}}
+        \put(1.5,0){\line(0,1){1.5}}
+        \put(3,0){\line(-1,0){1.5}}
+\end{picture}}}
+
+\newcommand\ptransdown{{\begin{picture}(6,4.5)(0,0) 
+        \put(0,-4.5){\line(0,1){1.5}}
+        \put(0,-2.625){\circle{0.75}}
+        \put(1.5,-2.25){\line(-1,0){3}}
+        \begin{thicklines}
+                \put(1.5,-1.5){\line(-1,0){3}}
+        \end{thicklines}
+        \put(3,0){\line(-1,0){1.5}}
+        \put(-1.5,0){\line(0,-1){1.5}}
+        \put(1.5,0){\line(0,-1){1.5}}
+        \put(-3,0){\line(1,0){1.5}}
+\end{picture}}}
+
+\newcommand\blob{{\circle*{0.4}}}
+\end_preamble
+\options ruled,noend,slide
+\use_default_options true
+\begin_modules
+algorithm2e
+\end_modules
+\maintain_unincluded_children false
+\begin_local_layout
+Format 49
+InsetLayout Flex:Code
+    LyxType               charstyle
+    LabelString           code
+    LatexType             command
+    LatexName             code
+    Font
+      Family              Typewriter
+    EndFont
+    Preamble
+    \newcommand{\code}[1]{\texttt{#1}}
+    EndPreamble
+    InToc                 true
+    HTMLTag               code
+ResetsFont true
+End
+\end_local_layout
+\language english
+\language_package default
+\inputencoding auto
+\fontencoding global
+\font_roman lmodern
+\font_sans lmss
+\font_typewriter lmtt
+\font_math auto
+\font_default_family default
+\use_non_tex_fonts false
+\font_sc false
+\font_osf false
+\font_sf_scale 100
+\font_tt_scale 100
+\graphics default
+\default_output_format default
+\output_sync 1
+\bibtex_command default
+\index_command default
+\float_placement H
+\paperfontsize default
+\spacing single
+\use_hyperref true
+\pdf_title "CMOS Calculator"
+\pdf_author "Candidate 597618"
+\pdf_bookmarks true
+\pdf_bookmarksnumbered false
+\pdf_bookmarksopen false
+\pdf_bookmarksopenlevel 1
+\pdf_breaklinks true
+\pdf_pdfborder true
+\pdf_colorlinks true
+\pdf_backref false
+\pdf_pdfusetitle true
+\papersize default
+\use_geometry false
+\use_package amsmath 1
+\use_package amssymb 1
+\use_package cancel 1
+\use_package esint 1
+\use_package mathdots 1
+\use_package mathtools 1
+\use_package mhchem 1
+\use_package stackrel 1
+\use_package stmaryrd 1
+\use_package undertilde 1
+\cite_engine basic
+\cite_engine_type default
+\biblio_style plain
+\use_bibtopic false
+\use_indices false
+\paperorientation portrait
+\suppress_date false
+\justification true
+\use_refstyle 1
+\index Index
+\shortcut idx
+\color #008000
+\end_index
+\leftmargin 1.5cm
+\topmargin 2cm
+\rightmargin 1.5cm
+\bottommargin 2cm
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\paragraph_indentation default
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes true
+\html_math_output 0
+\html_css_as_file 0
+\html_be_strict false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+CMOS Calculator
+\end_layout
+
+\begin_layout Author
+Candidate 597618
+\end_layout
+
+\begin_layout Date
+2014 -- 2015
+\end_layout
+
+\begin_layout Abstract
+The aim of this project was to build a CMOS simulator, with the following
+ interactive elements: 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{itemize}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Simplification and CMOS implementation of arbitrary logical expressions
+ 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Simulation to visualise the change in flow of potential as the state
+ of inputs changed 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+item Simulation of delay in propagation of state for large networks.
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{itemize}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Abstract
+There are many tools in existence to design CMOS circuits, but most focus
+ on the physical implementation and the exact positioning of gates, rather
+ than a more abstract approach, as may be required when reasoning about
+ the layout of circuits, this tool seeks to remedy that issue.
+ It quickly became apparent that the approach that I was using had various
+ similarities to a compiler, which will be a focus of this document.
+ Additionally, this report will discuss alternative approaches not used
+ in the final implementation to produce the final CMOS output
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset toc
+LatexCommand tableofcontents
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList algorithm
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset FloatList figure
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Introduction
+\end_layout
+
+\begin_layout Standard
+The idea of logical functions is familiar to many, and even a schoolchild
+ can grasp the concept of a box receiving true/false inputs and producing
+ a true/false output, and lots of these boxes in interesting combinations
+ can yield more interesting functions.
+ Through introducing these concepts, and producing more and more intricate
+ diagrams, a they can then see how more complicated ideas, such as addition
+ and subtraction are implemented, and maybe how these are used in the modern
+ computers used today.
+ However, what is rarely discussed is what is inside these boxes: they are
+ usually presented as the lowest level inputs and treated as the basic building
+ blocks.
+ The layer underneath this is built up of Complementary Metal-Oxide Semiconducto
+rs, henceforth referred to as CMOS.
+ 
+\end_layout
+
+\begin_layout Section
+Definitions
+\end_layout
+
+\begin_layout Subsection
+Logical Expressions
+\end_layout
+
+\begin_layout Standard
+A logical expression is built from a combination of constants, literals,
+ conjunctions, disjunctions and negations, using a grammar described as
+ follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+e & = & e\land e\label{eq:conj}\\
+ & \mid & e\lor e\label{eq:disj}\\
+ & \mid & \neg e\label{eq:neg}\\
+ & \mid & v\label{eq:var}\\
+ & \mid & c\label{eq:con}\\
+v & \in & \Sigma\\
+c & = & \top\mid\bot
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $\Sigma$
+\end_inset
+
+ is some accepted alphabet of variable (specifically, in this program, as
+ described by the regular expression 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb&^(?!out$)([A-Za-z0-9]+)&
+\end_layout
+
+\end_inset
+
+ that is, every alphanumeric phrase, with the exception of the single word
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb+out+
+\end_layout
+
+\end_inset
+
+, which has been reserved for specific use within the program).
+ 
+\begin_inset Formula $\top\text{ and }\bot$
+\end_inset
+
+
+\family roman
+\series medium
+\shape up
+\size normal
+\emph off
+\bar no
+\strikeout off
+\uuline off
+\uwave off
+\noun off
+\color none
+ are used within this text to denote the notions true and false, respectively.
+
+\family default
+\series default
+\shape default
+\size default
+\emph default
+\bar default
+\strikeout default
+\uuline default
+\uwave default
+\noun default
+\color inherit
+ Each variable within the expression that is used is given an assignment
+ by an evaluation function, commonly called 
+\begin_inset Formula $\mathcal{A}:\mathcal{V}\rightarrow\{\top,\bot\}$
+\end_inset
+
+
+\begin_inset CommandInset label
+LatexCommand label
+name "eq:assi"
+
+\end_inset
+
+, with the set of variables typically denoted as 
+\begin_inset Formula $\mathcal{V}$
+\end_inset
+
+.
+ A logical expression 
+\begin_inset Formula $E$
+\end_inset
+
+ is then evaluated recursively based on the following rules:
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E=F\land G$
+\end_inset
+
+: 
+\begin_inset Formula $E$
+\end_inset
+
+ is evaluated as true iff 
+\begin_inset Formula $F$
+\end_inset
+
+ is true and 
+\begin_inset Formula $G$
+\end_inset
+
+ is true (corresponding to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:conj"
+
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E=F\lor G$
+\end_inset
+
+: 
+\begin_inset Formula $E$
+\end_inset
+
+ is evaluated as true iff 
+\begin_inset Formula $F$
+\end_inset
+
+ is true or 
+\begin_inset Formula $G$
+\end_inset
+
+ is true (corresponding to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:disj"
+
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E=\neg F$
+\end_inset
+
+: 
+\begin_inset Formula $E$
+\end_inset
+
+ is evaluated as true iff 
+\begin_inset Formula $F$
+\end_inset
+
+ is false (corresponding to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:neg"
+
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E=v$
+\end_inset
+
+ for some 
+\begin_inset Formula $v\in\Sigma$
+\end_inset
+
+ is evaluated as true iff 
+\begin_inset Formula $\mathcal{A}(v)=\top$
+\end_inset
+
+ (corresponding to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:var"
+
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $E=c$
+\end_inset
+
+ for some constant is evaluated as the constant (corresponding to (
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:con"
+
+\end_inset
+
+))
+\end_layout
+
+\begin_layout Subsection
+CMOS Gates
+\end_layout
+
+\begin_layout Standard
+As the name would indicate, CMOS is made up of two distinct, complementarily
+ defined parts: a P-Gate can only carry high potential from their source
+ to their drain, whereas an N-Gate can only carry low potential from their
+ drain to their source.
+ Two power rails then provide a low potential (the drain), and a high potential
+ (the source), with a third wire used as the output wire.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+P(g,s,d) & = & \neg g\rightarrow(s\leftrightarrow d)\label{eq:pgate}\\
+N(g,s,d) & = & g\rightarrow(s\leftrightarrow d)\label{eq:ngate}
+\end{eqnarray}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:pgate"
+
+\end_inset
+
+ describes a simplified version of the P-Gate: the potential is only carried
+ (
+\begin_inset Formula $s\text{ matches }d$
+\end_inset
+
+) when the input 
+\begin_inset Formula $g$
+\end_inset
+
+ is not powered, losing the notion that only high potential flows from the
+ source to the drain.
+ 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:ngate"
+
+\end_inset
+
+ similarly describes a simplified version of the N-Gate: the potential is
+ only carried (
+\begin_inset Formula $s\text{ matches }d$
+\end_inset
+
+) when the input 
+\begin_inset Formula $g$
+\end_inset
+
+ is powered, losing the notion that only low potential flows from the drain
+ to the source.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\backslash
+sntrans 
+\backslash
+begin{picture}(4.5,6)
+\backslash
+end{picture} 
+\backslash
+sptrans 
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+N-Gate and P-Gate, respectively
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore, when using these gates, it is not sufficient to specify the implement
+ation of a logical expression in a positive sense (carrying potential when
+ the valuations of the inputs causes the expression to be evaluated as true),
+ but rather, both the high potential must be driven to the output, and the
+ low potential, using a complementary set of networks, made up solely of
+ P-Gates and N-Gates.
+ Throughout this report, and in the implementation, these are drawn with
+ the high potential being carried from the top of a diagram to the middle
+ by a network of P-Gates, and the low potential being carried from the bottom
+ of a diagram to the middle by a network of N-Gates.
+ To model conjunctions, a pair of P-Gates should be placed in series, indicating
+ that the second gate will only carry the potential if its variable is not
+ driven, and the first gate is carrying a high potential.
+ Similarly, a disjunction is modelled by a pair of P-Gates placed in parallel:
+ potential will be carried if at least one of the gates' variables is not
+ driven.
+\end_layout
+
+\begin_layout Standard
+In a more general sense, for some expression 
+\begin_inset Formula $e$
+\end_inset
+
+, we want a circuit 
+\begin_inset Formula $c=(p,n)$
+\end_inset
+
+ such that 
+\begin_inset Formula $p\rightarrow e$
+\end_inset
+
+ and 
+\begin_inset Formula $n\leftarrow e\equiv n\rightarrow\neg e$
+\end_inset
+
+, where 
+\begin_inset Formula $p\text{ and }n$
+\end_inset
+
+ are entirely made of P- and N- gates respectively.
+ 
+\end_layout
+
+\begin_layout Standard
+Suppose that 
+\begin_inset Formula $a\land b$
+\end_inset
+
+ is part of a network of P-Gates, such that 
+\begin_inset Formula $p$
+\end_inset
+
+ is the drain immediately above the implementation of 
+\begin_inset Formula $a\land b$
+\end_inset
+
+, and 
+\begin_inset Formula $q$
+\end_inset
+
+ is the source immediately below the implementation.
+ Therefore, 
+\begin_inset Formula $p$
+\end_inset
+
+ is acting as the source for 
+\begin_inset Formula $a\land b$
+\end_inset
+
+, and 
+\begin_inset Formula $q$
+\end_inset
+
+ is the drain, and we therefore want a series of gates such that 
+\begin_inset Formula $a\land b\rightarrow(p\leftrightarrow q)$
+\end_inset
+
+.
+ As described above, we will need the two gates in series to give the necessary
+ result, and they must be connected somehow, so we therefore introduce a
+ new variable to act as the point between them: 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & a\land b\rightarrow(p\leftrightarrow q)\\
+ & = & \exists x\cdot((a\rightarrow(p\leftrightarrow x))\land(b\rightarrow(x\leftrightarrow q)))\\
+ & = & \exists x\cdot P(\neg a,p,x)\land P(\neg b,x,q)
+\end{eqnarray*}
+
+\end_inset
+
+To define a similar construction in N-Gates, we have 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & a\land b\leftarrow p\leftrightarrow q\\
+ & \equiv & \neg(a\land b)\rightarrow(p\leftrightarrow q)\\
+ & \equiv & \neg a\lor\neg b\rightarrow(p\leftrightarrow q)
+\end{eqnarray*}
+
+\end_inset
+
+and we therefore derive 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & \neg a\lor\neg b\rightarrow(p\leftrightarrow q)\\
+ & = & (\neg a\rightarrow(p\leftrightarrow q))\land(\neg b\rightarrow(p\leftrightarrow q))\\
+ & = & N(\neg a,p,q)\land N(\neg b,p,q)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Alternatively, suppose that 
+\begin_inset Formula $a\lor b$
+\end_inset
+
+ is part of a network of P-Gates, with 
+\begin_inset Formula $p$
+\end_inset
+
+ and 
+\begin_inset Formula $q$
+\end_inset
+
+ behaving as before, and we therefore want a series of gates such that 
+\begin_inset Formula $a\lor b\rightarrow(p\leftrightarrow q)$
+\end_inset
+
+.
+ As described above, we will need the two gates in parallel to give the
+ necessary result: 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & a\lor b\rightarrow(p\leftrightarrow q)\\
+ & = & (a\rightarrow(p\leftrightarrow q))\land(b\rightarrow(p\leftrightarrow q))\\
+ & = & P(\neg a,p,q)\land P(\neg b,p,q)
+\end{eqnarray*}
+
+\end_inset
+
+To define a similar construction in N-Gates, we have 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & a\lor b\leftarrow p\leftrightarrow q\\
+ & \equiv & \neg(a\lor b)\rightarrow(p\leftrightarrow q)\\
+ & \equiv & \neg a\land\neg b\rightarrow(p\leftrightarrow q)
+\end{eqnarray*}
+
+\end_inset
+
+and we therefore derive 
+\begin_inset Formula 
+\begin{eqnarray*}
+ &  & \neg a\land\neg b\rightarrow(p\leftrightarrow q)\\
+ & = & \exists x\cdot(\neg a\rightarrow(p\leftrightarrow x))\land(\neg b\rightarrow(x\leftrightarrow q))\\
+ & = & N(\neg a,p,x)\land N(\neg b,p,x)
+\end{eqnarray*}
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The following networks are standard implementations of nand- and nor-gates:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+setlength
+\backslash
+unitlength{0.015
+\backslash
+textwidth}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tabular}{cc}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{picture}(25,27)(-2,-3)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{thicklines}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(0,0)(0,24){2}{
+\backslash
+line(1,0){18}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{thicklines}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(12,3)(0,6){2}{
+\backslash
+ntrans}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(9,21)(6,-6){2}{
+\backslash
+ptrans}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(9,24)(6,0){2}{
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(15,24){
+\backslash
+line(0,-1){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(0,21){
+\backslash
+line(1,0){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(-3,21){
+\backslash
+makebox(0,0){$b$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,21){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,21){
+\backslash
+line(0,-1){12}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,9){
+\backslash
+line(1,0){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(0,3){
+\backslash
+line(1,0){9}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(-3,3){
+\backslash
+makebox(0,0){$a$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,3){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,3){
+\backslash
+line(0,1){5.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,15){
+\backslash
+line(0,-1){5.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,15){
+\backslash
+line(1,0){2.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(12,15){
+\backslash
+line(-1,0){2.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(12,0){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,18){
+\backslash
+line(0,-1){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,12){
+\backslash
+line(1,0){9}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(21,12){
+\backslash
+makebox(0,0){$
+\backslash
+it out$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(12,12)(3,0){2}{
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,-3){
+\backslash
+makebox[0pt]{$
+\backslash
+mathit{out} = 
+\backslash
+lnot (a 
+\backslash
+wedge b)$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{picture}&
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{picture}(25,27)(-2,-3)
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{thicklines}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(0,0)(0,24){2}{
+\backslash
+line(1,0){18}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{thicklines}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(12,21)(0,-6){2}{
+\backslash
+ptrans}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(9,3)(6,6){2}{
+\backslash
+ntrans}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(9,0)(6,0){2}{
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(15,0){
+\backslash
+line(0,1){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(0,3){
+\backslash
+line(1,0){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(-3,3){
+\backslash
+makebox(0,0){$a$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,3){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,3){
+\backslash
+line(0,1){12}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(3,15){
+\backslash
+line(1,0){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(0,21){
+\backslash
+line(1,0){9}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(-3,21){
+\backslash
+makebox(0,0){$b$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,21){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,21){
+\backslash
+line(0,-1){5.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,9){
+\backslash
+line(0,1){5.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(6,9){
+\backslash
+line(1,0){2.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(12,9){
+\backslash
+line(-1,0){2.7}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(12,24){
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,6){
+\backslash
+line(0,1){6}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,12){
+\backslash
+line(1,0){9}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(21,12){
+\backslash
+makebox(0,0){$
+\backslash
+it out$}}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput(12,12)(3,0){2}{
+\backslash
+blob}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+put(9,-3){
+\backslash
+makebox[0pt]{$
+\backslash
+mathit{out} = 
+\backslash
+lnot (a 
+\backslash
+vee b)$}} 
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{picture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tabular}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Standard nor- and nand- gate implementations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Specification/Requirements
+\end_layout
+
+\begin_layout Standard
+The program would be expected to satisfy the following minimal requirements
+ in order for it to be considered successful:
+\end_layout
+
+\begin_layout Itemize
+Accuracy: any representation of CMOS produced must correctly implement the
+ logical expression that has been entered, and the visual output of the
+ expression should match the model that has been stored
+\end_layout
+
+\begin_layout Itemize
+Representation: the produced visualisation should be intuitive to read:
+ each element should be presented separately from the others, and clearly
+ labelled.
+ Any gate carrying potential should be clearly highlighted.
+\end_layout
+
+\begin_layout Itemize
+Portability: the visual output produced by the program should be available
+ to the user in a variety of formats
+\end_layout
+
+\begin_layout Itemize
+Interactivity: the program should produce sensible warnings when an expression
+ that is not possible to parse has been entered.
+ Once a CMOS representation has been constructed, it should be possible
+ for the user to interact with the publicly visible inputs (the variables
+ named in the initial expression), with updates delivered with a minimal
+ amount of latency.
+ Should the user wish to view the change in state due to the latency of
+ the gates, this should be visible, and at a variable speed.
+\end_layout
+
+\begin_layout Standard
+Given the nature of the project, the model-view-controller paradigm allows
+ a sensible division of labour, also allowing for extensibility and clear
+ separation of the purpose of the model and the interface.
+\end_layout
+
+\begin_layout Chapter
+Implementation
+\end_layout
+
+\begin_layout Standard
+By convention, when class diagrams are used, ovals will represent traits/abstrac
+t classes, with rectangles representing concrete implementations.
+\end_layout
+
+\begin_layout Section
+Model
+\end_layout
+
+\begin_layout Subsection
+Logical Expressions
+\end_layout
+
+\begin_layout Standard
+Every object that is used to represent logical expressions inherits from
+ some common 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Node
+\end_layout
+
+\end_inset
+
+ object that requires an accessor to determine if the given fragment evaluates
+ to true, as defined in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:conj"
+
+\end_inset
+
+ onwards.
+ As would be expected given the recursive nature of the design of the grammar
+ of the language of propositional logic, the parameters taken by each class
+ that is not an atom are nodes, and these are then evaluated recursively.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw (0,2) node (v0) { Node } ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (-3.5,-1.5) node (v1) { Atom } ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (-5,-3.5) rectangle (-8,-5.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (-6.5,-4.5) { Variable };
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.9] coordinates {(-5,-1.5) (-6,-2) (-6.5,-3.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.9] coordinates {(-1.5,2) (-3,1.5) (-3.5,-0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (-2,-3.5) rectangle (1,-5.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (-0.5,-4.5) {Constant};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.9] coordinates {(-2,-1.5) (-1,-2) (-0.5,-3.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (3,5.5) rectangle (6,3.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (3,3) rectangle (6,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (3,0.5) rectangle (6,-1.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (4.5,4.5) {And};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (4.5,2) {Or};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (4.5,-0.5) {Not};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.9] coordinates {(0,3) (1,4) (3,4.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.7] coordinates {(1.5,2) (3,2)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->]  plot[smooth, tension=.9] coordinates {(0,1) (1,0) (3,-0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Logical Expression Class Relations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Expressions are then parsed using Scala’s packrat parsing library (see 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sub:Parsing"
+
+\end_inset
+
+).
+ During parsing, each new variable is registered with a static map stored
+ in the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Variable
+\end_layout
+
+\end_inset
+
+ object, that takes the place of the assignment function 
+\begin_inset Formula $\mathcal{A}$
+\end_inset
+
+, as discussed in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:assi"
+
+\end_inset
+
+.
+ After parsing, but before the gate implementation (see 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sub:Gates-and-Wires"
+
+\end_inset
+
+), a modified version of the Quine-McCluskey algorithm (see 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sub:Normal-Forms"
+
+\end_inset
+
+) is applied to the parsed expression to minimise it and produce a canonical
+ form.
+\end_layout
+
+\begin_layout Subsection
+Gates and Wires
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Gates-and-Wires"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The gates are similarly structured: inheriting common attributes, where
+ possible, through a central 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Gate
+\end_layout
+
+\end_inset
+
+ class, sub-typing as appropriate.
+ There are five different types of wire, all inheriting from a central 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Wire
+\end_layout
+
+\end_inset
+
+ class.
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Drain
+\end_layout
+
+\end_inset
+
+ objects
+\begin_inset Foot
+status open
+
+\begin_layout Plain Layout
+Objects are indicated using bold lines in the diagram, and are similar in
+ behaviour to statically declared objects in many languages.
+\end_layout
+
+\end_inset
+
+ are responsible solely for delivering high and low potentials respectively,
+ and a 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+ object acting as the central link.
+ Finally, there are two wire classes responsible for carrying high and low
+ potential downwards and upwards called 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+WireHigh
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+WireLow
+\end_layout
+
+\end_inset
+
+, respectively.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float figure
+placement h
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (0,0) ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (0,0) {Gate};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (-1.5,2) rectangle (1.5,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (0,3) {PGate};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (-1.5,-2) rectangle (1.5,-4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (0,-3) {NGate};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->] plot[smooth, tension=.7] coordinates {(0,1) (0,2)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [->] plot[smooth, tension=.7] coordinates {(0,-1) (0,-2)};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (10.5,0) ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (10.5,4) ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (10.5,-4) ellipse (1.5 and 1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (10.5,4) {Output};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (10.5,0) {Wire};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (10.5,-4) {Input};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (7,-1) rectangle (4,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (14,-1) rectangle (17,1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (5.5,0) {WireHigh};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (15.5,0) {WireLow};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [thick] (4,5) rectangle (7,3);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [thick] (4,-5) rectangle (7,-3);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [thick] (14,3) rectangle (17,5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (5.5,4) {Source};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (5.5,-4) {Drain};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node at (15.5,4) {Output};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(10, 4-0.94280904158) (9.5,2)
+ (7,0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(9,4) (7,4)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(12,4) (14,4)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(11, 4-0.94280904158) (11.5,2)
+ (14,0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+% x = 10,   y = -(2 sqrt(2))/3
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(9,0) (7,0)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(12,0) (14,0)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(10, -3.057190958) (9.5,-2)
+ (7,-0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.9] coordinates {(11, -3.057190958) (11.5,-2)
+ (14,-0.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [<-] plot[smooth, tension=.9] coordinates {(9,-4) (7,-4)};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=0.9] coordinates {(11, 0.94280904158) (12,2)
+ (14,3.5)};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  [->] plot[smooth, tension=.7] coordinates {(12,-4) (17,-3) (18,-0.5)
+ (16.5,3)};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gate and Wire Class Relations
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut{Input}{Input}
+\backslash
+SetKwInOut{Output}{Output}
+\backslash
+SetKwInOut{SideEffects}{Side Effects}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{prvsGt}{previousGate}
+\backslash
+SetKwData{Result}{Result}
+\backslash
+SetKwData{Source}{Source}
+\backslash
+SetKwData{Drain}{Drain}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input{
+\end_layout
+
+\end_inset
+
+Expression 
+\begin_inset Formula $E=\bigvee_{i=1}^{n}\left(\bigwedge_{j=1}^{m}P_{i}\right)$
+\end_inset
+
+ in Disjunctive Normal Form
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output{
+\end_layout
+
+\end_inset
+
+None
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+ has a set of gates connected that implement 
+\begin_inset Formula $E$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+clear 
+\backslash
+Result
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+prvsGt $
+\backslash
+gets ()$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach{$c_i 
+\backslash
+in E = c_1 
+\backslash
+lor c_2 
+\backslash
+lor 
+\backslash
+ldots 
+\backslash
+lor c_n$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+ForEach{$l_i 
+\backslash
+in c_i = l_1 
+\backslash
+land l_2 
+\backslash
+land 
+\backslash
+ldots 
+\backslash
+land l_m$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+eIf{
+\backslash
+prvsGt is defined}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			Create a new gate and connect it to 
+\backslash
+prvsGt, updating 
+\backslash
+prvsGt to the new gate
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			Create a new gate and connect it to 
+\backslash
+Result, setting 
+\backslash
+prvsGt to this gate
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	Connect 
+\backslash
+prvsGt to 
+\backslash
+Source/
+\backslash
+Drain as appropriate
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Converting DNF expression to Gates
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The pseudo-code above describes the final implementation of the gate creation
+ algorithm, however, initially, a different approach was attempted, which
+ expanded the number of classes inheriting from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Node
+\end_layout
+
+\end_inset
+
+ to include implications and a representation of iff, as well as the classes
+ for the gates.
+ After parsing the formula, a function then proceeded to try and convert
+ the formula and its negation into a series of gates with literals as inputs,
+ joined by conjunctions and disjunctions.
+ Dealing with the large number of special cases quickly became impractical,
+ especially when small repeated changes had to be made, and therefore was
+ abandoned in favour of a separation of the logical and ``physical'' models,
+ where the gates were joined by wires and received potentials as inputs.
+\end_layout
+
+\begin_layout Standard
+Initially, potential was going to be simulated using an 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Option[Boolean]
+\end_layout
+
+\end_inset
+
+, with 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Nothing
+\end_layout
+
+\end_inset
+
+ to simulate an undriven gate/wire, and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Some(true)
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Some(false)
+\end_layout
+
+\end_inset
+
+ to indicate high and low potential separately.
+ This approach has also been reworked, to further separate the differences
+ between the abstract logical expressions with precise true/false values,
+ and the CMOS-specific high and low potentials.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status collapsed
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut{Input}{Input}
+\backslash
+SetKwInOut{Output}{Output}
+\backslash
+SetKwInOut{SideEffects}{Side Effects}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{prvsGt}{previousGate}
+\backslash
+SetKwData{Result}{Result}
+\backslash
+SetKwData{Source}{Source}
+\backslash
+SetKwData{Drain}{Drain}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{pgate}{P-Gate}
+\backslash
+SetKwData{ngate}{N-Gate}
+\backslash
+SetKwData{wh}{WireHigh}
+\backslash
+SetKwData{wl}{WireLow}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{high}{High}
+\backslash
+SetKwData{low}{Low}
+\backslash
+SetKwData{und}{Undriven}
+\backslash
+SetKwFunction{gstatus}{Gate-Status}
+\backslash
+SetKwFunction{wstatus}{Wire-Status}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwProg{Def}{def}{ as}{end}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input{None (necessary information contained in static object)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output{True/false value to indicate if the output is driven}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects{None}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\begin_layout Plain Layout
+
+$r 
+\backslash
+gets 
+\backslash
+und$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach{gate $
+\backslash
+in$ 
+\backslash
+Result sources}{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+If{$
+\backslash
+gstatus{gate}
+\backslash
+neq
+\backslash
+und$}{$r
+\backslash
+gets$ 
+\backslash
+gstatus{gate}
+\backslash
+;}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{$r = 
+\backslash
+und$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach{gate $
+\backslash
+in$ 
+\backslash
+Result drains}{
+\end_layout
+
+\begin_layout Plain Layout
+
+  
+\backslash
+If{$
+\backslash
+gstatus{gate}
+\backslash
+neq
+\backslash
+und$}{$r
+\backslash
+gets$ 
+\backslash
+gstatus{gate}
+\backslash
+;}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf{$r = 
+\backslash
+und$}{report error}{
+\backslash
+Return $r$}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Traversing gates to determine driven-ness
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset Box Frameless
+position "t"
+hor_pos "c"
+has_inner_box 1
+inner_pos "t"
+use_parbox 0
+use_makebox 0
+width "50text%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+null
+\end_layout
+
+\end_inset
+
+
+\begin_inset Float algorithm
+placement H
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut{Input}{Input}
+\backslash
+SetKwInOut{Output}{Output}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{prvsGt}{previousGate}
+\backslash
+SetKwData{Result}{Result}
+\backslash
+SetKwData{Source}{Source}
+\backslash
+SetKwData{Drain}{Drain}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{pgate}{P-Gate}
+\backslash
+SetKwData{ngate}{N-Gate}
+\backslash
+SetKwData{wh}{WireHigh}
+\backslash
+SetKwData{wl}{WireLow}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{high}{High}
+\backslash
+SetKwData{low}{Low}
+\backslash
+SetKwData{und}{Undriven}
+\backslash
+SetKwFunction{gstatus}{Gate-Status}
+\backslash
+SetKwFunction{wstatus}{Wire-Status}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwProg{Def}{def}{ as}{end}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Def{
+\backslash
+gstatus(gate: Gate)}{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Input{gate to check for driven-ness}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Output{Potential on gate}
+\end_layout
+
+\begin_layout Plain Layout
+
+	$r
+\backslash
+gets
+\backslash
+und$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+eIf{gate is 
+\backslash
+pgate}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\backslash
+eIf{$
+\backslash
+neg$gate.input}{$r
+\backslash
+gets$
+\backslash
+wstatus{gate.source}}{$r
+\backslash
+gets
+\backslash
+und$}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}{
+\end_layout
+
+\begin_layout Plain Layout
+
+	By symmetry for 
+\backslash
+ngate
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Return $r$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Def{
+\backslash
+wstatus(wire: Wire)}{
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Input{wire to check for driven-ness}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Output{Potential on wire}
+\end_layout
+
+\begin_layout Plain Layout
+
+	$r
+\backslash
+gets
+\backslash
+und$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+If{wire is 
+\backslash
+Source}{$r
+\backslash
+gets
+\backslash
+high$}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+ElseIf{wire is 
+\backslash
+Drain}{$r
+\backslash
+gets
+\backslash
+low$}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+ElseIf{wire is 
+\backslash
+wh}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+eIf{$
+\backslash
+neg$gate.input}{$r
+\backslash
+gets$
+\backslash
+wstatus{gate.source}}{$r
+\backslash
+gets
+\backslash
+und$}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\backslash
+ElseIf{wire is 
+\backslash
+wl}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		By symmetry for 
+\backslash
+wl
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+Return $r$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Helper methods to traverse gates to determine driven-ness
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Helpers
+\end_layout
+
+\begin_layout Subsubsection
+Parsing
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Parsing"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The Packrat parsing library is one of the many libraries available in Scala
+ for parsing purposes.
+\begin_inset CommandInset citation
+LatexCommand cite
+key "packrat"
+
+\end_inset
+
+ This library has the advantage of allowing efficient parsing by using memoisati
+on to reduce the number of times that a production rule needs testing.
+ This parsing library uses a domain-specific language to assist in the definitio
+n of the grammar to be parsed to ensure that the abstract representation
+ of the grammar matches the implementation as closely as possible.
+\end_layout
+
+\begin_layout Subsubsection
+Normal Forms
+\begin_inset CommandInset label
+LatexCommand label
+name "sub:Normal-Forms"
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+After an expression is parsed, it is then converted to a normal form to
+ allow the gate conversion tool to process it, in this case, as a disjunction
+ of conjunctions, by using the Quine-McCluskey Algorithm, and algorithm
+ developed by McCluskey
+\begin_inset CommandInset citation
+LatexCommand cite
+key "mccluskey"
+
+\end_inset
+
+, building on work by Quine
+\begin_inset CommandInset citation
+LatexCommand cite
+key "quine1,quine2"
+
+\end_inset
+
+.
+ The algorithm has the following sections:
+\end_layout
+
+\begin_layout Enumerate
+Convert logical expression to boolean function:
+\begin_inset Formula 
+\[
+f:\{0,1\}^{\mid\mathcal{A}\mid}\rightarrow\{0,1\},f\left(v_{1},v_{2},\ldots v_{n}\right)=\sum m\left(n_{1},n_{2},\ldots,n_{m}\right)+d\left(n_{m+1},\ldots,n_{k}\right)
+\]
+
+\end_inset
+
+ where 
+\begin_inset Formula $m$
+\end_inset
+
+ is the set of minterms, and 
+\begin_inset Formula $d$
+\end_inset
+
+ is the set of ``don't care'' values (not needed in this implementation,
+ as we are only considering logical expressions that are defined in the
+ syntax given above).
+\end_layout
+
+\begin_layout Enumerate
+Find the prime implicants of the function (
+\end_layout
+
+\begin_layout Enumerate
+Do more stuff
+\end_layout
+
+\begin_layout Enumerate
+Print
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Quine-McCluskey
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+View and Controller
+\end_layout
+
+\begin_layout Standard
+The view and controller are handled by two separate classes, one with an
+ overall responsibility for drawing and updating the UI view presented to
+ the user, written in Java and named 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Gui
+\end_layout
+
+\end_inset
+
+, which then invokes the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+DrawCircuit
+\end_layout
+
+\end_inset
+
+ Scala class to initially draw and then update the displayed circuit as
+ the inputs are changed.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut{Input}{Input}
+\backslash
+SetKwInOut{Output}{Output}
+\backslash
+SetKwInOut{SideEffects}{Side Effects}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{prvsGt}{previousGate}
+\backslash
+SetKwData{Result}{Result}
+\backslash
+SetKwData{Source}{Source}
+\backslash
+SetKwData{Drain}{Drain}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{graph}{Graph}
+\backslash
+SetKwData{ngate}{N-Gate}
+\backslash
+SetKwData{pgate}{P-Gate}
+\backslash
+SetKwData{lastgates}{LastGates}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwFunction{gstatus}{Gate-Status}
+\backslash
+SetKwData{und}{Undriven}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input{Graph object to draw on (all other data accessed statically)}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output{None}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects{Graph updated with visual representation of gates}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Clear 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+graph
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Add 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Result
+\end_layout
+
+\end_inset
+
+ to graph as long thin horizontal line going through 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\leftarrow0$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach{
+\end_layout
+
+\end_inset
+
+gate : 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ngate
+\end_layout
+
+\end_inset
+
+ attached to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Result}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y\leftarrow0$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+	currentGate 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ gate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	
+\backslash
+While{
+\end_layout
+
+\end_inset
+
+currentGate 
+\begin_inset Formula $\neq$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Source}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+		Add currentGate to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+graph
+\end_layout
+
+\end_inset
+
+ at 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ with size 
+\begin_inset Formula $(\delta_{x},\delta_{y})$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	
+\backslash
+If{
+\backslash
+gstatus{currentGate}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\neq\und$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}{
+\end_layout
+
+\end_inset
+
+Highlight currentGate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+		currentGate 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ gate.next
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y\leftarrow y+\delta_{y}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+	
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lastgates
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lastgates 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\cup$
+\end_inset
+
+ currentGate
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+	
+\begin_inset Formula $x\leftarrow x+\delta_{x}$
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach{
+\end_layout
+
+\end_inset
+
+gate 
+\begin_inset Formula $\in$
+\end_inset
+
+ 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+lastgates}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	
+\backslash
+eIf{
+\end_layout
+
+\end_inset
+
+gate : 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ngate}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+		Connect gate to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Source
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+		Connect gate to 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Drain
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Gate Drawing Algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Chapter
+Acknowledgements
+\end_layout
+
+\begin_layout Standard
+Professor Geraint Jones, my supervisor, for his advice and the diagrams
+ of the N-Gates and P-Gates seen in this document.
+\end_layout
+
+\begin_layout Standard
+\begin_inset CommandInset bibtex
+LatexCommand bibtex
+bibfiles "citations"
+options "plain"
+
+\end_inset
+
+
+\end_layout
+
+\end_body
+\end_document

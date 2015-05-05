@@ -1,0 +1,348 @@
+\setlength{\unitlength}{0.4cm}
+
+% standard gates are picture (6,6)
+% with connections at (-6,-1), (-6,1) and (0,0)
+% inverters are (5,2) connected at (-5,0) and (0,0)
+% big inverters are (10,4) connected at (-10,0) and (0,0)
+% downward inverters are (2,5) connected at (0,5) and (0,0)
+
+\newcommand\notgate{\begin{picture}(5,2)(5,0)
+        \put(0,0){\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,-1){\line(0,1){2}}
+                \put(2,-1){\line(2,1){2}}
+                \put(2,1){\line(2,-1){2}}
+                \put(4.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(4.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\buffgate{\begin{picture}(5,2)(5,0)
+        \put(0,0){\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,-1){\line(0,1){2}}
+                \put(2,-1){\line(2,1){2}}
+                \put(2,1){\line(2,-1){2}}
+        \end{thicklines}
+        \put(4,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\revnotgate{\begin{picture}(5,2)(0,0)
+        \put(5,0){\line(-1,0){2}}
+        \begin{thicklines}
+                \put(3,-1){\line(-0,1){2}}
+                \put(3,-1){\line(-2,1){2}}
+                \put(3,1){\line(-2,-1){2}}
+                \put(0.75,0){\circle{0.5}}
+        \end{thicklines}
+        \put(0.5,0){\line(-1,0){0.5}}
+\end{picture}}
+
+\newcommand\bignotgate{\begin{picture}(10,2)(10,0)
+        \put(0,0){\line(1,0){4}}
+        \begin{thicklines}
+                \put(4,-2){\line(0,1){4}}
+                \put(4,-2){\line(2,1){4}}
+                \put(4,2){\line(2,-1){4}}
+                \put(8.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(8.5,0){\line(1,0){1.5}}
+\end{picture}}
+
+\newcommand\downnotgate{\begin{picture}(2,5)(0,-5)
+        \put(0,0){\line(0,-1){2}}
+        \begin{thicklines}
+                \put(-1,-2){\line(1,0){2}}
+                \put(-1,-2){\line(1,-2){1}}
+                \put(1,-2){\line(-1,-2){1}}
+                \put(0,-4.25){\circle{0.5}}
+        \end{thicklines}
+        \put(0,-4.5){\line(0,-1){0.5}}
+\end{picture}}
+
+% \newcommand\inverter{\begin{picture}(6,6)
+%       \put(0,-2.25){\line(0,1){4.5}}
+%       \put(0,-2.25){\line(4,3){2.7}}
+%       \put(0,2.25){\line(4,-3){2.7}}
+%       \begin{thicklines}
+%               \put(3,0){\circle{0.75}}
+%       \end{thicklines}
+%       \put(6,0){\line(-1,0){2.625}}
+% \end{picture}}
+
+\newcommand\andgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\rightandgate{\begin{picture}(6,6)(6,0)  
+        \put(0,0){\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\nandgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \put(1,0){\oval(8,4)[r]}
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\orgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(1,2)(3,0)(1,-2)
+                \qbezier(1,2)(4,2)(5,0)
+                \qbezier(1,-2)(4,-2)(5,0)
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\leftorgate{\begin{picture}(6,6)(-6,0)  
+        \multiput(0,-1)(0,2){2}{\line(-1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(-1,2)(-3,0)(-1,-2)
+                \qbezier(-1,2)(-4,2)(-5,0)
+                \qbezier(-1,-2)(-4,-2)(-5,0)
+        \end{thicklines}
+        \put(-5,0){\line(-1,0){1}}
+\end{picture}}
+
+\newcommand\downorgate{\begin{picture}(6,6)(3,0)
+        % \multiput(-1,6)(2,0){2}{\line(0,-1){1.7}}
+        \begin{thicklines}
+                \qbezier(-2,5)(-2,2)(0,1)
+                \qbezier(2,5)(2,2)(0,1)
+                \qbezier(-2,5)(0,3)(2,5)
+        \end{thicklines}
+        \put(0,0){\line(0,1){1}}
+\end{picture}}
+
+\newcommand\norgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(1,2)(3,0)(1,-2)
+                \qbezier(1,2)(4,2)(5,0)
+                \qbezier(1,-2)(4,-2)(5,0)
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\leftnorgate{\begin{picture}(6,6)(-6,0)  
+        \multiput(0,-1)(0,2){2}{\line(-1,0){1.7}}
+        \begin{thicklines}
+                \qbezier(-1,2)(-3,0)(-1,-2)
+                \qbezier(-1,2)(-4,2)(-5,0)
+                \qbezier(-1,-2)(-4,-2)(-5,0)
+                \put(-5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(-5.5,0){\line(-1,0){0.5}}
+\end{picture}}
+
+\newcommand\xnorgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.5}}
+        \begin{thicklines}
+                \qbezier(0.8,1.9)(2.8,0)(0.8,-1.9)
+                \qbezier(1.3,2)(3.0,0)(1.3,-2)
+                \qbezier(1.3,2)(4,2)(5,0)
+                \qbezier(1.3,-2)(4,-2)(5,0)
+                \put(5.25,0){\circle{0.5}}
+        \end{thicklines}
+        \put(5.5,0){\line(1,0){0.5}}
+\end{picture}}
+
+\newcommand\xorgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,2){2}{\line(1,0){1.5}}
+        \begin{thicklines}
+                \qbezier(0.8,1.9)(2.8,0)(0.8,-1.9)
+                \qbezier(1.3,2)(3.0,0)(1.3,-2)
+                \qbezier(1.3,2)(4,2)(5,0)
+                \qbezier(1.3,-2)(4,-2)(5,0)
+        \end{thicklines}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+\newcommand\majgate{\begin{picture}(6,6)(6,0)  
+        \multiput(0,-1)(0,1){3}{\line(1,0){1}}
+        \begin{thicklines}
+                \put(1,-2){\line(0,1){4}}
+                \multiput(1,-2)(0,4){2}{\line(1,0){3}}
+                \put(4,0){\oval(2,4)[r]}
+        \end{thicklines}
+        \put(3,0){\makebox(0,0){\strut\textit{maj}}}
+        \put(5,0){\line(1,0){1}}
+\end{picture}}
+
+
+\newcommand\Celem{\begin{picture}(6,6)(6,0)  
+        \put(0,-1){\line(3,1){1.60}}
+        \put(0,1){\line(3,-1){1.60}}
+        \begin{thicklines} \put(3,0){\circle{3}} \put(3,0){\makebox(0,0){\textsc{c}}} \end{thicklines}
+        \put(6,0){\line(-1,0){1.5}}
+\end{picture}}
+
+\newcommand\Celemup{\begin{picture}(6,6)(0,6)  
+        \put(-1,0){\line(1,3){0.53}}
+        \put(1,0){\line(-1,3){0.53}}
+        \begin{thicklines}
+                \put(0,3){\circle{3}}
+                \put(0,3){\makebox(0,0){\textsc{c}}}
+        \end{thicklines}
+        \put(0,6){\line(0,-1){1.5}}
+\end{picture}}
+
+\newcommand\Celemdown{\begin{picture}(6,6)(0,0)  
+        \put(-1,6){\line(1,-3){0.53}}
+        \put(1,6){\line(-1,-3){0.53}}
+        \begin{thicklines}
+                \put(0,3){\circle{3}}
+                \put(0,3){\makebox(0,0){\textsc{c}}}
+        \end{thicklines}
+        \put(0,0){\line(0,1){1.5}}
+\end{picture}}
+
+% standard flipflops are picture (10,10)
+% with connections at (0,7), (1,3) and at (10,3) and (10,7)
+
+\newcommand\dtype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,3){\makebox(0,0)[l]{$\mskip-2mu>$}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,d}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+\newcommand\ttype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,3){\makebox(0,0)[l]{$\mskip-2mu>$}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,t}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+\newcommand\leveldtype{\begin{picture}(10,10)(0,0)  
+        \put(1,3){\line(1,0){1}}
+        \put(0,7){\line(1,0){2}}
+        \multiput(8,3)(0,4){2}{\line(1,0){2}}
+        \begin{thicklines}
+                \put(2,1){\framebox(6,8){}}
+        \end{thicklines}
+        \put(2,2.8){\framebox(0.6,0.4)[l]{}}
+        \put(2,7){\makebox(0,0)[l]{\textsc{\strut\,d}}}
+        \put(8,7){\makebox(0,0)[r]{\textsc{\strut q\,}}}
+        \put(8,3){\makebox(0,0)[r]{\textsc{\strut \=q\,}}}
+\end{picture}}
+
+
+
+
+
+% standard transistors are picture (4.5,6)
+% with connections at (0,-3), (0,3) and gate at (-4.5,0)
+
+\newcommand\ntrans{{\begin{picture}(4.5,8)(-4.5, -3)
+        \put(-4.5,0){\line(1,0){2.25}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+        \put(1,-3){$d$}
+        \put(1,3){$s$}
+		\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ntransdown{{\begin{picture}(6,4.5)(0,0) 
+        \put(0,-4.5){\line(0,1){2.25}}
+        \put(1.5,-2.25){\line(-1,0){3}}
+        \begin{thicklines}
+                \put(1.5,-1.5){\line(-1,0){3}}
+        \end{thicklines}
+        \put(3,0){\line(-1,0){1.5}}
+        \put(-1.5,0){\line(0,-1){1.5}}
+        \put(1.5,0){\line(0,-1){1.5}}
+        \put(-3,0){\line(1,0){1.5}}
+		\put(0,-4){$d$}
+        \put(0,4){$s$}
+		\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ntransup{{\begin{picture}(6,4.5)(0,0)
+        \put(0,4.5){\line(0,-1){2.25}}
+        \put(-1.5,2.25){\line(1,0){3}}
+        \begin{thicklines}
+                \put(-1.5,1.5){\line(1,0){3}}
+        \end{thicklines}
+        \put(-3,0){\line(1,0){1.5}}
+        \put(-1.5,0){\line(0,1){1.5}}
+        \put(1.5,0){\line(0,1){1.5}}
+        \put(3,0){\line(-1,0){1.5}}
+\end{picture}}}
+
+\newcommand\ptrans{{\begin{picture}(4.5,6)(-4.5,-3) 
+        \put(-4.5,0){\line(1,0){1.5}}
+        \put(-2.625,0){\circle{0.75}}
+        \put(-2.25,-1.5){\line(0,1){3}}
+        \begin{thicklines}
+                \put(-1.5,-1.5){\line(0,1){3}}
+        \end{thicklines}
+        \put(0,-3){\line(0,1){1.5}}
+        \put(0,-1.5){\line(-1,0){1.5}}
+        \put(0,1.5){\line(-1,0){1.5}}
+        \put(0,3){\line(0,-1){1.5}}
+		\put(1,-3){$d$}
+        \put(1,3){$s$}
+		\put(-5.5,0){$g$}
+\end{picture}}}
+
+\newcommand\ptransup{{\begin{picture}(6,4.5)(0,0)
+        \put(0,4.5){\line(0,-1){1.5}}
+        \put(0,2.625){\circle{0.75}}
+        \put(-1.5,2.25){\line(1,0){3}}
+        \begin{thicklines}
+                \put(-1.5,1.5){\line(1,0){3}}
+        \end{thicklines}
+        \put(-3,0){\line(1,0){1.5}}
+        \put(-1.5,0){\line(0,1){1.5}}
+        \put(1.5,0){\line(0,1){1.5}}
+        \put(3,0){\line(-1,0){1.5}}
+\end{picture}}}
+
+\newcommand\ptransdown{{\begin{picture}(6,4.5)(0,0) 
+        \put(0,-4.5){\line(0,1){1.5}}
+        \put(0,-2.625){\circle{0.75}}
+        \put(1.5,-2.25){\line(-1,0){3}}
+        \begin{thicklines}
+                \put(1.5,-1.5){\line(-1,0){3}}
+        \end{thicklines}
+        \put(3,0){\line(-1,0){1.5}}
+        \put(-1.5,0){\line(0,-1){1.5}}
+        \put(1.5,0){\line(0,-1){1.5}}
+        \put(-3,0){\line(1,0){1.5}}
+\end{picture}}}
+
+\newcommand\blob{{\circle*{0.4}}}
