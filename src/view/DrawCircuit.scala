@@ -129,6 +129,7 @@ case class DrawCircuit (val graph : mxGraph) {
           } else {
             "_en"
           }))
+        gate.drawnGate = Some(node)
         graph insertEdge(parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
 
         nodes push node
