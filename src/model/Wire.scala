@@ -27,6 +27,8 @@ abstract class Wire {
   def clearDrains : Unit = {
     drains = Array[Gate]()
   }
+
+  def resetDrawnGates() : Unit
 }
 
 

@@ -9,4 +9,6 @@ object Source extends Wire with Output {
   override def clear : Unit = clearDrains
 
   override def toString() = "Source"
+
+  override def resetDrawnGates () : Unit = ()
 }

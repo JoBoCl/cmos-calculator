@@ -20,4 +20,10 @@ class WireLow extends Wire with Input with Output {
   }
 
   override def toString() = ""
+
+  override def resetDrawnGates() : Unit = {
+    for (drain <- getDrains) {
+      drain.resetDrawnGates()
+    }
+  }
 }

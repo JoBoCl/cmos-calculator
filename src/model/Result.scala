@@ -28,4 +28,14 @@ object Result extends Wire with Input with Output {
   }
 
   override def toString() = "Result"
+
+  override def resetDrawnGates() : Unit = {
+    for (gate <- getSources) {
+      gate.resetDrawnGates()
+    }
+    for (gate <- getDrains) {
+      gate.resetDrawnGates()
+    }
+    ()
+  }
 }

@@ -9,4 +9,6 @@ object Drain extends Wire with Input {
   override def clear : Unit = clearSources
 
   override def toString() = "Drain"
+
+  override def resetDrawnGates () : Unit = ()
 }
