@@ -21,6 +21,8 @@ case class DrawCircuit (val graph : mxGraph) {
 
   def draw () : Unit = {
     parent = graph.getDefaultParent
+    // No gates are currently drawn, so reset
+    Result.resetDrawnGates()
     styleSheet("nmos_de")
     styleSheet("pmos_de")
     styleSheet("nmos_en")
@@ -115,37 +117,43 @@ case class DrawCircuit (val graph : mxGraph) {
     } else {
       for (gate <- gates) {
         gate.drawnGate match {
-          case Some(x) => {
-
+          case Some(node : AnyRef) => {
+            val box = graph.getCellBounds(node)
+            val x = box.getCenterX
+            val y = box.getCenterY + (box.getHeight * (if (drawingTopNetwork) {
+              -0.5
+            } else {
+              0.5
+            }))
+            val point = graph insertVertex(parent, null, "", x, y, 0, 0)
+            graph.insertEdge(parent, null, "", nodes.pop(), node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
           }
           case None => {
-            {
-              val previousNode = nodes.pop()
-              val node =
-                graph.insertVertex(parent, null, gate.input.toString, currentX, if (!drawingTopNetwork) {
-                  y
-                } else {
-                  -(y + deltaY)
-                }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
-                  "nmos"
-                } else {
-                  "pmos"
-                }) + (if (gate.get() == Undriven()) {
-                  "_de"
-                } else {
-                  "_en"
-                }))
-              gate.drawnGate = Some(node)
-              graph insertEdge
-              (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
-              nodes push node
-              drawNetwork(if (drawingTopNetwork) {
-                gate.source.getSources
+            val previousNode = nodes.pop()
+            val node =
+              graph.insertVertex(parent, null, gate.input.toString, currentX, if (!drawingTopNetwork) {
+                y
               } else {
-                gate.drain.getDrains
-              }, yPos + deltaY, drawingTopNetwork)
-              currentX += deltaX * 2
-            }
+                -(y + deltaY)
+              }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
+                "nmos"
+              } else {
+                "pmos"
+              }) + (if (gate.get() == Undriven()) {
+                "_de"
+              } else {
+                "_en"
+              }))
+            gate.drawnGate = Some(node)
+            graph insertEdge
+            (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
+            nodes push node
+            drawNetwork(if (drawingTopNetwork) {
+              gate.source.getSources
+            } else {
+              gate.drain.getDrains
+            }, yPos + deltaY, drawingTopNetwork)
+            currentX += deltaX * 2
           }
         }
       }
