@@ -1,0 +1,20 @@
+Input ,Expected Output 
+“” ,None 
+test,None
+a ,Variable(a) 
+! ,None 
+!a ,Not(Variable(a)) 
+and ,None 
+a and ,None 
+and a ,None 
+a and b ,"And(Variable(a), Variable(b))"
+!a and b ,"And(Not(Variable(a), Variable(b))"
+a and !b ,"And(Variable(a), Variable(b))"
+!a and !b,"And(Not(Variable(a), Not(Variable(b)))"
+or,None
+a or,None
+or a,None
+a or b,"Or(Variable(a), Variable(b))"
+!a or b ,"Or(Not(Variable(a), Variable(b))"
+a or !b ,"Or(Variable(a), Variable(b))"
+!a or !b,"Or(Not(Variable(a), Not(Variable(b)))"
