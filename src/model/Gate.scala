@@ -7,6 +7,7 @@ abstract class Gate {
   val input : Node
   val drain : Wire
   val source : Wire
+  var drawnGate : Option[AnyRef] = None
 
   def get() : Potential
 }
