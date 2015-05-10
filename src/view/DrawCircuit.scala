@@ -114,32 +114,40 @@ case class DrawCircuit (val graph : mxGraph) {
       }
     } else {
       for (gate <- gates) {
-        val previousNode = nodes.pop()
-        val node =
-          graph.insertVertex(parent, null, gate.input.toString, currentX, if (!drawingTopNetwork) {
-            y
-          } else {
-            -(y + deltaY)
-          }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
-            "nmos"
-          } else {
-            "pmos"
-          }) + (if (gate.get() == Undriven()) {
-            "_de"
-          } else {
-            "_en"
-          }))
-        gate.drawnGate = Some(node)
-        graph insertEdge(parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
+        gate.drawnGate match {
+          case Some(x) => {
 
-        nodes push node
-
-        drawNetwork(if (drawingTopNetwork) {
-          gate.source.getSources
-        } else {
-          gate.drain.getDrains
-        }, yPos + deltaY, drawingTopNetwork)
-        currentX += deltaX * 2
+          }
+          case None => {
+            {
+              val previousNode = nodes.pop()
+              val node =
+                graph.insertVertex(parent, null, gate.input.toString, currentX, if (!drawingTopNetwork) {
+                  y
+                } else {
+                  -(y + deltaY)
+                }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
+                  "nmos"
+                } else {
+                  "pmos"
+                }) + (if (gate.get() == Undriven()) {
+                  "_de"
+                } else {
+                  "_en"
+                }))
+              gate.drawnGate = Some(node)
+              graph insertEdge
+              (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
+              nodes push node
+              drawNetwork(if (drawingTopNetwork) {
+                gate.source.getSources
+              } else {
+                gate.drain.getDrains
+              }, yPos + deltaY, drawingTopNetwork)
+              currentX += deltaX * 2
+            }
+          }
+        }
       }
     }
   }
