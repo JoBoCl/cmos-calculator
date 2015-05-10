@@ -68,5 +68,11 @@ object Parser extends LogicalExpression {
     println("Actual Result: " + variableParser("a and b and c"))
     println("Expected Result: ")
     println("Actual Result: " + variableParser(""))
+    println("Expected Result: !a and !b")
+    println("Actual Result: " + variableParser("(!a) and !b"))
+    println("Expected Result: None")
+    println("Actual Result: " + variableParser("out"))
+
+
   }
 }
