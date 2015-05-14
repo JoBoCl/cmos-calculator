@@ -27,6 +27,9 @@ case class DrawCircuit (val graph : mxGraph) {
     styleSheet("pmos_de")
     styleSheet("nmos_en")
     styleSheet("pmos_en")
+    wireStyle(true)
+    wireStyle(false)
+    otherWireStyle()
     graph.getModel.beginUpdate()
     try { {
       val node = graph.insertVertex(parent, null, "output", 0, 0, 0, 1)
@@ -45,19 +48,17 @@ case class DrawCircuit (val graph : mxGraph) {
       }
       drawNetwork(drains, 0, false)
       maxX = Math.max(maxX, currentX)
-      val newOut = graph.insertVertex(parent, null, "output", -15, 0, maxX + 30, 1, mxConstants.STYLE_SHAPE + "=" +
-                                                                                    mxConstants.SHAPE_LINE)
+      val newOut = graph.insertVertex(parent, null, "output", -15, 0, maxX + 30, 1, "wireUndriven")
 
-      val drain = graph.insertVertex(parent, null, "drain", -15, drainsYLimit + 2 * deltaY, maxX + 30, 1,
-                                     mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
+      val drain = graph.insertVertex(parent, null, "drain", -15, (drainsYLimit + 2 * deltaY), maxX + 30, 1,
+                                     "wireDriven")
 
       val source = graph.insertVertex(parent, null, "source", -15, -1.0 * (sourcesYLimit + deltaY), maxX + 30, 1,
-                                      mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
+                                      "wireDriven")
 
 
-      if (Result.get() != Undriven()) {
-        graph.setCellStyle("fillColor=green", Array(node))
-        graph.setCellStyle(mxConstants.STYLE_FONTSTYLE + "=" + mxConstants.FONT_BOLD, Array(node))
+      if (Result.get() == High()) {
+        graph.setCellStyle("wireDriven", Array(newOut))
       }
 
       for (edge <- graph.getEdges(node)) {
@@ -66,14 +67,14 @@ case class DrawCircuit (val graph : mxGraph) {
 
       for (sourceGate <- lastSources) {
         val x = graph.getCellGeometry(sourceGate).getCenterX
-        val dot = graph.insertVertex(parent, null, "", x, -1.0 * (sourcesYLimit + deltaY), 0, 0)
-        graph.insertEdge(parent, null, "", sourceGate, dot)
+        val dot = graph.insertVertex(parent, null, "", x, -1.0 * (sourcesYLimit + deltaY), 1, 1)
+        graph.insertEdge(parent, null, "", sourceGate, dot, "wireOther")
       }
 
       for (drainGate <- lastDrains) {
         val x = graph.getCellGeometry(drainGate).getCenterX
-        val dot = graph.insertVertex(parent, null, "", x, drainsYLimit + deltaY, 0, 0)
-        graph.insertEdge(parent, null, "", drainGate, dot)
+        val dot = graph.insertVertex(parent, null, "", x, drainsYLimit + 2 * deltaY, 1, 1)
+        graph.insertEdge(parent, null, "", drainGate, dot, "wireOther")
       }
 
       lastSources.clear()
@@ -103,8 +104,55 @@ case class DrawCircuit (val graph : mxGraph) {
     stylesheet.putCellStyle(styleName, style)
   }
 
-  private[this] def drawNetwork (gates : Array[Gate], y : Int, drawingTopNetwork : Boolean) : Unit = {
-    val yPos = y
+  private def otherWireStyle() : Unit = {
+    // get graph stylesheet
+    val stylesheet = graph.getStylesheet
+
+    // define image style name
+    val styleName = "wireOther"
+
+    // define image style
+    val style = new java.util.HashMap[String, AnyRef]()
+    style.put(mxConstants.STYLE_ENDARROW, mxConstants.NONE)
+    style.put(mxConstants.STYLE_STARTARROW, mxConstants.NONE)
+    style.put(mxConstants.STYLE_STROKECOLOR, "red")
+    style.put(mxConstants.STYLE_FILLCOLOR, "red")
+    style.put(mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_RIGHT)
+
+    stylesheet.putCellStyle(styleName, style)
+
+  }
+
+  private def wireStyle (driven : Boolean) : Unit = {
+    // get graph stylesheet
+    val stylesheet = graph.getStylesheet
+
+    // define image style name
+    val styleName = "wire" + (if (driven) {
+      "Driven"
+    } else {
+      "Undriven"
+    })
+
+    // define image style
+    val style = new java.util.HashMap[String, AnyRef]()
+    style.put(mxConstants.STYLE_SHAPE, mxConstants.SHAPE_LINE)
+    style.put(mxConstants.STYLE_STROKECOLOR, if (driven) {
+      "red"
+    } else {
+      "black"
+    })
+    style.put(mxConstants.STYLE_FILLCOLOR, if (driven) {
+      "red"
+    } else {
+      "black"
+    })
+    style.put(mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_RIGHT)
+
+    stylesheet.putCellStyle(styleName, style)
+  }
+
+  private[this] def drawNetwork (gates : Array[Transistor], y : Int, drawingTopNetwork : Boolean) : Unit = {
     if (gates.isEmpty) {
       // if last node on the chain, nothing to connect it to, so forget it
       if (drawingTopNetwork) {
@@ -118,42 +166,51 @@ case class DrawCircuit (val graph : mxGraph) {
       for (gate <- gates) {
         gate.drawnGate match {
           case Some(node : AnyRef) => {
-            val box = graph.getCellBounds(node)
-            val x = box.getCenterX
-            val y = box.getCenterY + (box.getHeight * (if (drawingTopNetwork) {
-              -0.5
-            } else {
-              0.5
-            }))
-            val point = graph insertVertex(parent, null, "", x, y, 0, 0)
-            graph.insertEdge(parent, null, "", nodes.pop(), node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
+            {
+              {
+                val box = graph.getCellBounds(node)
+                val x = box.getCenterX
+                val y = box.getCenterY + (box.getHeight * (if (drawingTopNetwork) {
+                  -0.5
+                } else {
+                  0.5
+                }))
+                val point = graph insertVertex(parent, null, "", x, y, 0, 0)
+                graph.insertEdge(parent, null, "", nodes.pop(), node,
+                                 mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
+              }
+            }
           }
           case None => {
-            val previousNode = nodes.pop()
-            val node =
-              graph.insertVertex(parent, null, gate.input.toString, currentX, if (!drawingTopNetwork) {
-                y
-              } else {
-                -(y + deltaY)
-              }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
-                "nmos"
-              } else {
-                "pmos"
-              }) + (if (gate.get() == Undriven()) {
-                "_de"
-              } else {
-                "_en"
-              }))
-            gate.drawnGate = Some(node)
-            graph insertEdge
-            (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
-            nodes push node
-            drawNetwork(if (drawingTopNetwork) {
-              gate.source.getSources
-            } else {
-              gate.drain.getDrains
-            }, yPos + deltaY, drawingTopNetwork)
-            currentX += deltaX * 2
+            {
+              {
+                val previousNode = nodes.pop()
+                val node =
+                  graph.insertVertex(parent, null, gate.input.toString, currentX, if (drawingTopNetwork) {
+                    -(y + deltaY)
+                  } else {
+                    y
+                  }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
+                    "nmos"
+                  } else {
+                    "pmos"
+                  }) + (if (gate.get() == Undriven()) {
+                    "_de"
+                  } else {
+                    "_en"
+                  }))
+                gate.drawnGate = Some(node)
+                graph insertEdge
+                (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
+                nodes push node
+                drawNetwork(if (drawingTopNetwork) {
+                  gate.source.getSources
+                } else {
+                  gate.drain.getDrains
+                }, y + deltaY, drawingTopNetwork)
+                currentX += deltaX * 2
+              }
+            }
           }
         }
       }

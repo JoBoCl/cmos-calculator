@@ -1,31 +1,31 @@
 package model
 
 abstract class Wire {
-  private var sources = Array[Gate]()
-  private var drains = Array[Gate]()
+  private var sources = Array[Transistor]()
+  private var drains = Array[Transistor]()
 
   def get() : Potential
 
-  def addSource(node : Gate) = {
+  def addSource(node : Transistor) = {
     sources = node +: sources
   }
 
   def getSources = sources
 
   def clearSources : Unit = {
-    sources = Array[Gate]()
+    sources = Array[Transistor]()
   }
 
   def clear() : Unit
 
   def getDrains = drains
 
-  def addDrain(node : Gate) = {
+  def addDrain(node : Transistor) = {
     drains = node +: drains
   }
 
   def clearDrains : Unit = {
-    drains = Array[Gate]()
+    drains = Array[Transistor]()
   }
 
   def resetDrawnGates() : Unit

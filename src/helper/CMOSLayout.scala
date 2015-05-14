@@ -2,6 +2,7 @@ package helper
 
 import model._
 
+import scala.collection.mutable
 import scala.collection.mutable.{HashSet, Stack}
 
 /**
@@ -25,6 +26,24 @@ object CMOSLayout {
 
   private val negations = new HashSet[Variable]()
 
+  def checkForDuplicateGates (wire : Wire)(checkingTopNetwork : Boolean) = {
+    // if we're at the result, we've finished
+    if (wire != Result) {
+      val gates = new mutable.HashMap[Node, Transistor]()
+      for (gate <- (if(checkingTopNetwork) wire.getDrains else wire.getSources)) {
+        if (gates.contains(gate.input)) {
+          if (checkingTopNetwork) {
+            for (source <- gate.drain.getSources) gates(gate.input).drain.addSource(source)
+          } else {
+
+          }
+        } else {
+          gates.put(gate.input, gate)
+        }
+      }
+    }
+  }
+
   def layout(expr: model.Node): Integer = {
     Result.clear;
     totalGates = 0;
@@ -45,6 +64,8 @@ object CMOSLayout {
       }
     }
     Variable.negateAll(expr)
+    checkForDuplicateGates(Source)(true)
+    checkForDuplicateGates(Drain)(false)
     (totalGates + 2 * negations.size)
   }
 
@@ -60,12 +81,6 @@ object CMOSLayout {
     // Initially stack = [], subExpr = expr => I
     val stack = Stack[model.Node]()
     var subExpr = expr
-
-/*
-    while (exprNotAtom(subExpr) && exprNotConjunction(subExpr)) {
-
-    }
-*/
 
     while (subExpr != Constant(false)) {
       subExpr match {
@@ -131,12 +146,12 @@ object CMOSLayout {
         x match {
           case Not(Variable(v)) => {
             if (buildingTopNetwork) {
-              val gate = new PGate(Variable(v), currentWire, wire)
+              val gate = new PTrans(Variable(v), currentWire, wire)
               currentWire addSource gate
               wire addDrain gate
               println("Adding source to " + currentWire.toString())
             } else {
-              val gate = new NGate(Not(Variable(v)), wire, currentWire)
+              val gate = new NTrans(Not(Variable(v)), wire, currentWire)
               negations add Variable(v)
               currentWire addDrain gate
               wire addSource gate
@@ -145,13 +160,13 @@ object CMOSLayout {
           }
           case Variable(v) => {
             if (buildingTopNetwork) {
-              val gate = new PGate(Not(Variable(v)), currentWire, wire)
+              val gate = new PTrans(Not(Variable(v)), currentWire, wire)
               negations add Variable(v)
               currentWire addSource gate
               wire addDrain gate
               println("Adding source to " + currentWire.toString())
             } else {
-              val gate = new NGate(Variable(v), wire, currentWire)
+              val gate = new NTrans(Variable(v), wire, currentWire)
               currentWire addDrain gate
               wire addSource gate
               println("Adding drain to " + currentWire.toString())
@@ -164,12 +179,12 @@ object CMOSLayout {
       // Create a new gate and finish
       case Not(Variable(v)) => {
         if (buildingTopNetwork) {
-          val gate = new PGate(Variable(v), currentWire, Source)
+          val gate = new PTrans(Variable(v), currentWire, Source)
           currentWire addSource gate
           Source addDrain gate
           println("Adding source to " + currentWire.toString())
         } else {
-          val gate = new NGate(Not(Variable(v)), Drain, currentWire)
+          val gate = new NTrans(Not(Variable(v)), Drain, currentWire)
           negations add Variable(v)
           currentWire addDrain gate
           Drain addSource gate
@@ -179,13 +194,13 @@ object CMOSLayout {
       }
       case Variable(v) => {
         if (buildingTopNetwork) {
-          val gate = new PGate(Not(Variable(v)), currentWire, Source)
+          val gate = new PTrans(Not(Variable(v)), currentWire, Source)
           negations add Variable(v)
           currentWire addSource gate
           Source addDrain gate
           println("Adding source to " + currentWire.toString())
         } else {
-          val gate = new NGate(Variable(v), Drain, currentWire)
+          val gate = new NTrans(Variable(v), Drain, currentWire)
           currentWire addDrain gate
           Drain addSource gate
           println("Adding drain to " + currentWire.toString())

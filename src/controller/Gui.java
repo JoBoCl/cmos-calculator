@@ -4,10 +4,8 @@ import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxConstants;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
-import com.mxgraph.view.mxStylesheet;
 import helper.CMOSLayout;
 import helper.Parser;
 import model.Node;
@@ -26,7 +24,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by joshua on 08/04/15.
@@ -73,6 +70,9 @@ public class Gui {
                     final TreeMap<String, Object> map = Variable.getMap();
                     final Iterator<Tuple2<String, Object>> it = map.iterator();
                     visPanel.setSize(400, 300);
+                    if (graph != null) {
+                        ((mxGraphModel) graph.getModel()).clear();
+                    }
                     graphComponent = initGraph();
                     visPanel.add(graphComponent, BorderLayout.CENTER);
                     mainPanel.updateUI();
@@ -157,26 +157,12 @@ public class Gui {
 
         // define a parallel layout for the edges
         layout = new mxParallelEdgeLayout(graph);
-
-        // change the default edge style to rounded
-        mxStylesheet styleSheet = graph.getStylesheet();
-        Map<String, Object> edgeStyle = styleSheet.getDefaultEdgeStyle();
-        edgeStyle.put(mxConstants.STYLE_ROUNDED, true);
-        styleSheet.setDefaultEdgeStyle(edgeStyle);
-        graph.setStylesheet(styleSheet);
-
         drawCircuit = new DrawCircuit(graph);
         drawCircuit.draw();
 
         resizeGraphView(localGraphComponent);
 
-        //graph.setCollapseToPreferredSize(true);
-        //}
-        //if (localGraphComponent == null) {
-        //  return graphComponent;
-        //} else {
         return localGraphComponent;
-        //}
     }
 
     private void resizeGraphView (mxGraphComponent localGraphComponent) {

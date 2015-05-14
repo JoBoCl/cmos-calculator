@@ -29,12 +29,10 @@
 
 \newcommand{\notgate}{\begin{picture}(5,2)(5,0)
         \put(0,0){\line(1,0){2}}
-        \begin{thicklines}
                 \put(2,-1){\line(0,1){2}}
                 \put(2,-1){\line(2,1){2}}
                 \put(2,1){\line(2,-1){2}}
                 \put(4.25,0){\circle{0.5}}
-        \end{thicklines}
         \put(4.5,0){\line(1,0){0.5}}
 \end{picture}}
 
@@ -397,16 +395,16 @@
 \usepackage{tabularx}
 \usepackage{cleveref}
 \end_preamble
-\options ruled,noend,slide
+\options ruled,noend,slide,10pt
 \use_default_options false
 \begin_modules
 algorithm2e
 logicalmkup
 \end_modules
 \maintain_unincluded_children false
-\language english
-\language_package default
-\inputencoding iso8859-15
+\language british
+\language_package auto
+\inputencoding auto
 \fontencoding T1
 \font_roman lmodern
 \font_sans lmss
@@ -485,7 +483,7 @@ CMOS Calculator
 \end_layout
 
 \begin_layout Author
-Candidate 597618
+Joshua Clark
 \end_layout
 
 \begin_layout Date
@@ -534,9 +532,9 @@ Simulation of delay in propagation of state for large networks.
 \end_deeper
 \begin_layout Abstract
 There are many tools in existence to design CMOS circuits, but most focus
- on the physical implementation and the exact positioning of gates, rather
- than a more abstract approach, as may be required when reasoning about
- the layout of circuits, this tool seeks to remedy that issue.
+ on the physical implementation and the exact positioning of transistors,
+ rather than a more abstract approach, as may be required when reasoning
+ about the layout of circuits, this tool seeks to remedy that issue.
  It quickly became apparent that the approach that I was using had various
  similarities to a compiler, which will be a focus of this document.
  Additionally, this report will discuss alternative approaches not used
@@ -586,7 +584,7 @@ The idea of logical functions is familiar to many, and even a schoolchild
  a true/false output, and lots of these boxes in interesting combinations
  can yield more interesting functions.
  Through introducing these concepts, and producing more and more intricate
- diagrams, a they can then see how more complicated ideas, such as addition
+ diagrams, they can then see how more complicated ideas, such as addition
  and subtraction are implemented, and maybe how these are used in the modern
  computers used today.
  However, what is rarely discussed is what is inside these boxes: they are
@@ -631,16 +629,12 @@ c & = & \top\mid\bot
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Standard
 where 
 \begin_inset Formula $\Sigma$
 \end_inset
 
  is some accepted alphabet of variable (specifically, in this program, as
- described by the regular expression 
+ described by the Perl-Compatible Regex 
 \begin_inset ERT
 status collapsed
 
@@ -737,42 +731,14 @@ name "eq:assi"
 \begin_inset Formula $G$
 \end_inset
 
- is true (corresponding to (
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ is true (corresponding to equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:neg"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:neg
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-)) 
+) 
 \end_layout
 
 \begin_layout Itemize
@@ -791,42 +757,14 @@ status collapsed
 \begin_inset Formula $G$
 \end_inset
 
- is true (corresponding to (
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ is true (corresponding to equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:disj"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:disj
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-)) 
+) 
 \end_layout
 
 \begin_layout Itemize
@@ -841,42 +779,14 @@ status collapsed
 \begin_inset Formula $F$
 \end_inset
 
- is false (corresponding to (
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ is false (corresponding to equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:conj"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:conj
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-)) 
+) 
 \end_layout
 
 \begin_layout Itemize
@@ -891,104 +801,77 @@ status collapsed
 \begin_inset Formula $\mathcal{A}(v)=\top$
 \end_inset
 
- (corresponding to (
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ (corresponding to equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:var"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:cons
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-)) 
+) 
 \end_layout
 
 \begin_layout Itemize
 \begin_inset Formula $E=c$
 \end_inset
 
- for some constant is evaluated as the constant (corresponding to (
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ for some constant is evaluated as the constant (corresponding to equation
+ 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:cons"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:var
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-)) 
+) 
 \end_layout
 
 \begin_layout Subsubsection
-CMOS Gates
+CMOS Transistors
 \end_layout
 
 \begin_layout Standard
-As the name would indicate, CMOS is made up of two distinct, complementarily
- defined parts
+As the name would indicate, CMOS is made up of two distinct, complementary
+ parts
 \begin_inset CommandInset citation
 LatexCommand cite
 key "digsys"
 
 \end_inset
 
-: a P-Gate can only carry high potential from their source to their drain,
- whereas an N-Gate can only carry low potential from their drain to their
- source.
- Two power rails then provide a low potential (the drain), and a high potential
- (the source), with a third wire used as the output wire.
+: a P-transistor can only carry high potential from their source to their
+ drain when the gate (connected to some wire representing a variable) is
+ not driven, whereas an N-transistor can only carry low potential from their
+ drain to their source when the gate is driven.
+ Two power rails then provide a low potential (commonly referred to as 
+\begin_inset Formula $V_{dd},$
+\end_inset
+
+ and in this document, referred to at an implementation level as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Drain
+\end_layout
+
+\end_inset
+
+), and a high potential (commonly referred to as 
+\begin_inset Formula $V_{ss},$
+\end_inset
+
+ and in this document, referred to at an implementation level as 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source
+\end_layout
+
+\end_inset
+
+), with a third wire used as the output wire.
 \end_layout
 
 \begin_layout Standard
@@ -1004,42 +887,15 @@ N(g,s,d) & = & g\rightarrow(s\leftrightarrow d)\label{eq:ngate}
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:pgate"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:pgate
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- describes a simplified version of the P-Gate: the potential is only carried
- (
+ describes a simplified version of the P-transistor: the potential is only
+ carried (
 \begin_inset Formula $s\text{ matches }d$
 \end_inset
 
@@ -1049,43 +905,15 @@ status collapsed
 
  is not powered, losing the notion that only high potential flows from the
  source to the drain.
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
+ Equation 
+\begin_inset CommandInset ref
+LatexCommand ref
+reference "eq:ngate"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:ngate
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- similarly describes a simplified version of the N-Gate: the potential is
- only carried (
+ similarly describes a simplified version of the N-transistor: the potential
+ is only carried (
 \begin_inset Formula $s\text{ matches }d$
 \end_inset
 
@@ -1106,7 +934,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1119,7 +947,7 @@ sntrans
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1132,7 +960,7 @@ begin{picture}
 
 (4.5,6)
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1145,7 +973,7 @@ end{picture}
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -1160,62 +988,10 @@ sptrans
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-N-Gate and P-Gate, respectively
+N-transistor and P-transistor, respectively
 \end_layout
 
 \end_inset
@@ -1229,22 +1005,23 @@ N-Gate and P-Gate, respectively
 \end_layout
 
 \begin_layout Standard
-Therefore, when using these gates, it is not sufficient to specify the implement
-ation of a logical expression in a positive sense (carrying potential when
- the valuations of the inputs causes the expression to be evaluated as true),
- but rather, both the high potential must be driven to the output, and the
- low potential, using a complementary set of networks, made up solely of
- P-Gates and N-Gates.
+Therefore, when using these transistors, it is not sufficient to specify
+ the implementation of a logical expression in a positive sense (carrying
+ potential when the valuations of the inputs causes the expression to be
+ evaluated as true), but rather, both the high potential must be driven
+ to the output, and the low potential, using a complementary set of networks,
+ made up solely of P-transistors and N-transistors.
  Throughout this report, and in the implementation, these are drawn with
  the high potential being carried from the top of a diagram to the middle
- by a network of P-Gates, and the low potential being carried from the bottom
- of a diagram to the middle by a network of N-Gates.
- To model conjunctions, a pair of P-Gates should be placed in series, indicating
- that the second gate will only carry the potential if its variable is not
- driven, and the first gate is carrying a high potential.
- Similarly, a disjunction is modelled by a pair of P-Gates placed in parallel:
- potential will be carried if at least one of the gates' variables is not
- driven.
+ by a network of P-transistors, and the low potential being carried from
+ the bottom of a diagram to the middle by a network of N-transistors.
+ To model conjunctions, a pair of P-transistors should be placed in series,
+ indicating that the second transistor will only carry the potential if
+ its variable is not driven, and the first transistor is carrying a high
+ potential.
+ Similarly, a disjunction is modelled by a pair of P-transistors placed
+ in parallel: potential will be carried if at least one of the transistors'
+ gate is not driven.
 \end_layout
 
 \begin_layout Standard
@@ -1261,14 +1038,14 @@ In a more general sense, for some expression
 \end_inset
 
  and 
-\begin_inset Formula $n\leftarrow e\equiv n\rightarrow\neg e$
+\begin_inset Formula $n\leftarrow e\equiv\neg n\rightarrow\neg e$
 \end_inset
 
 , where 
 \begin_inset Formula $p\text{ and }n$
 \end_inset
 
- are entirely made of P- and N- gates respectively.
+ are entirely made of P- and N- transistors respectively.
 \end_layout
 
 \begin_layout Standard
@@ -1276,7 +1053,7 @@ Suppose that
 \begin_inset Formula $a\land b$
 \end_inset
 
- is part of a network of P-Gates, such that 
+ is part of a network of P-transistors, such that 
 \begin_inset Formula $p$
 \end_inset
 
@@ -1301,14 +1078,14 @@ Suppose that
 \begin_inset Formula $q$
 \end_inset
 
- is the drain, and we therefore want a series of gates such that 
+ is the drain, and we therefore want a series of transistors such that 
 \begin_inset Formula $a\land b\rightarrow(p\leftrightarrow q)$
 \end_inset
 
 .
- As described above, we will need the two gates in series to give the necessary
- result, and they must be connected somehow, so we therefore introduce a
- new variable to act as the point between them: 
+ As described above, we will need the two transistors in series to give
+ the necessary result, and they must be connected somehow, so we therefore
+ introduce a new variable to act as the point between them: 
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & a\land b\rightarrow(p\leftrightarrow q)\\
@@ -1318,7 +1095,7 @@ Suppose that
 
 \end_inset
 
-To define a similar construction in N-Gates, we have 
+To define a similar construction in N-transistors, we have 
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & a\land b\leftarrow p\leftrightarrow q\\
@@ -1346,7 +1123,7 @@ Alternatively, suppose that
 \begin_inset Formula $a\lor b$
 \end_inset
 
- is part of a network of P-Gates, with 
+ is part of a network of P-transistors, with 
 \begin_inset Formula $p$
 \end_inset
 
@@ -1354,13 +1131,14 @@ Alternatively, suppose that
 \begin_inset Formula $q$
 \end_inset
 
- behaving as before, and we therefore want a series of gates such that 
+ behaving as before, and we therefore want a series of transistors such
+ that 
 \begin_inset Formula $a\lor b\rightarrow(p\leftrightarrow q)$
 \end_inset
 
 .
- As described above, we will need the two gates in parallel to give the
- necessary result: 
+ As described above, we will need the two transistors in parallel to give
+ the necessary result: 
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & a\lor b\rightarrow(p\leftrightarrow q)\\
@@ -1370,7 +1148,7 @@ Alternatively, suppose that
 
 \end_inset
 
-To define a similar construction in N-Gates, we have 
+To define a similar construction in N-transistors, we have 
 \begin_inset Formula 
 \begin{eqnarray*}
  &  & a\lor b\leftarrow p\leftrightarrow q\\
@@ -1394,7 +1172,14 @@ and we therefore derive
 \end_layout
 
 \begin_layout Standard
-The following networks are standard implementations of nand- and nor-gates:
+The networks seen in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "fig:Standard-nor--and"
+
+\end_inset
+
+ are standard implementations of nand- and nor-gates.
 \end_layout
 
 \begin_layout Standard
@@ -1405,7 +1190,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -4642,6 +4427,12 @@ protect
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Standard-nor--and"
+
+\end_inset
+
 Standard nor- and nand- gate implementations
 \end_layout
 
@@ -4668,34 +4459,33 @@ The program would be expected to satisfy the following minimal requirements
  in order for it to be considered successful: 
 \end_layout
 
-\begin_layout Itemize
-Accuracy: any representation of CMOS produced must correctly implement the
+\begin_layout Description
+Accuracy any representation of CMOS produced must correctly implement the
  logical expression that has been entered, and the visual output of the
- expression should match the model that has been stored 
+ expression should match the model that has been stored.
 \end_layout
 
-\begin_layout Itemize
-Representation: the produced visualisation should be intuitive to read:
- each element should be presented separately from the others, and clearly
- labelled.
+\begin_layout Description
+Representation the produced visualisation should be intuitive to read: each
+ element should be presented separately from the others, and clearly labelled.
  Any gate carrying potential should be clearly highlighted.
  
 \end_layout
 
-\begin_layout Itemize
-Portability: the visual output produced by the program should be available
- to the user in a variety of formats 
+\begin_layout Description
+Portability the visual output produced by the program should be available
+ to the user in a variety of formats.
 \end_layout
 
-\begin_layout Itemize
-Interactivity: the program should produce sensible warnings when an expression
+\begin_layout Description
+Interactivity the program should produce sensible warnings when an expression
  that is not possible to parse has been entered.
  Once a CMOS representation has been constructed, it should be possible
  for the user to interact with the publicly visible inputs (the variables
  named in the initial expression), with updates delivered with a minimal
  amount of latency.
  Should the user wish to view the change in state due to the latency of
- the gates, this should be visible, and at a variable speed.
+ the transistors, this should be visible, and at a variable speed.
  
 \end_layout
 
@@ -4710,8 +4500,8 @@ Design
 \end_layout
 
 \begin_layout Standard
-In order to fulfil the above specfications, it was obvious that a graphical
- interface would be required, so that the user could quicly interact with
+In order to fulfil the above specifications, it was obvious that a graphical
+ interface would be required, so that the user could quickly interact with
  the program and determine the variable assignments intuitively, and to
  have their actions quickly reflected in the circuit diagram.
  Initially, due to the quality of the output produced by LaTeX diagrams,
@@ -4755,7 +4545,7 @@ small}]
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -4777,7 +4567,7 @@ draw  (3,5) rectangle (3.5,4.5);
 \backslash
 node at (3.25,4.75) {Go}; 
 \backslash
-node at (2.,4.75) {Expression}; 
+node at (2,4.75) {Expression}; 
 \backslash
 node at (2.25,3.75) {Variable$_0$}; 
 \backslash
@@ -4923,7 +4713,7 @@ Node
 
 \end_inset
 
- object that requires an accessor to determine if the given fragment evaluates
+ object that requires accessors to determine if the given fragment evaluates
  to true, as defined in 
 \begin_inset ERT
 status collapsed
@@ -5172,7 +4962,7 @@ Logical Expression Class Relations
 \end_layout
 
 \begin_layout Standard
-Expressions are then parsed using Scala's packrat parsing library.
+Expressions are then parsed using Scala's Packrat parsing library.
  During parsing, each new variable is registered with a static map stored
  in the 
 \begin_inset Flex Flex:Code
@@ -5299,7 +5089,7 @@ status collapsed
 \end_layout
 
 \begin_layout Subsubsection
-Gates and Wires
+Transistors and Wires
 \begin_inset CommandInset label
 LatexCommand label
 name "sub:Gates-and-Wires"
@@ -5310,13 +5100,13 @@ name "sub:Gates-and-Wires"
 \end_layout
 
 \begin_layout Standard
-The gates are similarly structured: inheriting common attributes, where
- possible, through a central 
+The transistors are similarly structured: inheriting common attributes,
+ where possible, through a central 
 \begin_inset Flex Flex:Code
 status collapsed
 
 \begin_layout Plain Layout
-Gate
+Transistor
 \end_layout
 
 \end_inset
@@ -5422,7 +5212,7 @@ begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -5443,7 +5233,7 @@ draw  (0,0) ellipse (1.5 and 1);
 
 
 \backslash
-node at (0,0) {Gate};
+node at (0,0) {Transistor};
 \end_layout
 
 \begin_layout Plain Layout
@@ -5457,7 +5247,7 @@ draw  (-1.5,2) rectangle (1.5,4);
 
 
 \backslash
-node at (0,3) {PGate};
+node at (0,3) {PTrans};
 \end_layout
 
 \begin_layout Plain Layout
@@ -5471,7 +5261,7 @@ draw  (-1.5,-2) rectangle (1.5,-4);
 
 
 \backslash
-node at (0,-3) {NGate};
+node at (0,-3) {NTrans};
 \end_layout
 
 \begin_layout Plain Layout
@@ -5728,7 +5518,7 @@ draw  [->] plot[smooth, tension=.7] coordinates {(12,-4) (17,-3) (18,-0.5)
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -5780,7 +5570,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -5793,7 +5583,7 @@ SetKwInOut
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -5995,7 +5785,7 @@ status collapsed
 
 \end_inset
 
-previousGate
+previous-gate
 \begin_inset ERT
 status collapsed
 
@@ -6294,7 +6084,7 @@ Result
 
 \end_inset
 
- has a set of gates connected that implement 
+ has a set of transistors connected that implement 
 \begin_inset Formula $E$
 \end_inset
 
@@ -6582,7 +6372,7 @@ status collapsed
 
  
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -6746,7 +6536,7 @@ protect
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Converting DNF expression to Gates
+Converting DNF expression to transistors
 \begin_inset CommandInset label
 LatexCommand label
 name "alg:Converting-DNF-expression"
@@ -6767,9 +6557,16 @@ name "alg:Converting-DNF-expression"
 \end_layout
 
 \begin_layout Standard
-The pseudo-code above describes the final implementation of the gate creation
- algorithm, however, initially, a different approach was attempted, which
- expanded the number of classes inheriting from 
+The pseudo-code in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Converting-DNF-expression"
+
+\end_inset
+
+ describes the final implementation of the gate creation algorithm, however,
+ initially, a different approach was attempted, which expanded the number
+ of classes inheriting from 
 \begin_inset Flex Flex:Code
 status collapsed
 
@@ -6780,10 +6577,10 @@ Node
 \end_inset
 
  to include implications and a representation of iff, as well as the classes
- for the gates.
+ for the transistors.
  After parsing the formula, a function then proceeded to try and convert
- the formula and its negation into a series of gates with literals as inputs,
- joined by conjunctions and disjunctions.
+ the formula and its negation into a series of transistors with literals
+ as inputs, joined by conjunctions and disjunctions.
  Dealing with the large number of special cases quickly became impractical,
  especially when small repeated changes had to be made, and therefore was
  abandoned in favour of a separation of the logical and 
@@ -6794,13 +6591,13 @@ physical
 \begin_inset Quotes erd
 \end_inset
 
- models, where the gates were joined by wires and received potentials as
- inputs.
+ models, where the transistors were joined by wires and received potentials
+ as inputs.
 \end_layout
 
 \begin_layout Standard
-Once an initial array of gates has been generated, the program then minimises
- the number of gates produced, by traversing from 
+Once an initial array of transistors has been generated, the program then
+ minimises the number of transistors produced, by traversing from 
 \begin_inset Flex Code
 status open
 
@@ -6840,8 +6637,15 @@ Result
 
 \end_inset
 
-, looking for gates operating on the same literal that may be combined into
- one group.
+, looking for transistors operating on the same literal that may be combined
+ into one group, as described in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Minimising-the-transistors"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -6851,24 +6655,412 @@ sideways false
 status open
 
 \begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+SideEffects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Side Effects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input{Starting wire, top/bottom network indicator}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output{None}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects{Minimised number of transistors in network, updated totals to
+ reflect this}
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Minimising the number of gates
+Minimising the number of transistors
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Minimising-the-transistors"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
 
 
 \end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additionally, it may be more expedient to negate the expression that needs
+ finding and then negate the output to determine a final drivenness result,
+ as if several input variables need negating, this will require an extra
+ two transistors per variable.
+ For example, 
+\begin_inset Formula $a\land b$
+\end_inset
+
+ requires 8 gates (
+\begin_inset Formula $\neg a$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
 
 \begin_layout Plain Layout
-
+Source
 \end_layout
 
 \end_inset
 
+ to intermediate wire, 
+\begin_inset Formula $\neg b$
+\end_inset
 
+ from intermediate wire to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Formula $\neg a$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Drain
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Formula $\neg b$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Drain
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, and a pair of transistors to produce each of 
+\begin_inset Formula $\neg a$
+\end_inset
+
+, and 
+\begin_inset Formula $\neg b$
+\end_inset
+
+), whereas 
+\begin_inset Formula $\neg(\neg a\lor\neg b)$
+\end_inset
+
+ requires 6 transistors (
+\begin_inset Formula $a$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Drain
+\end_layout
+
+\end_inset
+
+ to intermediate wire, 
+\begin_inset Formula $b$
+\end_inset
+
+ from intermediate wire to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Formula $a$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, 
+\begin_inset Formula $b$
+\end_inset
+
+ from 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source
+\end_layout
+
+\end_inset
+
+ to 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+, and a pair of transistors to produce the final negation).
 \end_layout
 
 \begin_layout Standard
@@ -6892,7 +7084,7 @@ Nothing
 
 \end_inset
 
- to simulate an undriven gate/wire, and 
+ to simulate a transistor/wire that is not driven, and 
 \begin_inset Flex Flex:Code
 status collapsed
 
@@ -6915,8 +7107,8 @@ Some(false)
  to indicate high and low potential separately.
  This approach has also been reworked, to further separate the differences
  between the abstract logical expressions with precise true/false values,
- and the CMOS-specific high and low potentials where the gates/wires are
- driven, or a specific 
+ and the CMOS-specific high and low potentials where the transistors/wires
+ are driven, or a specific 
 \begin_inset Flex Flex:Code
 status collapsed
 
@@ -6927,6 +7119,21 @@ Undriven
 \end_inset
 
  value.
+ The pseudo-code in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Traversing-transistors-to"
+
+\end_inset
+
+, and 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Helper-methods-Drivenness"
+
+\end_inset
+
+ describe in further detail the steps required to determine drivenness.
 \end_layout
 
 \begin_layout Standard
@@ -7152,7 +7359,7 @@ status collapsed
 
 \end_inset
 
-previousGate
+previous-transistor
 \begin_inset ERT
 status collapsed
 
@@ -7358,7 +7565,7 @@ status collapsed
 
 \end_inset
 
-pgate
+ptransistor
 \begin_inset ERT
 status collapsed
 
@@ -7380,7 +7587,7 @@ status collapsed
 
 \end_inset
 
-P-Gate
+P-transistor
 \begin_inset ERT
 status collapsed
 
@@ -7415,7 +7622,7 @@ status collapsed
 
 \end_inset
 
-ngate
+ntransistor
 \begin_inset ERT
 status collapsed
 
@@ -7437,7 +7644,7 @@ status collapsed
 
 \end_inset
 
-N-Gate
+N-transistor
 \begin_inset ERT
 status collapsed
 
@@ -7779,7 +7986,7 @@ status collapsed
 
 \end_inset
 
-Gate-Status
+transistor-Status
 \begin_inset ERT
 status collapsed
 
@@ -8107,7 +8314,7 @@ status collapsed
 
 \end_inset
 
-gate 
+transistor 
 \begin_inset Formula $\in$
 \end_inset
 
@@ -8224,7 +8431,7 @@ status collapsed
 
 \end_inset
 
-gate
+transistor
 \begin_inset ERT
 status collapsed
 
@@ -8344,7 +8551,7 @@ status collapsed
 
 \end_inset
 
-gate 
+transistor 
 \begin_inset Formula $\in$
 \end_inset
 
@@ -8461,7 +8668,7 @@ status collapsed
 
 \end_inset
 
-gate
+transistor
 \begin_inset ERT
 status collapsed
 
@@ -8638,7 +8845,14 @@ protect
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Traversing gates to determine driven-ness
+Traversing transistors to determine drivenness
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Traversing-transistors-to"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -8817,7 +9031,7 @@ status collapsed
 
 \end_inset
 
-previousGate
+previous-transistor
 \begin_inset ERT
 status collapsed
 
@@ -9023,7 +9237,7 @@ status collapsed
 
 \end_inset
 
-pgate
+ptransistor
 \begin_inset ERT
 status collapsed
 
@@ -9045,7 +9259,7 @@ status collapsed
 
 \end_inset
 
-P-Gate
+P-transistor
 \begin_inset ERT
 status collapsed
 
@@ -9080,7 +9294,7 @@ status collapsed
 
 \end_inset
 
-ngate
+ntransistor
 \begin_inset ERT
 status collapsed
 
@@ -9102,7 +9316,7 @@ status collapsed
 
 \end_inset
 
-N-Gate
+N-transistor
 \begin_inset ERT
 status collapsed
 
@@ -9444,7 +9658,7 @@ status collapsed
 
 \end_inset
 
-Gate-Status
+transistor-Status
 \begin_inset ERT
 status collapsed
 
@@ -9650,7 +9864,7 @@ gstatus
 
 \end_inset
 
-(gate: Gate)
+(transistor: Transistor)
 \begin_inset ERT
 status collapsed
 
@@ -9696,7 +9910,7 @@ status collapsed
 
 \end_inset
 
-gate to check for driven-ness
+transistor to check for drivenness
 \begin_inset ERT
 status collapsed
 
@@ -9731,7 +9945,7 @@ status collapsed
 
 \end_inset
 
-Potential on gate
+Potential on transistor
 \begin_inset ERT
 status collapsed
 
@@ -9783,7 +9997,7 @@ status collapsed
 
 \end_inset
 
-gate is 
+transistor is 
 \begin_inset ERT
 status collapsed
 
@@ -9791,7 +10005,7 @@ status collapsed
 
 
 \backslash
-pgate
+ptransistor
 \end_layout
 
 \end_inset
@@ -9846,7 +10060,7 @@ status collapsed
 \begin_inset Formula $\neg$
 \end_inset
 
-gate.input
+transistor.input
 \begin_inset ERT
 status collapsed
 
@@ -9896,7 +10110,7 @@ status collapsed
 
 \end_inset
 
-gate.source
+transistor.source
 \begin_inset ERT
 status collapsed
 
@@ -9974,7 +10188,7 @@ status collapsed
 
 
 \backslash
-ngate
+ntransistor
 \end_layout
 
 \end_inset
@@ -10412,7 +10626,7 @@ status collapsed
 \begin_inset Formula $\neg$
 \end_inset
 
-gate.input
+transistor.input
 \begin_inset ERT
 status collapsed
 
@@ -10462,7 +10676,7 @@ status collapsed
 
 \end_inset
 
-gate.source
+transistor.source
 \begin_inset ERT
 status collapsed
 
@@ -10665,7 +10879,14 @@ protect
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Helper methods to traverse gates to determine driven-ness
+Helper methods to determine drivenness
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Helper-methods-Drivenness"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -10702,7 +10923,7 @@ key "packrat"
 
 \end_inset
 
- This library has the advantage of allowing efficient parsing by using memoisati
+ This library has the advantage of allowing efficient parsing by using memoizati
 on to reduce the number of times that a production rule needs testing.
  This parsing library uses a domain-specific language to assist in the definitio
 n of the grammar to be parsed to ensure that the abstract representation
@@ -10722,9 +10943,9 @@ name "sub:Normal-Forms"
 
 \begin_layout Standard
 After an expression is parsed, it is then converted to a normal form to
- allow the gate conversion tool to process it, in this case, as a disjunction
- of conjunctions, by using the Quine-McCluskey Algorithm, and algorithm
- developed by McCluskey
+ allow the transistor conversion tool to process it, in this case, as a
+ disjunction of conjunctions, by using the Quine-McCluskey Algorithm, and
+ algorithm developed by McCluskey
 \begin_inset CommandInset citation
 LatexCommand cite
 key "mccluskey"
@@ -10770,7 +10991,19 @@ don't care
 
  values (not needed in this implementation, as we are only considering logical
  expressions that are defined in the syntax given above).
- The minterms give a non-minimal canonical representation of a formula (e.g.
+ The minterms give a non-minimal canonical representation of a formula (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+e.g.
+\backslash
+
+\end_layout
+
+\end_inset
+
  for 
 \begin_inset Formula $f(A,B)=\sum m(0)$
 \end_inset
@@ -10783,7 +11016,15 @@ don't care
 \begin_inset Formula $\neg A\land\neg B$
 \end_inset
 
-) 
+).
+ This is described in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Quine-McCluskey----Logical"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -10817,8 +11058,28 @@ implicant
 prime implicant
 \emph default
  is an implicant that is minimal in the number of terms that it contains
- (i.e.
- no more literals can be removed without it becoming a non-implicant)) 
+ (
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+i.e.
+\backslash
+
+\end_layout
+
+\end_inset
+
+ no more literals can be removed without it becoming a non-implicant)).
+ This is described in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Quine-McCluskey----Prime"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Enumerate
@@ -10827,7 +11088,15 @@ Find the essential prime implicants, as well as any others that are necessary
 \emph on
 essential 
 \emph default
-when it is the only prime implicant to cover some minterm) 
+when it is the only prime implicant to cover some minterm).
+ This is described in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Quine-McCluskey----Essential"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -11547,6 +11816,13 @@ protect
 
 \begin_layout Plain Layout
 Quine-McCluskey -- Logical Expression to Boolean Function
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Quine-McCluskey----Logical"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -11782,7 +12058,7 @@ status collapsed
 
 \end_inset
 
-Minterms
+minterms
 \begin_inset ERT
 status collapsed
 
@@ -11839,7 +12115,7 @@ status collapsed
 
 \end_inset
 
-ImplicantTable
+implicant-table
 \begin_inset ERT
 status collapsed
 
@@ -12595,6 +12871,13 @@ protect
 
 \begin_layout Plain Layout
 Quine-McCluskey -- Prime Implicants
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Quine-McCluskey----Prime"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -12887,7 +13170,7 @@ status collapsed
 
 \end_inset
 
-PrimeImplicants
+prime-implicants
 \begin_inset ERT
 status collapsed
 
@@ -12944,7 +13227,7 @@ status collapsed
 
 \end_inset
 
-Minterm-Imp-Table
+minterm-imp-table
 \begin_inset ERT
 status collapsed
 
@@ -13001,7 +13284,7 @@ status collapsed
 
 \end_inset
 
-Minimised-Minterms
+minimised-minterms
 \begin_inset ERT
 status collapsed
 
@@ -13058,7 +13341,7 @@ status collapsed
 
 \end_inset
 
-CoveredMinterms
+covered-minterms
 \begin_inset ERT
 status collapsed
 
@@ -13115,7 +13398,7 @@ status collapsed
 
 \end_inset
 
-ChosenImplicants
+chosen-implicants
 \begin_inset ERT
 status collapsed
 
@@ -13872,6 +14155,13 @@ protect
 
 \begin_layout Plain Layout
 Quine-McCluskey -- Essential and covering implicants
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Quine-McCluskey----Essential"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -13926,8 +14216,8 @@ status open
 
 \end_inset
 
-ve version, designed for drawing gates where each wire, other than the static
- 
+ve version, designed for drawing transistors where each wire, other than
+ the static 
 \begin_inset Flex Code
 status open
 
@@ -13957,7 +14247,15 @@ Result
 
 \end_inset
 
- has precisely one gate attached.
+ has precisely one transistor attached.
+ This is described in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Transistor-Drawing-Algorithm"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -14183,7 +14481,7 @@ status collapsed
 
 \end_inset
 
-previousGate
+previous-transistor
 \begin_inset ERT
 status collapsed
 
@@ -14446,7 +14744,7 @@ status collapsed
 
 \end_inset
 
-ngate
+ntransistor
 \begin_inset ERT
 status collapsed
 
@@ -14468,64 +14766,7 @@ status collapsed
 
 \end_inset
 
-N-Gate
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-SetKwData
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-pgate
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-P-Gate
+N-transistor
 \begin_inset ERT
 status collapsed
 
@@ -14560,7 +14801,7 @@ status collapsed
 
 \end_inset
 
-lastgates
+ptransistor
 \begin_inset ERT
 status collapsed
 
@@ -14582,7 +14823,64 @@ status collapsed
 
 \end_inset
 
-LastGates
+P-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+lasttransistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+last-transistors
 \begin_inset ERT
 status collapsed
 
@@ -14639,7 +14937,7 @@ status collapsed
 
 \end_inset
 
-Gate-Status
+transistor-Status
 \begin_inset ERT
 status collapsed
 
@@ -14801,7 +15099,7 @@ status collapsed
 
 \end_inset
 
-Graph updated with visual representation of gates
+Graph updated with visual representation of transistors
 \begin_inset ERT
 status collapsed
 
@@ -14936,7 +15234,7 @@ status collapsed
 
 \end_inset
 
-gate : 
+transistor : 
 \begin_inset ERT
 status collapsed
 
@@ -14944,7 +15242,7 @@ status collapsed
 
 
 \backslash
-ngate
+ntransistor
 \end_layout
 
 \end_inset
@@ -15008,11 +15306,11 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-currentGate 
+current-transistor 
 \begin_inset Formula $\leftarrow$
 \end_inset
 
- gate
+ transistor
 \begin_inset ERT
 status collapsed
 
@@ -15052,7 +15350,7 @@ status collapsed
 
 \end_inset
 
-currentGate 
+current-transistor 
 \begin_inset Formula $\neq$
 \end_inset
 
@@ -15095,7 +15393,7 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-Add currentGate to 
+Add current-transistor to 
 \begin_inset ERT
 status collapsed
 
@@ -15180,7 +15478,7 @@ status collapsed
 
 \end_inset
 
-currentGate
+current-transistor
 \begin_inset ERT
 status collapsed
 
@@ -15217,7 +15515,7 @@ status collapsed
 
 \end_inset
 
-Highlight currentGate
+Highlight current-transistor
 \begin_inset ERT
 status collapsed
 
@@ -15232,11 +15530,11 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-currentGate 
+current-transistor 
 \begin_inset Formula $\leftarrow$
 \end_inset
 
- gate.next
+ transistor.next
 \begin_inset ERT
 status collapsed
 
@@ -15294,7 +15592,7 @@ status collapsed
 
 
 \backslash
-lastgates
+lasttransistors
 \end_layout
 
 \end_inset
@@ -15311,7 +15609,7 @@ status collapsed
 
 
 \backslash
-lastgates
+lasttransistors
 \end_layout
 
 \end_inset
@@ -15320,7 +15618,7 @@ lastgates
 \begin_inset Formula $\cup$
 \end_inset
 
- currentGate
+ current-transistor
 \begin_inset ERT
 status collapsed
 
@@ -15368,6 +15666,26 @@ status collapsed
 \end_inset
 
  
+\end_layout
+
+\begin_layout Plain Layout
+The above, by symmetry, for the bottom transistor network
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset ERT
 status collapsed
 
@@ -15391,7 +15709,7 @@ status collapsed
 
 \end_inset
 
-gate 
+transistor 
 \begin_inset Formula $\in$
 \end_inset
 
@@ -15403,7 +15721,7 @@ status collapsed
 
 
 \backslash
-lastgates
+lasttransistors
 \end_layout
 
 \end_inset
@@ -15457,7 +15775,7 @@ status collapsed
 
 \end_inset
 
-gate : 
+transistor : 
 \begin_inset ERT
 status collapsed
 
@@ -15465,7 +15783,7 @@ status collapsed
 
 
 \backslash
-ngate
+ntransistor
 \end_layout
 
 \end_inset
@@ -15496,7 +15814,7 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-Connect gate to 
+Connect transistor to 
 \begin_inset ERT
 status collapsed
 
@@ -15551,7 +15869,7 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-Connect gate to 
+Connect transistor to 
 \begin_inset ERT
 status collapsed
 
@@ -15609,7 +15927,14 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Gate Drawing Algorithm
+Transistor Drawing Algorithm
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Transistor-Drawing-Algorithm"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -15623,13 +15948,1851 @@ Gate Drawing Algorithm
 \end_layout
 
 \begin_layout Standard
-In order to modify the above algorithm to draw gates where one wire may
- have multiple gates attached, the drawing algorithm checks for the presence
- of a pre-drawn gate, and if it is found, connects the two branches and
- finishes drawing (as it would otherwise duplicate work).
+In order to modify the above algorithm to draw transistors where one wire
+ may have multiple transistors attached, the drawing algorithm checks for
+ the presence of a pre-drawn transistor, and if it is found, connects the
+ two branches and finishes drawing (as it would otherwise duplicate work).
  This does increase the work necessary before drawing, however, as the presence
- of drawn gates needs to be removed, using a visitation pattern not disimilar
- to the method used to determine driven-ness.
+ of drawn transistors needs to be removed, using a visitation pattern not
+ dissimilar to the method used to determine drivenness.
+ This is described in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Optimised-Transistor-Drawing"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+SideEffects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Side Effects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+prvsGt
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+previous-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Source
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Source
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Drain
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Drain
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+graph
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Graph
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ntransistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+N-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ptransistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+P-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+lasttransistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+last-transistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData{drawntransistors}{drawn-transistors}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwFunction
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gstatus
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+transistor-Status
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+und
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Undriven
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Graph object to draw on (all other data accessed statically)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+None
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Graph updated with visual representation of transistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Clear 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+graph
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Traverse transistors to reset drawn-transistor property
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+drawntransistors
+\backslash
+gets
+\backslash
+emptyset$
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Add 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Result
+\end_layout
+
+\end_inset
+
+ to graph as long thin horizontal line going through 
+\begin_inset Formula $(0,0)$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\leftarrow0$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+transistor : 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ntransistor
+\end_layout
+
+\end_inset
+
+ attached to 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Result
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y\leftarrow0$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+current-transistor 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+While
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+current-transistor 
+\begin_inset Formula $\neq$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Source
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf{current-transistor.drawn-node$=
+\backslash
+emptyset$}{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Add current-transistor to 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+graph
+\end_layout
+
+\end_inset
+
+ at 
+\begin_inset Formula $(x,y)$
+\end_inset
+
+ with size 
+\begin_inset Formula $(\delta_{x},\delta_{y})$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+$
+\backslash
+drawntransistors
+\backslash
+gets
+\backslash
+drawntransistors
+\backslash
+cup
+\backslash
+{
+\backslash
+text{current-transistor}
+\backslash
+}$
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+If
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+gstatus
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+current-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\neq\und$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Highlight current-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+current-transistor 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ transistor.next
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $y\leftarrow y+\delta_{y}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\begin_layout Plain Layout
+
+	Connect 
+\backslash
+prvsGt to current-transistor.drawn-node
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	current-transistor$
+\backslash
+gets
+\backslash
+Source$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+lasttransistors
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\leftarrow$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+lasttransistors
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\cup$
+\end_inset
+
+ current-transistor
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Formula $x\leftarrow x+\delta_{x}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+The above, by symmetry, for the bottom transistor network
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+transistor 
+\begin_inset Formula $\in$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+lasttransistors
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+transistor : 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ntransistor
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Connect transistor to 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Source
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+Connect transistor to 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Drain
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Optimised T
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Optimised-Transistor-Drawing"
+
+\end_inset
+
+ransistor Drawing Algorithm
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Section
@@ -15641,8 +17804,8 @@ The usual definition of a compiler is
 \begin_inset Quotes eld
 \end_inset
 
-a program that can read a program in one language and traslate it into an
- equivalent program in another language
+a program that can read a program in one language and translate it into
+ an equivalent program in another language
 \begin_inset Quotes erd
 \end_inset
 
@@ -15658,7 +17821,14 @@ key "aho2003compilers"
  language into something low-level that can then be directly executed by
  a machine.
  The structure of a compiler can be thought of as the composition of a series
- of functions, each with a distinct focus.
+ of functions, each with a distinct focus, as shown in 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "fig:Compiler-Structure"
+
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Standard
@@ -15920,6 +18090,13 @@ protect
 
 \begin_layout Plain Layout
 Compiler Structure
+\begin_inset CommandInset label
+LatexCommand label
+name "fig:Compiler-Structure"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -15943,61 +18120,26 @@ e established to allow keywords to be treated as such, rather than as variables.
 \emph on
 syntax tree
 \emph default
-, usually following the shape of some context-free grammar, similar to the
- structure of logical expressions defined in 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-crefrange
-\end_layout
+, where the nodes are production rules or terminals in the context-free
+ grammar, and the edges correspond to variables leading to further production
+ rules, similar to the structure of logical expressions defined in 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:neg"
 
 \end_inset
 
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
+ to 
+\begin_inset CommandInset ref
+LatexCommand eqref
+reference "eq:var"
 
 \end_inset
 
-eq:neg
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:var
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
+ in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:cons"
 
 \end_inset
 
@@ -16010,7 +18152,8 @@ status collapsed
 
 \begin_layout Standard
 The lexical, syntax, and semantic analysis stages can all be thought to
- be covered by the compiler, as the various tokens in the language (
+ be covered by the parsing stages in the application, as the various tokens
+ in the language (
 \begin_inset Flex Flex:Code
 status collapsed
 
@@ -16103,20 +18246,20 @@ Once no more work can occur on the syntax tree, the compiler then starts
 status open
 
 \begin_layout Plain Layout
-peephole optimisation
+peep-hole optimisation
 \end_layout
 
 \end_inset
 
  owing to the metaphor of only being able to see a small part of a scene
- at any one time through a peephole camera.
+ at any one time through a peep-hole camera.
  
 \end_layout
 
 \begin_layout Standard
 This is replaced in the CMOS calculator by the Quine-McCluskey algorithm
- before gate generation, effectively putting the optimisation before the
- code generation, though in a more general software engineering metaphor,
+ before transistor generation, effectively putting the optimisation before
+ the code generation, though in a more general software engineering metaphor,
  this could be considered as a refactoring to remove redundancy before actually
  compiling the code, resulting in different byte-code, but with equivalent
  effects.
@@ -16126,9 +18269,9 @@ This is replaced in the CMOS calculator by the Quine-McCluskey algorithm
 Once no more work can take place on the intermediate code, a compiler then
  starts producing platform-specific code, followed by any further platform-speci
 fic operations.
- In the CMOS calculator's case, this would then be the gate generation algorithm
-, taking the canonical form generated by the Quine-McCluskey algorithm,
- and turning it into the CMOS implementation.
+ In the CMOS calculator's case, this would then be the transistor generation
+ algorithm, taking the canonical form generated by the Quine-McCluskey algorithm
+, and turning it into the CMOS implementation.
 \end_layout
 
 \begin_layout Standard
@@ -16142,9 +18285,9 @@ The next stage in the pipeline produces optimisations to the machine-readable
  frequently translates into taking advantage of the large caches available
  to minimise the number of secondary memory lookups and therefore the number
  of cycles spent idling while the RAM is queried.
- Within the context of the CMOS gates, this then focuses on maximising the
- number of gates that may be eliminated while retaining the same orginial
- expression.
+ Within the context of the CMOS transistors, this then focuses on maximising
+ the number of transistors that may be eliminated while retaining the same
+ original expression.
 \end_layout
 
 \begin_layout Section
@@ -16156,11 +18299,11 @@ General Testing Strategy
 \end_layout
 
 \begin_layout Standard
-The logical expression were deliberately designed so that the output that
- they would produce would be compatible with the parser, thus making testing
- the output of any given module producing logical expressions as output
- much easier, as they could then be compared to the expected values, once
- the behaviour of the parser was verified.
+The output from the logical expression classes was deliberately designed
+ so that the output that they would produce would be compatible with the
+ parser, thus making testing the output of any given module producing logical
+ expressions as output much easier, as they could then be compared to the
+ expected values, once the behaviour of the parser was verified.
 \end_layout
 
 \begin_layout Standard
@@ -16177,10 +18320,18 @@ Parsing
 
 \begin_layout Standard
 Care must be taken, as already discussed to ensure that only valid inputs
- are parsed, without affecting the ability of the program to opearte using
+ are parsed, without affecting the ability of the program to operate using
  predefined constants that have been set aside for specific purposes.
  Furthermore, the parser must ensure that statements are parsed with due
  care paid to the order of operations, with negations binding correctly.
+ The contents of 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "tab:Parsing-Test-Data"
+
+\end_inset
+
+ list the sample test data and expected outcomes.
 \end_layout
 
 \begin_layout Standard
@@ -17750,35 +19901,22 @@ Or(Not(Variable(a)), Not(Variable(b))))
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
 Parsing Test Data
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Parsing-Test-Data"
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
 
 
-\begin_inset CommandInset label
-LatexCommand label
-name "parsing-test"
-
-\end_inset
-
- 
 \end_layout
 
 \end_inset
@@ -17791,7 +19929,7 @@ Quine-McCluskey Algorithm
 \end_layout
 
 \begin_layout Subsection
-Gate Generation and Drawing
+Transistor Generation and Drawing
 \end_layout
 
 \begin_layout Section
@@ -17803,7 +19941,7 @@ Conclusions
 \end_layout
 
 \begin_layout Standard
-The project has acheived much of the scope that it had originally set out
+The project has achieved much of the scope that it had originally set out
  to, however, the order of completion of different subcomponents of the
  program needed changing quite substantially.
 \end_layout
@@ -17818,21 +19956,28 @@ Model
 
 \begin_layout Standard
 This project has deliberately focused on defining logical expressions using
- strictly binary values, and precisely adhering to the standard rulse for
+ strictly binary values, and precisely adhering to the standard rules for
  laying out CMOS diagrams, without any deviations.
  It has been assumed that the output wire will always be driven, with an
- undriven state being invalid, whereas the standard 
-\emph on
-enb
-\emph default
- 
+ undriven state being invalid, whereas the standard tri-state buffer 
 \begin_inset CommandInset citation
 LatexCommand cite
 key "digsys"
 
 \end_inset
 
-gate 
+gate, where 
+\begin_inset Formula $\mathit{enb}\rightarrow(\mathit{in}\leftrightarrow\mathit{out})$
+\end_inset
+
+, and 
+\begin_inset Formula $\neg\mathit{enb}$
+\end_inset
+
+ results in the output wire being undriven.
+\end_layout
+
+\begin_layout Standard
 \begin_inset Float figure
 wide false
 sideways false
@@ -17840,1521 +19985,250 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
 
 \backslash
-begin{picture}
+setlength{
+\backslash
+unitlength}{0.015
+\backslash
+textwidth}
 \end_layout
-
-\end_inset
-
-(25,27)(-2,-3) 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-begin{thicklines}
+begin{center}
 \end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-multiput
+begin{picture}(25,27)(-2,-3) 
 \end_layout
-
-\end_inset
-
-(0,0)(0,24)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+begin{thicklines} 
 \end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-18
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-end{thicklines}
+multiput(0,0)(0,24){2}{
+\backslash
+line(1,0){18}}
 \end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-multiput
+end{thicklines} 
 \end_layout
-
-\end_inset
-
-(12,21)(0,-6)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-ptrans
+multiput(15,21)(0,-6){2}{
+\backslash
+ptrans} 
 \end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-multiput
+multiput(15,3)(0,6){2}{
+\backslash
+ntrans}
 \end_layout
-
-\end_inset
-
-(9,3)(6,6)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-ntrans
+put(15,0){
+\backslash
+blob} 
 \end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-multiput
+put(15,24){
+\backslash
+blob} 
 \end_layout
-
-\end_inset
-
-(9,0)(6,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-blob
+put(-3,9){
+\backslash
+makebox(0,0){${
+\backslash
+it enb}$}}
 \end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(3,9){
+\backslash
+blob} 
 \end_layout
-
-\end_inset
-
-(15,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+put(0,9){
+\backslash
+line(1,0){12}} 
 \end_layout
-
-\end_inset
-
-(0,1)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-6
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(3,9){
+\backslash
+line(0,1){6}}
 \end_layout
-
-\end_inset
-
-(0,3)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+put(3,15){
+\backslash
+line(1,0){4}}
 \end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-6
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(11,15){
+\backslash
+notgate}
 \end_layout
-
-\end_inset
-
-(-3,3)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-makebox(0,0){
+put(5,21){
+\backslash
+notgate}
 \end_layout
-
-\end_inset
-
-
-\begin_inset Formula $a$
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(5,21){
+\backslash
+line(1,0){7}} 
 \end_layout
-
-\end_inset
-
-(3,3)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-blob
+put(-3,21){
+\backslash
+makebox(0,0){${
+\backslash
+it in}$}}
 \end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(6,21){
+\backslash
+blob} 
 \end_layout
-
-\end_inset
-
-(3,3)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+put(6,21){
+\backslash
+line(0,-1){5.7}} 
 \end_layout
-
-\end_inset
-
-(0,1)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-12
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(6,14.7){
+\backslash
+line(0,-1){5.4}}
 \end_layout
-
-\end_inset
-
-(3,15)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+put(6,8.7){
+\backslash
+line(0,-1){5.7}}
 \end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-6
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(6,3){
+\backslash
+line(1,0){6}}
 \end_layout
-
-\end_inset
-
-(0,21)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-line
+put(12,12){
+\backslash
+line(1,0){6}}
 \end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-9
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-put
+put(21,12){
+\backslash
+makebox(0,0){${
+\backslash
+it out}$}} 
 \end_layout
-
-\end_inset
-
-(-3,21)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-makebox(0,0){
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula $b$
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
+put(15,12){
 \backslash
-put
+blob}
 \end_layout
-
-\end_inset
-
-(6,21)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-blob
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(6,21)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(0,-1)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-5.7
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(6,9)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(0,1)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-5.7
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(6,9)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2.7
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(12,9)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(-1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2.7
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(12,24)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-blob
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(9,6)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(0,1)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-6
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(9,12)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-line
-\end_layout
-
-\end_inset
-
-(1,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-9
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-put
-\end_layout
-
-\end_inset
-
-(21,12)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-makebox(0,0){
-\end_layout
-
-\end_inset
-
-
-\begin_inset Formula ${\it out}$
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-multiput
-\end_layout
-
-\end_inset
-
-(12,12)(3,0)
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-2
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-blob
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
 
 \begin_layout Plain Layout
 
@@ -19363,20 +20237,11 @@ status collapsed
 end{picture}
 \end_layout
 
-\end_inset
-
-
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
 \begin_layout Plain Layout
 
 
 \backslash
-protect
+end{center}
 \end_layout
 
 \end_inset
@@ -19385,10 +20250,7 @@ protect
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-\begin_inset Formula $\mathit{enb}$
-\end_inset
-
- gate
+Tri-state buffer
 \end_layout
 
 \end_inset
@@ -19398,21 +20260,12 @@ protect
 
 \end_inset
 
-
+ 
 \end_layout
 
 \begin_layout Standard
-, where 
-\begin_inset Formula $\mathit{enb}\rightarrow(\mathit{in}\leftrightarrow\mathit{out})$
-\end_inset
-
-, and 
-\begin_inset Formula $\neg\mathit{enb}$
-\end_inset
-
- is undriven cannot be represented currently.
- Additionally, the structure of the gates produced by the gate placing algorithm
- 
+Additionally, the structure of the transistors produced by the transistor
+ placing algorithm 
 \begin_inset ERT
 status collapsed
 
@@ -19447,7 +20300,7 @@ status collapsed
 
 \end_inset
 
- is more constrained than the gates that amy be drawn.
+ is more constrained than the transistors that may be drawn.
 \end_layout
 
 \begin_layout Standard
@@ -19467,6 +20320,100 @@ Decreasing the verbosity of the required input should also be a priority
 
  do not add any additional expressiveness to the language, they are not
  currently parsed by the parsing module.
+\end_layout
+
+\begin_layout Standard
+Furthermore, exploring limits on the size of the circuits produced to more
+ accurately simulate the effects of resistance could be a further expansion
+ for the system, which would also necessitate changes to the procedure by
+ which the visual output is created in order to facilitate animation to
+ properly demonstrate the effect of resistance in the time taken for the
+ current to flow across a transistor or through wires, assuming non-negligible
+ resistance.
+ A na
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+"i
+\end_layout
+
+\end_inset
+
+ve approach would involve the height of series of transistors being artificially
+ limited, however, this would not take into account the length of connecting
+ wires.
+\end_layout
+
+\begin_layout Standard
+The model could also be expanded to include a more formalised notion of
+ Tony Hoare's drivenness analysis
+\begin_inset CommandInset citation
+LatexCommand cite
+key "H88:Calculus"
+
+\end_inset
+
+, as discussed in a draft paper, where formulae
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+~
+\end_layout
+
+\end_inset
+
+
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:pgate"
+
+\end_inset
+
+ and 
+\begin_inset CommandInset ref
+LatexCommand formatted
+reference "eq:ngate"
+
+\end_inset
+
+ in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "eq:pgate"
+
+\end_inset
+
+ are updated as follows:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula 
+\begin{eqnarray}
+\delta P(g,s,d) & = & \neg g\land s\land d\land\delta g\rightarrow(\delta s\leftrightarrow\delta d)\label{eq:pgate-1}\\
+\delta N(g,s,d) & = & g\land\neg s\land\neg d\land\delta g\rightarrow(\delta s\leftrightarrow\delta d)\label{eq:ngate-1}
+\end{eqnarray}
+
+\end_inset
+
+where the presence of 
+\begin_inset Formula $\delta v$
+\end_inset
+
+ is used to indicate that 
+\begin_inset Formula $v$
+\end_inset
+
+ is driven, either high or low, if 
+\begin_inset Formula $\delta v$
+\end_inset
+
+ also holds.
 \end_layout
 
 \begin_layout Subsubsection
@@ -19499,13 +20446,13 @@ Due to the implementation of the pointer-based mxGraph that I was using
 \end_layout
 
 \begin_layout Standard
-Adding the ability to drag-and-drop gates onto the graph, connect them and
- derive an expression for a valid arrangement of gates would be a logical
- extension of the current functionality, though it is likely that any output
- produced would, unless the number of variables was limited, not be in any
- normal form, due to the cost of running the Quine-McCluskey algorithm (in
- the worst case, 
-\begin_inset Formula $\left(O\left(\sfrac{3^{n}}{n}\right)\right)$
+Adding the ability to drag-and-drop transistors onto the graph, connect
+ them and derive an expression for a valid arrangement of transistors would
+ be a logical extension of the current functionality, though it is likely
+ that any output produced would, unless the number of variables was limited,
+ not be in any normal form, due to the cost of running the Quine-McCluskey
+ algorithm (in the worst case, 
+\begin_inset Formula $\left(\mathcal{O}\left(\sfrac{3^{n}}{n}\right)\right)$
 \end_inset
 
  prime implicants will be generated alone).
@@ -19521,7 +20468,21 @@ Acknowledgements
 
 \begin_layout Standard
 Professor Geraint Jones, my supervisor, for his advice and the diagrams
- of the N-Gates and P-Gates seen in this document.
+ of the N-transistors and P-transistors seen in this document.
+\end_layout
+
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+%Matthew Sjdin and Stephen Heap for general support throughout the project.
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard

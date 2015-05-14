@@ -5,7 +5,7 @@ package model
  *
  * N gates can only carry low potential from their drain to their source
  */
-case class NGate(input : Node, drain : Wire, source : Wire) extends Gate {
+case class NTrans(input : Node, drain : Wire, source : Wire) extends Transistor {
   override def get : Potential = if (input.get) drain.get() else Undriven()
   var drawnGate : Option[AnyRef] = None
 
