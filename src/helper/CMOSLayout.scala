@@ -26,27 +26,46 @@ object CMOSLayout {
 
   private val negations = new HashSet[Variable]()
 
-  def checkForDuplicateGates (wire : Wire)(checkingTopNetwork : Boolean) = {
+  def checkForDuplicateGates (wire : Wire)(checkingTopNetwork : Boolean) : Unit  = {
     // if we're at the result, we've finished
     if (wire != Result) {
+      val wiresToCheck = new mutable.HashSet[Wire]()
       val gates = new mutable.HashMap[Node, Transistor]()
       for (gate <- (if(checkingTopNetwork) wire.getDrains else wire.getSources)) {
         if (gates.contains(gate.input)) {
           if (checkingTopNetwork) {
-            for (source <- gate.drain.getSources) gates(gate.input).drain.addSource(source)
+            for (drain <- gate.drain.getDrains) gates(gate.input).drain.addDrain(drain)
+            wiresToCheck += gates(gate.input).drain
           } else {
-
+            for (source <- gate.source.getSources) gates(gate.input).source.addSource(source)
+            wiresToCheck += gates(gate.input).source
           }
+          gate.remove()
+          totalGates -= 1
         } else {
           gates.put(gate.input, gate)
         }
       }
+      for (wire <- wiresToCheck) checkForDuplicateGates(wire)(checkingTopNetwork)
     }
   }
 
   def layout(expr: model.Node): Integer = {
+    val normal = tryLayout(expr)
+    val doubleNegate = tryLayout(Not(expr)) + 2
+
+    if (normal < doubleNegate) {
+      tryLayout(expr)
+      return normal
+    } else {
+      return doubleNegate
+    }
+  }
+
+  def tryLayout(expr : model.Node) : Integer = {
     Result.clear;
     totalGates = 0;
+
     LogicalFunction.quineMcCluskey(expr) match {
       case Some(x) => {
         execute(x)(true)
@@ -64,8 +83,8 @@ object CMOSLayout {
       }
     }
     Variable.negateAll(expr)
-    checkForDuplicateGates(Source)(true)
-    checkForDuplicateGates(Drain)(false)
+    //checkForDuplicateGates(Source)(true)
+    //checkForDuplicateGates(Drain)(false)
     (totalGates + 2 * negations.size)
   }
 
