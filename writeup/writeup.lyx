@@ -395,7 +395,7 @@
 \usepackage{tabularx}
 \usepackage{cleveref}
 \end_preamble
-\options ruled,noend,slide,10pt
+\options ruled,noend,slide,12pt
 \use_default_options false
 \begin_modules
 algorithm2e
@@ -478,16 +478,174 @@ logicalmkup
 
 \begin_body
 
-\begin_layout Title
-CMOS Calculator
+\begin_layout Standard
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+thispagestyle{empty}
 \end_layout
 
-\begin_layout Author
-Joshua Clark
+\begin_layout Plain Layout
+
+
+\backslash
+begin{center}
 \end_layout
 
-\begin_layout Date
-2014 -- 2015
+\begin_layout Plain Layout
+
+
+\backslash
+begin{minipage}{0.75
+\backslash
+linewidth}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+centering
+\end_layout
+
+\begin_layout Plain Layout
+
+%University logo
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+includegraphics[width=0.4
+\backslash
+linewidth]{oxford.png}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+par
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+vspace{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+%Thesis title
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\backslash
+uppercase{
+\backslash
+Large CMOS Calculator 
+\backslash
+par}}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+vspace{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+%Author's name
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\backslash
+Large Joshua Clark
+\backslash
+par}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+vspace{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+%Degree
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\backslash
+Large Third Year Project Report for the Final Honour School of Computer
+ Science
+\backslash
+par}
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+vspace{2cm}
+\end_layout
+
+\begin_layout Plain Layout
+
+%Date
+\end_layout
+
+\begin_layout Plain Layout
+
+    {
+\backslash
+Large May 2015}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{minipage}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{center}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+clearpage
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Abstract
@@ -538,7 +696,7 @@ There are many tools in existence to design CMOS circuits, but most focus
  It quickly became apparent that the approach that I was using had various
  similarities to a compiler, which will be a focus of this document.
  Additionally, this report will discuss alternative approaches not used
- in the final implementation to produce the final CMOS output 
+ in the final implementation to produce the final CMOS output.
 \end_layout
 
 \begin_layout Standard
@@ -592,6 +750,54 @@ The idea of logical functions is familiar to many, and even a schoolchild
  blocks.
  The layer underneath this is built up of Complementary Metal-Oxide Semiconducto
 rs, henceforth referred to as CMOS.
+ The treatment of this document mainly concerns producing this sequence
+ of transistors from plain string through a series of intermediary formats,
+ until a visual representation is produced.
+\end_layout
+
+\begin_layout Standard
+Initially, this document will define key concepts, such as the fundamental
+ propositional logic syntax and semantic meanings usually associated with
+ logic gates, and the definition of the two different transistors that form
+ CMOS.
+ We will then go on to discuss the requirements and use cases of a program
+ to present these ideas before defining the algorithms to be used.
+ On closer inspection, their composition has a behaviour not entirely dissimilar
+ to that of a compiler, and the subsequent design of the program upon realising
+ this was the paradigm being used will then be analysed.
+ The program that has then been produced will finally be compared against
+ the stated objectives, with possible further work then listed.
+\end_layout
+
+\begin_layout Subsection
+Document Conventions
+\end_layout
+
+\begin_layout Standard
+By convention, when class diagrams are used, ovals will represent traits/abstrac
+t classes, with rectangles representing concrete implementations.
+ Objects are indicated using bold lines in the diagram, and are similar
+ in behaviour to statically declared objects in many languages.
+\end_layout
+
+\begin_layout Standard
+Whenever 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{this font face}
+\end_layout
+
+\end_inset
+
+ is used, the text is referring to either some implementation level object
+ or class, or the grammar used by the parser as opposed to the standard
+ blackboard mathematical symbols, or text entered into the application or
+ used for testing.
 \end_layout
 
 \begin_layout Subsection
@@ -617,15 +823,15 @@ key "intlog"
 
 \begin_layout Standard
 \begin_inset Formula 
-\begin{eqnarray}
-e & = & \neg e\label{eq:neg}\\
- & \mid & e\lor e\label{eq:disj}\\
- & \mid & e\land e\label{eq:conj}\\
- & \mid & c\label{eq:cons}\\
- & \mid & v\label{eq:var}\\
-v & \in & \Sigma\\
-c & = & \top\mid\bot
-\end{eqnarray}
+\begin{align}
+e & =\neg e=\texttt{!e}\label{eq:neg}\\
+ & \mid e\lor e=\texttt{e or e}\label{eq:disj}\\
+ & \mid e\land e=\texttt{e and e}\label{eq:conj}\\
+ & \mid c\label{eq:cons}\\
+ & \mid v\label{eq:var}\\
+v & \in\Sigma\\
+c & =\top\mid\bot=\texttt{0}\mid\texttt{1}
+\end{align}
 
 \end_inset
 
@@ -636,13 +842,13 @@ where
  is some accepted alphabet of variable (specifically, in this program, as
  described by the Perl-Compatible Regex 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
 
 \backslash
-verb&^(?!out$)([A-Za-z0-9]+)&
+verb&^(?!out|and|or$)([A-Za-z0-9]+)&
 \end_layout
 
 \end_inset
@@ -661,7 +867,33 @@ verb+out+
 
 \end_inset
 
-, which has been reserved for specific use within the program).
+, which has been reserved for specific use within the program, and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb+and+
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+verb+or+
+\end_layout
+
+\end_inset
+
+ which are keywords in the logical expression language).
  
 \begin_inset Formula $\top\text{ and }\bot$
 \end_inset
@@ -1017,8 +1249,7 @@ Therefore, when using these transistors, it is not sufficient to specify
  the bottom of a diagram to the middle by a network of N-transistors.
  To model conjunctions, a pair of P-transistors should be placed in series,
  indicating that the second transistor will only carry the potential if
- its variable is not driven, and the first transistor is carrying a high
- potential.
+ its gate is not driven, and the first transistor is carrying a high potential.
  Similarly, a disjunction is modelled by a pair of P-transistors placed
  in parallel: potential will be carried if at least one of the transistors'
  gate is not driven.
@@ -1221,7 +1452,7 @@ textwidth}
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -4555,85 +4786,289 @@ status open
 
 
 \backslash
-draw  (0,0) rectangle (10,6) node (v16) {}; 
+draw  (0,0) rectangle (10,6) node (v16) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (0.5,0.5) rectangle (4,5.5); 
+draw  (0.5,0.5) rectangle (4,5.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (4.5,0.5) rectangle (9.5,5.5) node (v15) {}; 
+draw  (4.5,0.5) rectangle (9.5,5.5) node (v15) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1,5) rectangle (3,4.5); 
+draw  (1,5) rectangle (3,4.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (3,5) rectangle (3.5,4.5); 
+draw  (3,5) rectangle (3.5,4.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (3.25,4.75) {Go}; 
+node at (3.25,4.75) {Go};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2,4.75) {Expression}; 
+node at (2,4.75) {Expression};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,3.75) {Variable$_0$}; 
+node at (2.5,3.75) {Variable$_0$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,3.25) {Variable$_1$}; 
+node at (2.5,3.25) {Variable$_1$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,2.75) {Variable$_2$}; 
+node at (2.5,2.75) {Variable$_2$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,2.25) {Variable$_3$}; 
+node at (2.5,2.25) {Variable$_3$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,1.75) {Variable$_4$}; 
+node at (2.5,1.75) {Variable$_4$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (2.25,1.25) {Variable$_5$}; 
+node at (2.5,1.25) {Variable$_5$};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node at (7,3) {Diagram}; 
+node at (7,3) {Diagram};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1,4) node (v7) {} rectangle (3.5,3.5); 
+draw  (1,4) node (v7) {} rectangle (3.5,3.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1,3) node (v1) {} rectangle (3.5,3.5); 
+draw  (1,3) node (v1) {} rectangle (3.5,3.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (3.5,2.5) node (v2) {} rectangle (v1); 
+draw  (3.5,2.5) node (v2) {} rectangle (v1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1,2) node (v3) {} rectangle (v2); 
+draw  (1,2) node (v3) {} rectangle (v2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (3.5,1.5) node (v4) {} rectangle (v3); 
+draw  (3.5,1.5) node (v4) {} rectangle (v3);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1,1) rectangle (v4); 
+draw  (1,1) rectangle (v4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,3.5) node (v8) {} rectangle (1,4); 
+draw  (1.5,3.5) node (v8) {} rectangle (1,4);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,3) node (v10) {} rectangle (1,3.5) node (v5) {}; 
+draw  (1.5,3) node (v10) {} rectangle (1,3.5) node (v5) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,2.5) node (v11) {} rectangle (v1); 
+draw  (1.5,2.5) node (v11) {} rectangle (v1);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,2) node (v13) {} rectangle (1,2.5) node (v9) {}; 
+draw  (1.5,2) node (v13) {} rectangle (1,2.5) node (v9) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,1.5) node (v12) {} rectangle (1,2); 
+draw  (1.5,1.5) node (v12) {} rectangle (1,2);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (1.5,1) rectangle (1,1.5) node (v14) {}; 
+draw  (1.5,1) rectangle (1,1.5) node (v14) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-node (v6) at (1.5,4) {}; 
+node (v6) at (1.5,4) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v5) edge (v6); 
+draw  (v5) edge (v6);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v7) edge (v8); 
+draw  (v7) edge (v8);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v9) edge (v10); 
+draw  (v9) edge (v10);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v1) edge (v11); 
+draw  (v1) edge (v11);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v12) edge (v3); 
+draw  (v12) edge (v3);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v13) edge (v14); 
+draw  (v13) edge (v14);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (8.5,6) rectangle (9,5.5); 
+draw  (8.5,6) rectangle (9,5.5);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (9,6) rectangle (v15); 
+draw  (9,6) rectangle (v15);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (9.5,6) node (v18) {} rectangle (10,5.5) node (v17) {}; 
+draw  (9.5,6) node (v18) {} rectangle (10,5.5) node (v17) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v15) edge (v16); 
+draw  (v15) edge (v16);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (v17) edge (v18); 
+draw  (v17) edge (v18);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (9.1,5.9) rectangle (9.4,5.6); 
+draw  (9.1,5.9) rectangle (9.4,5.6);
+\end_layout
+
+\begin_layout Plain Layout
+
+
 \backslash
-draw  (8.6,5.7) rectangle (8.9,5.6); 
+draw  (8.6,5.7) rectangle (8.9,5.6);
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw  (9,1) rectangle (7,1.5); 
+\backslash
+node at (8,1.25) {Export};
 \end_layout
 
 \end_inset
@@ -4684,13 +5119,43 @@ Initial Design
 
 \end_layout
 
-\begin_layout Section
-Implementation
+\begin_layout Subsection
+Typical Use
 \end_layout
 
 \begin_layout Standard
-By convention, when class diagrams are used, ovals will represent traits/abstrac
-t classes, with rectangles representing concrete implementations.
+On starting the application, the user will typically enter a well-formed
+ logical expression, as described using the grammar above, with a non-trivial
+ canonical representation (i.e.
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+ 
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\mathit{expr}\neq\top,\bot$
+\end_inset
+
+).
+ This will then be parsed and converted to a canonical form (DNF) which
+ will then be processed to produce a series of transistors to implement
+ the desired logical expression.
+ This will then be rendered, with gates highlighted red to indicate drivenness,
+ and a list of variables provided.
+ The user can then change the assignment of these variables by toggling
+ a checkbox, and this change will then be reflected in the rendered set
+ of gates.
+\end_layout
+
+\begin_layout Section
+Implementation
 \end_layout
 
 \begin_layout Subsection
@@ -5088,6 +5553,12 @@ status collapsed
  form.
 \end_layout
 
+\begin_layout Standard
+The running time of the Packrat parser is consistently linear in the size
+ of the input received, albeit at the cost of increased storage capacity,
+ regardless of the specific grammar used.
+\end_layout
+
 \begin_layout Subsubsection
 Transistors and Wires
 \begin_inset CommandInset label
@@ -5143,19 +5614,8 @@ Drain
 
 \end_inset
 
- objects
-\begin_inset Foot
-status collapsed
-
-\begin_layout Plain Layout
-Objects are indicated using bold lines in the diagram, and are similar in
- behaviour to statically declared objects in many languages.
-\end_layout
-
-\end_inset
-
- are responsible solely for delivering high and low potentials respectively,
- and a 
+ objects are responsible solely for delivering high and low potentials respectiv
+ely, and a 
 \begin_inset Flex Flex:Code
 status collapsed
 
@@ -5194,7 +5654,7 @@ WireLow
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \align center
@@ -6638,7 +7098,8 @@ Result
 \end_inset
 
 , looking for transistors operating on the same literal that may be combined
- into one group, as described in 
+ into one group, by removing the redundant transistor, and extending the
+ wire below, as described in 
 \begin_inset CommandInset ref
 LatexCommand vref
 reference "alg:Minimising-the-transistors"
@@ -6646,6 +7107,7 @@ reference "alg:Minimising-the-transistors"
 \end_inset
 
 .
+ Alternatively, rather than working inwards from the outer nodes, it w
 \end_layout
 
 \begin_layout Standard
@@ -6836,6 +7298,15 @@ status open
 
 
 \backslash
+SetKwData{Result}{Result}
+\backslash
+SetKwData{totalGates}{total-gates}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
 Input{Starting wire, top/bottom network indicator}
 \end_layout
 
@@ -6852,6 +7323,176 @@ Output{None}
 \backslash
 SideEffects{Minimised number of transistors in network, updated totals to
  reflect this}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+If{wire $
+\backslash
+neq$ 
+\backslash
+Result}{
+\end_layout
+
+\begin_layout Plain Layout
+
+	$
+\backslash
+mathit{gates} : 
+\backslash
+mathcal V 
+\backslash
+rightarrow 
+\backslash
+text{Transistor} 
+\backslash
+gets 
+\backslash
+emptyset$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+eIf{checkingTopNetwork}{gate-list $
+\backslash
+gets$ wire.getDrains}{gate-list $
+\backslash
+gets$ wire.getSources}
+\end_layout
+
+\begin_layout Plain Layout
+
+	
+\backslash
+ForEach{gate $
+\backslash
+in$ gate-list}{
+\end_layout
+
+\begin_layout Plain Layout
+
+		
+\backslash
+eIf{$
+\backslash
+text{gate.input}
+\backslash
+in
+\backslash
+mathrm{dom}(
+\backslash
+mathit{gates})$}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			
+\backslash
+eIf{checkingTopNetwork}{
+\end_layout
+
+\begin_layout Plain Layout
+
+				
+\backslash
+ForEach{drain $
+\backslash
+in$ gate.drain.getDrains}{gates(gate.input).drain.addDrain(drain)}
+\end_layout
+
+\begin_layout Plain Layout
+
+			}{
+\end_layout
+
+\begin_layout Plain Layout
+
+				
+\backslash
+ForEach{source $
+\backslash
+in$ gate.source.getSources}{gates(gate.input).source.addSource(source)}
+\end_layout
+
+\begin_layout Plain Layout
+
+			}
+\end_layout
+
+\begin_layout Plain Layout
+
+			remove gate
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+			$
+\backslash
+totalGates 
+\backslash
+gets
+\backslash
+totalGates-1$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}{
+\end_layout
+
+\begin_layout Plain Layout
+
+			$
+\backslash
+mathit{gates} 
+\backslash
+gets 
+\backslash
+mathit{gates}
+\backslash
+cup
+\backslash
+{(gate.input, gate)
+\backslash
+}$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+		}
+\end_layout
+
+\begin_layout Plain Layout
+
+	}
+\end_layout
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\begin_layout Plain Layout
+
 \end_layout
 
 \begin_layout Plain Layout
@@ -7061,6 +7702,374 @@ Result
 \end_inset
 
 , and a pair of transistors to produce the final negation).
+ It is therefore necessary to generate the transistor networks at least
+ twice, however, it is far more useful to the program's structure to implement
+ 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+ as a single static object, and in half of the cases, the worst-case of
+ three passes will not be needed.
+ This is discussed in more detail in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "alg:Determining-the-optimal"
+
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Input
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Output
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwInOut
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+SideEffects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Side Effects
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+SetKwFunction{tryLayout}{try-layout}
+\backslash
+SetKwData{expr}{expr}
+\backslash
+SetKwData{Result}{Result}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Input{Expression to convert to transistors 
+\backslash
+expr}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output{Integer value of number of gates needed}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects{Transistor network produced on 
+\backslash
+Result}
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+BlankLine
+\end_layout
+
+\begin_layout Plain Layout
+
+   $
+\backslash
+text{normal} 
+\backslash
+gets 
+\backslash
+tryLayout{
+\backslash
+expr}$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+   $
+\backslash
+text{double-negate} 
+\backslash
+gets 
+\backslash
+tryLayout{$
+\backslash
+neg
+\backslash
+expr$} + 2$
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+    
+\backslash
+eIf {$
+\backslash
+text{normal} < 
+\backslash
+text{doubleNegate}$} {
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\backslash
+tryLayout{
+\backslash
+expr}
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\backslash
+Return normal
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+    } {
+\end_layout
+
+\begin_layout Plain Layout
+
+      
+\backslash
+Return double-negate
+\backslash
+;
+\end_layout
+
+\begin_layout Plain Layout
+
+    }
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Determining the optimal sequence of negations
+\begin_inset CommandInset label
+LatexCommand label
+name "alg:Determining-the-optimal"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Standard
@@ -7119,6 +8128,18 @@ Undriven
 \end_inset
 
  value.
+ Functionally, this does not differ significantly in practise from the originall
+y proposed 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Option[Boolean]
+\end_layout
+
+\end_inset
+
+ implementation.
  The pseudo-code in 
 \begin_inset CommandInset ref
 LatexCommand vref
@@ -11099,6 +12120,14 @@ reference "alg:Quine-McCluskey----Essential"
 .
 \end_layout
 
+\begin_layout Enumerate
+Print/export the results using the list of variables to assign values, and
+ iterating through each of the essential implicants.
+ This will also result in the returned expression's clauses already being
+ in alphabetical order, making later optimisations based on connections
+ of gates easier.
+\end_layout
+
 \begin_layout Standard
 \begin_inset Float algorithm
 wide false
@@ -12611,7 +13640,7 @@ If
 
 
 \begin_inset ERT
-status collapsed
+status open
 
 \begin_layout Plain Layout
 
@@ -13869,7 +14898,7 @@ ForEach
 
 \end_inset
 
-
+(Find all essential implicants, and add them to the list of required implicants)
 \begin_inset ERT
 status collapsed
 
@@ -13924,42 +14953,6 @@ status collapsed
 \end_inset
 
  
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
-
-\end_inset
-
- 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-tcc
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-Find all essential implicants (only covering for a minterm), and add them
- to the list of required implicants
 \begin_inset ERT
 status collapsed
 
@@ -17775,14 +18768,19 @@ status collapsed
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
-Optimised T
+Optimised Transistor Drawing Algorithm
 \begin_inset CommandInset label
 LatexCommand label
 name "alg:Optimised-Transistor-Drawing"
 
 \end_inset
 
-ransistor Drawing Algorithm
+
+\end_layout
+
+\end_inset
+
+
 \end_layout
 
 \end_inset
@@ -17790,9 +18788,28 @@ ransistor Drawing Algorithm
 
 \end_layout
 
+\begin_layout Standard
+Unfortunately, this algorithm does not properly take into account overlapping
+ transistors/wires, as they are drawn from the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
 \end_inset
 
+ wire outwards.
+ Techniques to allow both the optimised drawing algorithm, and the gate-reductio
+n algorithms to work together more effectively are discussed in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "sec:Conclusions-and-Further"
 
+\end_inset
+
+.
 \end_layout
 
 \begin_layout Section
@@ -17977,7 +18994,7 @@ pgfmathresult};
 \backslash
 foreach 
 \backslash
-i in {0,8,16} {
+i in {0,12,24} {
 \end_layout
 
 \begin_layout Plain Layout
@@ -17988,7 +19005,7 @@ draw (
 \backslash
 i,-5) rectangle (
 \backslash
-i+4,-2);
+i+5,-2);
 \end_layout
 
 \begin_layout Plain Layout
@@ -18006,15 +19023,15 @@ i,-3.5) };
 
 	
 \backslash
-node [text width=2.25cm] at (
+node [text width=2.75cm] at (
 \backslash
-i+2.125, -3.5) {
+i+2.25, -3.5) {
 \backslash
 pgfmathparse{
 \backslash
 function[
 \backslash
-i/8+4]}
+i/12+4]}
 \backslash
 pgfmathresult};
 \end_layout
@@ -18023,15 +19040,15 @@ pgfmathresult};
 
 	
 \backslash
-node [text width=1.25cm] at (
+node [text width=2cm] at (
 \backslash
-i-3, -3.5) {
+i-4, -3.5) {
 \backslash
 pgfmathparse{
 \backslash
 type[
 \backslash
-i/8+4]}
+i/12+4]}
 \backslash
 pgfmathresult};
 \end_layout
@@ -18222,7 +19239,7 @@ Variable
  Owing to the simplicity of the propositional logic language, there is obviously
  no need for formal semantic analysis of the entered expression, however,
  it is useful to register each variable, with the minimal semantic check
- that the reserved keyword 
+ that the reserved keywords 
 \begin_inset Flex Code
 status open
 
@@ -18232,7 +19249,22 @@ out
 
 \end_inset
 
- is not used in the entered expression.
+, 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{and}, and 
+\backslash
+texttt{or}
+\end_layout
+
+\end_inset
+
+ are not used in the entered expression.
 \end_layout
 
 \begin_layout Standard
@@ -18263,6 +19295,25 @@ This is replaced in the CMOS calculator by the Quine-McCluskey algorithm
  this could be considered as a refactoring to remove redundancy before actually
  compiling the code, resulting in different byte-code, but with equivalent
  effects.
+ Additionally, this has the advantage of ensuring that expressions such
+ as 
+\begin_inset Formula $\bigwedge_{i=0}^{n}a$
+\end_inset
+
+ get reduced properly to 
+\begin_inset Formula $a$
+\end_inset
+
+, rather than attempting to produce 
+\begin_inset Formula $n$
+\end_inset
+
+ N-transistors in series for , followed by 
+\begin_inset Formula $n$
+\end_inset
+
+ P-transistors in parallel, so the number of gates is strictly bound by
+ the number of variables, rather than the size of the entered expression.
 \end_layout
 
 \begin_layout Standard
@@ -18288,6 +19339,9 @@ The next stage in the pipeline produces optimisations to the machine-readable
  Within the context of the CMOS transistors, this then focuses on maximising
  the number of transistors that may be eliminated while retaining the same
  original expression.
+ Just as the optimisation stages of a compiler will focus on the structure
+ of the program to find subtle optimisations, so too does this program produce
+ a minimised final output by examining the wires nearest to it.
 \end_layout
 
 \begin_layout Section
@@ -19928,12 +20982,761 @@ name "tab:Parsing-Test-Data"
 Quine-McCluskey Algorithm
 \end_layout
 
+\begin_layout Standard
+The contents of 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "tab:QMA-Test-Data"
+
+\end_inset
+
+ list the sample test data and expected outcomes.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+placement h
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="18" columns="4">
+<features rotate="0" booktabs="true" tabularvalignment="middle" tabularwidth="100text%">
+<column alignment="none" valignment="top" special="@{\extracolsep{\fill}}l">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<column alignment="left" valignment="top">
+<row>
+<cell alignment="none" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Input 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Expected Output 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Input 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Expected Output
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+And(Not(Variable(a)), Variable(a))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+None
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" topline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Or(Not(Variable(a)), Variable(a))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+None
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+And(Variable(a), Variable(a))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variable(a)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Or(Variable(a), Variable(a))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Variable(a)
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Parsing Test Data
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:QMA-Test-Data"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Subsection
 Transistor Generation and Drawing
 \end_layout
 
 \begin_layout Section
 Conclusions and Further Work
+\begin_inset CommandInset label
+LatexCommand label
+name "sec:Conclusions-and-Further"
+
+\end_inset
+
+
 \end_layout
 
 \begin_layout Subsection
@@ -19944,6 +21747,82 @@ Conclusions
 The project has achieved much of the scope that it had originally set out
  to, however, the order of completion of different subcomponents of the
  program needed changing quite substantially.
+ Initially, the order of completion of the modules was intended to be parser,
+ transistor-generator, gate-drawer, optimisations (including Quine-McCluskey-rel
+ated functions), however, it quickly became apparent that laying out the
+ transistors would be far quicker and simpler if the input was in some sort
+ of normal form first, therefore, finding an implementation of the Quine-McClusk
+ey algorithm became a far higher priority, with drawing and a finalised
+ transistor-generation algorithm being slightly delayed.
+ On the other hand, as predicted, once a gate-drawing algorithm was in place,
+ it became far easier to troubleshoot issues relating to local optimisation
+ of gates, as the output of the optimisation sequence was far easier to
+ visualise, rather than attempting to traverse the representation of wires
+ and transistors stored in the currently executing program's memory.
+\end_layout
+
+\begin_layout Description
+Accuracy The program's visual output, as the drawing algorithm is structurally
+ based on the representation within the model, the rendering is accurate.
+ Owing to constraints on the drawing algorithm, it was necessary to sacrifice
+ an optimal number of gates in lieu of ensuring that the drawn output remains
+ consistent and easily interpreted: due to the way that mxGraph positions
+ vertices and edges, any attempts to reduce overlap would have caused the
+ edges to shift and become disconnected.
+\end_layout
+
+\begin_layout Description
+Representation The program produces a clearly labelled network of transistors,
+ with driven transistors indicated in red, and undriven transistors in black.
+ Unlike the diagrams seen in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "fig:Standard-nor--and"
+
+\end_inset
+
+, wires linking common variables are not shown, to further enhance clarity,
+ as in more complicated networks, a large number of overlapping wires may
+ be needed.
+ Additionally, when a variable needs negating, the small not-gate is not
+ shown, nor are the transistors necessary, as this would only complicate
+ the number of diagrams needed, as well as their layout.
+\end_layout
+
+\begin_layout Description
+Portability Beyond the bitmap based images that are produced by the program,
+ which are then easily converted between similar formats, there is no other
+ output produced by the program, to either allow reloading old networks,
+ nor raster-based images to allow simple scaling without loss of resolution.
+ While a number of workarounds exist to solve the latter problem, through
+ software that is already in existence, these are likely to produce images
+ that are less than optimally encoded, as they will not necessarily take
+ into account.
+ Additionally, unlike 9-patch image files, stretching in one dimension will
+ produce a skewed image, rather than sub-components resizing themselves
+ intelligently.
+\end_layout
+
+\begin_layout Description
+Interactivity The program produces several different types of warning, correspon
+ding to each stage of the compilation, and then the current runtime state
+ of the circuit.
+ The earliest warning may be invoked during parsing if a incorrectly parsed
+ expression is seen, followed by after the completion of the first stage
+ of the Quine-McCluskey algorithm, if the entered logical expression has
+ a trivial normal form (
+\begin_inset Formula $\top\text{ or \bot}$
+\end_inset
+
+).
+ Finally, in the event that the circuit produced does not always drive the
+ output with a high or low potential, this will cause a warning to be thrown
+ as it occurs, however, this may be a transient error, as the circuit should
+ only be driven high or low at any time.
+ If in the future, it becomes possible to import pre-produced circuits,
+ some of these may not be properly formed, so it is a helpful check to have
+ in place, as well as when prototyping the transistor production algorithm
+ to ensure that the output was driven consistently.
 \end_layout
 
 \begin_layout Subsection
@@ -19981,7 +21860,7 @@ gate, where
 \begin_inset Float figure
 wide false
 sideways false
-status open
+status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
@@ -20427,6 +22306,37 @@ The data produced by the view is currently only in a limited number of bitmap
  like this, LaTeX-compatible output, or Dia compatible output.
 \end_layout
 
+\begin_layout Standard
+A future implementation of the transistor-drawing algorithm should be reworked
+ in order to draw the transistors from the 
+\begin_inset Flex Code
+status open
+
+\begin_layout Plain Layout
+Source
+\end_layout
+
+\end_inset
+
+ and 
+\begin_inset ERT
+status open
+
+\begin_layout Plain Layout
+
+
+\backslash
+texttt{Drain}
+\end_layout
+
+\end_inset
+
+ objects respectively, so as to ensure that grouped transistors are handled
+ properly, without overlapping, however, this would also require a more
+ detailed knowledge as to the structure and bounds of the generated network
+ of transistors.
+\end_layout
+
 \begin_layout Subsubsection
 Controller
 \end_layout
@@ -20467,8 +22377,13 @@ Acknowledgements
 \end_layout
 
 \begin_layout Standard
-Professor Geraint Jones, my supervisor, for his advice and the diagrams
- of the N-transistors and P-transistors seen in this document.
+There are a number of people, without whose assistance over the past year,
+ this project would not have been possible.
+\end_layout
+
+\begin_layout Standard
+Professor Geraint Jones, my supervisor, for his advice and support, as well
+ as the diagrams of the N-transistors and P-transistors seen in this document.
 \end_layout
 
 \begin_layout Standard
@@ -20477,7 +22392,10 @@ status open
 
 \begin_layout Plain Layout
 
-%Matthew Sjdin and Stephen Heap for general support throughout the project.
+Matthew S
+\backslash
+"ojdin, Eleanor Kirk, and Stephen Heap for general support throughout the
+ project.
 \end_layout
 
 \end_inset
