@@ -15,7 +15,7 @@ import scala.util.parsing.combinator.{PackratParsers, RegexParsers}
  * constant -> 0 | 1
  **/
 class LogicalExpression extends RegexParsers with PackratParsers {
-  lazy val variable : PackratParser[Node] = """^(?!out$)([A-Za-z0-9]+)""".r ^^ {
+  lazy val variable : PackratParser[Node] = """^(?!out|and|or$)([A-Za-z0-9]+)""".r ^^ {
     v => {
       Variable.create(v, false)
     }
