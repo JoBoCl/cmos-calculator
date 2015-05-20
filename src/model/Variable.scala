@@ -20,13 +20,6 @@ object Variable {
   identMap += Tuple2("out", false)
   private var intermediate = 0;
 
-  def getUnusedVariable(startsOn : Boolean) : Variable = {
-    // Cannot parse expressions containing _, so guaranteed to be free
-    identMap += Tuple2("i_" + intermediate, startsOn)
-    intermediate += 1
-    Variable("i_" + (intermediate - 1))
-  }
-
   def create(ident : String, value : Boolean) : Variable = {
     if (!(identMap contains ident))
       identMap += Tuple2(ident, value)

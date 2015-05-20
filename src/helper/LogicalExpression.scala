@@ -40,11 +40,11 @@ class LogicalExpression extends RegexParsers with PackratParsers {
   }
 
   lazy val conj : PackratParser[Node] = rep1sep(literal, "and") ^^ {
-    _.reduceRight(And(_, _))
+    _.reduceRight(And)
   }
 
   lazy val disj : PackratParser[Node] = rep1sep(conj, "or") ^^ {
-    _.reduceRight(Or(_, _))
+    _.reduceRight(Or)
   }
 
   lazy val simp : PackratParser[Node] = (variable

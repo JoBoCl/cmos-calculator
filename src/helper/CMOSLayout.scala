@@ -97,7 +97,7 @@ object CMOSLayout {
    * @return - side effects on the Result object
    */
   private def execute(expr: model.Node)(buildingTopNetwork: Boolean): Unit = {
-    // I : \/ stack ∨ subExpr = expr
+    // I : \/ stack or subExpr = expr
     // Initially stack = [], subExpr = expr => I
     val stack = Stack[model.Node]()
     var subExpr = expr
@@ -143,11 +143,11 @@ object CMOSLayout {
    * As the parser operates using a fold, the right hand node must always be an Or(x,y), with the last node being made
    * up of a Variable(x) or Not(Variable(x))
    *
-   * For some expression, assuming buildingTopNetwork, x_0 ∧ x_1 ∧ ... ∧ x_n, with literals x_0, x_1, ... x_n, x_0's
-   * drain is attached to the output wire, x_0's source is attached to a new wire, which is then attached to x_1's
-   * drain, working along the conjunction until the last node.  x_n is attached to the source wire.
+   * For some expression, assuming buildingTopNetwork, `$x_0 \land x_1 \land \ldots \land x_n$`, with literals `$x_0, x_1, \ldots x_n$`, `$x_0$`'s
+   * drain is attached to the output wire, `$x_0$`'s source is attached to a new wire, which is then attached to `$x_1$`'s
+   * drain, working along the conjunction until the last node.  `$x_n$` is attached to the source wire.
    *
-   * If not buildingTopNetwork, replace all instances of source with drain, and attach x_n to the drain wire.
+   * If not buildingTopNetwork, replace all instances of source with drain, and attach `$x_n$` to the drain wire.
    *
    * @param node the logical expression to be converted to a series of gates
    * @param buildingTopNetwork indicates if the top half, or bottom is being evaluated

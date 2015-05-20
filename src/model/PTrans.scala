@@ -1,7 +1,7 @@
 package model
 
 /**
- * P(g, s, d) = ¬g -> (s <-> d)
+ * P(g, s, d) = !g -> (s <-> d)
  *
  * P gates can only carry high potential from the source to their drain
  */
