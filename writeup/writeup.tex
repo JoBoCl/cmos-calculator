@@ -628,8 +628,8 @@ or text entered into the application or used for testing.
 \subsubsection{Logical Expressions}
 
 A logical expression is built from a combination of constants, literals,
-conjunctions, disjunctions and negations, using a grammar described
-as follows:\cite{intlog}
+conjunctions, disjunctions and negations\cite{intlog}, using a grammar described
+as follows:
 
 \begin{align}
 e & =\neg e=\texttt{!e}\label{eq:neg}\\
@@ -640,7 +640,7 @@ e & =\neg e=\texttt{!e}\label{eq:neg}\\
 v & \in\Sigma\\
 c & =\top\mid\bot=\texttt{0}\mid\texttt{1}
 \end{align}
-where $\Sigma$ is some accepted alphabet of variable (specifically,
+where $\Sigma$ is some accepted alphabet of variables (
 in this program, as described by the Perl-Compatible Regex \verb&^(?!out|and|or$)([A-Za-z0-9]+)&
 that is, every alphanumeric phrase, with the exception of the single
 word \verb+out+, which has been reserved for specific use within
@@ -1165,7 +1165,7 @@ $\text{normal}\gets\tryLayout{\expr}$\;
 
 $\text{double-negate}\gets\tryLayout{$\neg\expr$} + 2$\;
 
-\eIf{$\text{normal}<\text{doubleNegate}$} { 
+\eIf{$\text{normal}\le\text{doubleNegate}$} { 
 	\tryLayout{\expr}\; \Return normal\; 
 } { 
 	\Return double-negate\; 
@@ -1175,10 +1175,10 @@ $\text{double-negate}\gets\tryLayout{$\neg\expr$} + 2$\;
 \end{algorithm}
 
 
-Initially, potential was going to be simulated using an \code{Option{[}Boolean{]}},
-with \code{Nothing} to simulate a transistor/wire that is not driven,
-and \code{Some(true)} and \code{Some(false)} to indicate high and
-low potential separately. This approach has also been reworked, to
+Initially, potential was going to be simulated using the \code{Option{[}Boolean{]}} type,
+with \code{Some(true)} and \code{Some(false)} to indicate high and
+low potential separately, and \code{Nothing} to simulate a transistor or wire that is not driven.
+This approach has also been reworked, to
 further separate the differences between the abstract logical expressions
 with precise true/false values, and the CMOS-specific high and low
 potentials where the transistors/wires are driven, or a specific \code{Undriven}
@@ -1775,9 +1775,9 @@ expression is preferred.
 \toprule 
 Input & Driven Output & Undriven Output & Transistors \\
 \midrule
-$\neg a$ & \includegraphics[width=0.1\linewidth]{notdriven} & \includegraphics[width=0.1\linewidth]{notundriven} & 2 \tabularnewline
-$(a\land b)\lor(\neg a\land\neg b\land c)$ & \includegraphics[width=0.2\linewidth]{networklow} & \includegraphics[width=0.2\linewidth]{networkhigh} & 17 \tabularnewline
- &  & \tabularnewline
+$\neg a$ & \includegraphics[width=0.15\linewidth]{notdriven} & \includegraphics[width=0.15\linewidth]{notundriven} & 2 \tabularnewline
+$(a\land b)\lor(\neg a\land\neg b\land c)$ & \includegraphics[width=0.25\linewidth]{networklow} & \includegraphics[width=0.25\linewidth]{networkhigh} & 17 \tabularnewline
+$a \land b \land c$ &\includegraphics[width=0.25\linewidth]{conjhigh} & \includegraphics[width=0.25\linewidth]{conjlow} & $6+2$ \tabularnewline
  &  & \tabularnewline
  &  & \tabularnewline
  &  & \tabularnewline
