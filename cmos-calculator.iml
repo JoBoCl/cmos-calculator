@@ -13,5 +13,6 @@
     <orderEntry type="library" exported="" name="scala-sdk-2.11.4" level="project" />
     <orderEntry type="library" exported="" name="scala-sdk-2.11.4 (2)" level="application" />
     <orderEntry type="library" exported="" name="jgraphx" level="project" />
+    <orderEntry type="library" exported="" name="scalacheck_2.11-1.12.2" level="application" />
   </component>
 </module>
