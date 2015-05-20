@@ -1,6 +1,11 @@
 package model
 
 object Result extends Wire with Input with Output {
+  override def removeGate (transistor : Transistor) : Unit = {
+    sources = sources diff Array(transistor)
+    drains = drains diff Array(transistor)
+  }
+
   override def get() : Potential = {
     var result : Potential = Undriven()
     for (gate <- getSources) {
@@ -16,7 +21,7 @@ object Result extends Wire with Input with Output {
       }
     }
     if (result == Undriven()) {
-      throw new RuntimeException("Result is undriven!")
+      result//throw new RuntimeException("Result not driven")
     } else {
       result
     }
@@ -25,6 +30,8 @@ object Result extends Wire with Input with Output {
   override def clear : Unit = {
     clearDrains
     clearSources
+    Source.clear
+    Drain.clear
   }
 
   override def toString() = "Result"

@@ -33,10 +33,9 @@ object qmm {
     val prime_implicants = genImplicants(implicants, order).filter(_.prime)
 
     val results = PITable.solve(prime_implicants, minterms, vars)
-    //println(results)
 
     val res = results.toSumOfProducts(vars)
-    println(res)
+
     return res
   }
 

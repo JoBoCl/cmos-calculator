@@ -1,8 +1,10 @@
 package model
 
 abstract class Wire {
-  private var sources = Array[Transistor]()
-  private var drains = Array[Transistor]()
+  def removeGate (transistor : Transistor) : Unit
+
+  protected var sources = Array[Transistor]()
+  protected var drains = Array[Transistor]()
 
   def get() : Potential
 
