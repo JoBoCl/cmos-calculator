@@ -16,7 +16,11 @@
 % Preview source code
 
 \usepackage{babel}
+% Preview source code
+
+\usepackage{babel}
 \usepackage{tikz}
+\usetikzlibrary{calc}
 
 
 \setlength{\unitlength}{0.4cm}
@@ -389,13 +393,34 @@
         \put(-3,0){\line(1,0){1.5}}
 \end{picture}}}
 
+\usepackage{multirow}
+\begin{filecontents*}{logexp.tex}
+\begin{tabular}{cc|cccc}
+ & \multicolumn{1}{c}{} & \multicolumn{4}{c}{$ab$}\tabularnewline
+ &  & 00 & 01 & 11 & 10\tabularnewline
+\hline 
+\multirow{2}{*}{$c$} & 0 & 0 & 0 & 1 & 0\tabularnewline
+ & 1 & 1 & 0 & 1 & 0\tabularnewline
+\end{tabular}
+\end{filecontents*}
+
+\begin{filecontents*}{xortab.tex}
+\begin{tabular}{cc|cccc}
+ & \multicolumn{1}{c}{} & \multicolumn{4}{c}{$ab$}\tabularnewline
+ &  & 00 & 01 & 11 & 10\tabularnewline
+\hline 
+\multirow{2}{*}{$c$} & 0 & 0 & 1 & 0 & 1\tabularnewline
+ & 1 & 1 & 0 & 1 & 0\tabularnewline
+\end{tabular}
+\end{filecontents*}
+
 \newcommand{\blob}{{\circle*{0.4}}}
 \usepackage{xfrac}
 \usepackage[protrusion=true,expansion=true,kerning=true,tracking=true,spacing=true]{microtype}
 \usepackage{tabularx}
 \usepackage{cleveref}
 \end_preamble
-\options ruled,noend,slide,12pt
+\options ruled,noend,slide
 \use_default_options false
 \begin_modules
 algorithm2e
@@ -403,8 +428,8 @@ logicalmkup
 \end_modules
 \maintain_unincluded_children false
 \language british
-\language_package auto
-\inputencoding auto
+\language_package default
+\inputencoding iso8859-15
 \fontencoding T1
 \font_roman lmodern
 \font_sans lmss
@@ -422,7 +447,7 @@ logicalmkup
 \output_sync_macro "\synctex=-1"
 \bibtex_command default
 \index_command default
-\paperfontsize default
+\paperfontsize 12
 \spacing single
 \use_hyperref true
 \pdf_title "CMOS Calculator"
@@ -480,7 +505,7 @@ logicalmkup
 
 \begin_layout Standard
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -489,160 +514,187 @@ status open
 thispagestyle{empty}
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-
-\backslash
-begin{center}
+ 
 \end_layout
 
+\begin_layout Standard
+\align center
+\begin_inset Box Frameless
+position "c"
+hor_pos "c"
+has_inner_box 1
+inner_pos "c"
+use_parbox 0
+use_makebox 0
+width "75line%"
+special "none"
+height "1in"
+height_special "totalheight"
+status open
+
+\begin_layout Plain Layout
+ 
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
 
-\backslash
-begin{minipage}{0.75
-\backslash
-linewidth}
-\end_layout
-
-\begin_layout Plain Layout
-
-    
 \backslash
 centering
 \end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 %University logo
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
 
-\backslash
-includegraphics[width=0.4
-\backslash
-linewidth]{oxford.png}
+\begin_inset Graphics
+	filename oxford.png
+	width 40line%
+
+\end_inset
+
+ 
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset VSpace 2cm
+\end_inset
 
-
-\backslash
-par
-\end_layout
-
-\begin_layout Plain Layout
-
-    
-\backslash
-vspace{2cm}
-\end_layout
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 %Thesis title
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    {
-\backslash
-uppercase{
-\backslash
-Large CMOS Calculator 
-\backslash
-par}}
-\end_layout
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
-    
-\backslash
-vspace{2cm}
+{
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+uppercase
+\end_layout
+
+\end_inset
+
+
+\size larger
+CMOS Calculator 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset VSpace 2cm
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 %Author's name
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    {
-\backslash
-Large Joshua Clark
-\backslash
-par}
+ 
+\size larger
+Joshua Clark
 \end_layout
 
 \begin_layout Plain Layout
+ 
+\begin_inset VSpace 2cm
+\end_inset
 
-    
-\backslash
-vspace{2cm}
-\end_layout
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 %Degree
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    {
-\backslash
-Large Third Year Project Report for the Final Honour School of Computer
- Science
-\backslash
-par}
+ 
+\size larger
+Third Year Project Report for the Final Honour School of Computer Science
 \end_layout
 
 \begin_layout Plain Layout
+ 
+\begin_inset VSpace 2cm
+\end_inset
 
-    
-\backslash
-vspace{2cm}
-\end_layout
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 %Date
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    {
-\backslash
-Large May 2015}
+ 
+\size larger
+May 2015
+\size default
+ 
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-
-\backslash
-end{minipage}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-clearpage
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
+\begin_layout Standard
+\begin_inset Newpage clearpage
 \end_inset
 
 
@@ -661,7 +713,7 @@ Simplification and CMOS implementation of arbitrary logical expressions
 
 \begin_deeper
 \begin_layout Standard
- 
+
 \end_layout
 
 \end_deeper
@@ -672,7 +724,7 @@ Simulation to visualise the change in flow of potential as the state of
 
 \begin_deeper
 \begin_layout Standard
- 
+
 \end_layout
 
 \end_deeper
@@ -683,7 +735,7 @@ Simulation of delay in propagation of state for large networks.
 
 \begin_deeper
 \begin_layout Standard
- 
+
 \end_layout
 
 \end_deeper
@@ -697,6 +749,7 @@ There are many tools in existence to design CMOS circuits, but most focus
  similarities to a compiler, which will be a focus of this document.
  Additionally, this report will discuss alternative approaches not used
  in the final implementation to produce the final CMOS output.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -782,18 +835,9 @@ t classes, with rectangles representing concrete implementations.
 
 \begin_layout Standard
 Whenever 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-texttt{this font face}
-\end_layout
-
-\end_inset
-
+\family typewriter
+this font face
+\family default
  is used, the text is referring to either some implementation level object
  or class, or the grammar used by the parser as opposed to the standard
  blackboard mathematical symbols, or text entered into the application or
@@ -842,7 +886,7 @@ where
  is some accepted alphabet of variable (specifically, in this program, as
  described by the Perl-Compatible Regex 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -869,7 +913,7 @@ verb+out+
 
 , which has been reserved for specific use within the program, and 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -882,7 +926,7 @@ verb+and+
 
  and 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1080,8 +1124,8 @@ key "digsys"
 \end_inset
 
  and in this document, referred to at an implementation level as 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -1094,8 +1138,8 @@ Drain
 \end_inset
 
  and in this document, referred to at an implementation level as 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -1166,7 +1210,7 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1179,7 +1223,7 @@ sntrans
 
  
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1192,7 +1236,7 @@ begin{picture}
 
 (4.5,6)
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1205,7 +1249,7 @@ end{picture}
 
  
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1421,7 +1465,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -1452,7 +1496,7 @@ textwidth}
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -4642,19 +4686,6 @@ end{picture}
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -4694,6 +4725,7 @@ The program would be expected to satisfy the following minimal requirements
 Accuracy any representation of CMOS produced must correctly implement the
  logical expression that has been entered, and the visual output of the
  expression should match the model that has been stored.
+ 
 \end_layout
 
 \begin_layout Description
@@ -4706,6 +4738,7 @@ Representation the produced visualisation should be intuitive to read: each
 \begin_layout Description
 Portability the visual output produced by the program should be available
  to the user in a variety of formats.
+ 
 \end_layout
 
 \begin_layout Description
@@ -4776,7 +4809,7 @@ small}]
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -5090,19 +5123,6 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -5127,16 +5147,7 @@ Typical Use
 On starting the application, the user will typically enter a well-formed
  logical expression, as described using the grammar above, with a non-trivial
  canonical representation (i.e.
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
- 
-\end_layout
-
+\begin_inset space \space{}
 \end_inset
 
 
@@ -5180,37 +5191,9 @@ Node
 
  object that requires accessors to determine if the given fragment evaluates
  to true, as defined in 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:neg
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "eq:neg"
 
 \end_inset
 
@@ -5397,19 +5380,6 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -5444,108 +5414,24 @@ Variable
 \end_inset
 
 , as discussed in 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-eq:assi
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "eq:assi"
 
 \end_inset
 
 .
  After parsing, but before the gate implementation (see 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-sub:Gates-and-Wires
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sub:Gates-and-Wires"
 
 \end_inset
 
 ), a modified version of the Quine-McCluskey algorithm (see 
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-nameref
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{
-\end_layout
-
-\end_inset
-
-sub:Normal-Forms
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-}
-\end_layout
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "sub:Normal-Forms"
 
 \end_inset
 
@@ -5654,7 +5540,7 @@ WireLow
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \align center
@@ -5672,7 +5558,7 @@ begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -5978,7 +5864,7 @@ draw  [->] plot[smooth, tension=.7] coordinates {(12,-4) (17,-3) (18,-0.5)
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -5993,19 +5879,6 @@ end{tikzpicture}
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -6030,7 +5903,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -6043,7 +5916,7 @@ SetKwInOut
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -6179,7 +6052,7 @@ status collapsed
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -6832,7 +6705,7 @@ status collapsed
 
  
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -6980,19 +6853,6 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -7058,8 +6918,8 @@ physical
 \begin_layout Standard
 Once an initial array of transistors has been generated, the program then
  minimises the number of transistors produced, by traversing from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -7068,8 +6928,8 @@ Source
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7078,8 +6938,8 @@ Result
 \end_inset
 
 , followed by from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -7088,8 +6948,8 @@ Drain
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7107,7 +6967,65 @@ reference "alg:Minimising-the-transistors"
 \end_inset
 
 .
- Alternatively, rather than working inwards from the outer nodes, it w
+ Alternatively, rather than working inwards from the outer nodes, it could
+ work outwards from the 
+\begin_inset Flex Flex:Code
+status collapsed
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+ wire, however, it is likely that only one of these passes may be performed,
+ as applying it in both directions may result in transistors being connected
+ that should not be, e.g.
+\begin_inset space \space{}
+\end_inset
+
+
+\begin_inset Formula $a\oplus b\oplus c$
+\end_inset
+
+ will result in 
+\begin_inset Formula $a$
+\end_inset
+
+ and 
+\begin_inset Formula $\neg a$
+\end_inset
+
+ being connected to the 
+\begin_inset Flex Flex:Code
+status collapsed
+
+\begin_layout Plain Layout
+Souce
+\end_layout
+
+\end_inset
+
+ twice, and 
+\begin_inset Formula $c$
+\end_inset
+
+ and 
+\begin_inset Formula $\neg c$
+\end_inset
+
+ bein connected to the drain twice, however, by merging both sets of gates,
+ connections are then formed such that 
+\begin_inset Flex Flex:Code
+status collapsed
+
+\begin_layout Plain Layout
+Result
+\end_layout
+
+\end_inset
+
+ is always driven.
 \end_layout
 
 \begin_layout Standard
@@ -7118,7 +7036,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7131,7 +7049,7 @@ SetKwInOut
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7267,7 +7185,7 @@ status collapsed
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7292,38 +7210,226 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-SetKwData{Result}{Result}
-\backslash
-SetKwData{totalGates}{total-gates}
+SetKwData
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-Input{Starting wire, top/bottom network indicator}
+SetKwData
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+totalGates
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+total-gates
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-Output{None}
+Input
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Starting wire, top/bottom network indicator
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-SideEffects{Minimised number of transistors in network, updated totals to
- reflect this}
+Output
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+None
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Minimised number of transistors in network, updated totals to reflect this
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7332,171 +7438,574 @@ SideEffects{Minimised number of transistors in network, updated totals to
 BlankLine
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+If
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+wire 
+\begin_inset Formula $\neq$
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
 
 \backslash
-If{wire $
-\backslash
-neq$ 
-\backslash
-Result}{
+Result
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-	$
-\backslash
-mathit{gates} : 
-\backslash
-mathcal V 
-\backslash
-rightarrow 
-\backslash
-text{Transistor} 
-\backslash
-gets 
-\backslash
-emptyset$
-\backslash
-;
-\end_layout
 
-\begin_layout Plain Layout
-
-	
-\backslash
-eIf{checkingTopNetwork}{gate-list $
-\backslash
-gets$ wire.getDrains}{gate-list $
-\backslash
-gets$ wire.getSources}
-\end_layout
-
-\begin_layout Plain Layout
-
-	
-\backslash
-ForEach{gate $
-\backslash
-in$ gate-list}{
-\end_layout
-
-\begin_layout Plain Layout
-
-		
-\backslash
-eIf{$
-\backslash
-text{gate.input}
-\backslash
-in
-\backslash
-mathrm{dom}(
-\backslash
-mathit{gates})$}{
-\end_layout
-
-\begin_layout Plain Layout
-
-			
-\backslash
-eIf{checkingTopNetwork}{
-\end_layout
-
-\begin_layout Plain Layout
-
-				
-\backslash
-ForEach{drain $
-\backslash
-in$ gate.drain.getDrains}{gates(gate.input).drain.addDrain(drain)}
-\end_layout
-
-\begin_layout Plain Layout
-
-			}{
-\end_layout
-
-\begin_layout Plain Layout
-
-				
-\backslash
-ForEach{source $
-\backslash
-in$ gate.source.getSources}{gates(gate.input).source.addSource(source)}
-\end_layout
-
-\begin_layout Plain Layout
-
-			}
-\end_layout
-
-\begin_layout Plain Layout
-
-			remove gate
-\backslash
-;
-\end_layout
-
-\begin_layout Plain Layout
-
-			$
-\backslash
-totalGates 
-\backslash
-gets
-\backslash
-totalGates-1$
-\backslash
-;
-\end_layout
-
-\begin_layout Plain Layout
-
-		}{
-\end_layout
-
-\begin_layout Plain Layout
-
-			$
-\backslash
-mathit{gates} 
-\backslash
-gets 
-\backslash
-mathit{gates}
-\backslash
-cup
-\backslash
-{(gate.input, gate)
-\backslash
-}$
-\backslash
-;
-\end_layout
-
-\begin_layout Plain Layout
-
-		}
-\end_layout
-
-\begin_layout Plain Layout
-
-	}
-\end_layout
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 }
 \end_layout
 
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
+{
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset Formula $\mathit{gates}:\mathcal{V}\rightarrow\text{Transistor}\gets\emptyset$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+checkingTopNetwork
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gate-list 
+\begin_inset Formula $\gets$
+\end_inset
+
+ wire.getDrains
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gate-list 
+\begin_inset Formula $\gets$
+\end_inset
+
+ wire.getSources
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gate 
+\begin_inset Formula $\in$
+\end_inset
+
+ gate-list
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula $\text{gate.input}\in\mathrm{dom}(\mathit{gates})$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+checkingTopNetwork
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+drain 
+\begin_inset Formula $\in$
+\end_inset
+
+ gate.drain.getDrains
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gates(gate.input).drain.addDrain(drain)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ForEach
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+source 
+\begin_inset Formula $\in$
+\end_inset
+
+ gate.source.getSources
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+gates(gate.input).source.addSource(source)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ remove gate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\totalGates\gets\totalGates-1$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset Formula $\mathit{gates}\gets\mathit{gates}\cup\{(gate.input,gate)\}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+;
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
@@ -7542,8 +8051,8 @@ Additionally, it may be more expedient to negate the expression that needs
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -7556,8 +8065,8 @@ Source
 \end_inset
 
  from intermediate wire to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7570,8 +8079,8 @@ Result
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -7580,8 +8089,8 @@ Drain
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7594,8 +8103,8 @@ Result
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -7604,8 +8113,8 @@ Drain
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7630,8 +8139,8 @@ Result
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -7644,8 +8153,8 @@ Drain
 \end_inset
 
  from intermediate wire to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7658,8 +8167,8 @@ Result
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -7668,8 +8177,8 @@ Source
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7682,8 +8191,8 @@ Result
 \end_inset
 
  from 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -7692,8 +8201,8 @@ Source
 \end_inset
 
  to 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7705,8 +8214,8 @@ Result
  It is therefore necessary to generate the transistor networks at least
  twice, however, it is far more useful to the program's structure to implement
  
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -7734,7 +8243,7 @@ status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7747,7 +8256,7 @@ SetKwInOut
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7883,7 +8392,7 @@ status collapsed
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7908,43 +8417,309 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-SetKwFunction{tryLayout}{try-layout}
-\backslash
-SetKwData{expr}{expr}
-\backslash
-SetKwData{Result}{Result}
+SetKwFunction
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+tryLayout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+try-layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-Input{Expression to convert to transistors 
-\backslash
-expr}
+SetKwData
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+expr
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+expr
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-Output{Integer value of number of gates needed}
+SetKwData
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Result
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-SideEffects{Transistor network produced on 
-\backslash
-Result}
+Input
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Expression to convert to transistors 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+expr
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Output
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Integer value of number of gates needed
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+SideEffects
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+Transistor network produced on 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+Result
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -7953,90 +8728,208 @@ Result}
 BlankLine
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset Formula $\text{normal}\gets\tryLayout{\expr}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
-   $
-\backslash
-text{normal} 
-\backslash
-gets 
-\backslash
-tryLayout{
-\backslash
-expr}$
+
 \backslash
 ;
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset Formula $\text{double-negate}\gets\tryLayout{}\neg\expr$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
-   $
+}
+\end_layout
+
+\end_inset
+
+ + 2
+\begin_inset Formula $\;\eIf{}\text{normal}<\text{doubleNegate}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
-text{double-negate} 
+tryLayout
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
-gets 
-\backslash
-tryLayout{$
-\backslash
-neg
-\backslash
-expr$} + 2$
+expr
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
 ;
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
+
+\backslash
+Return
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    
-\backslash
-eIf {$
-\backslash
-text{normal} < 
-\backslash
-text{doubleNegate}$} {
-\end_layout
+ normal
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
-      
-\backslash
-tryLayout{
-\backslash
-expr}
+
 \backslash
 ;
 \end_layout
 
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
-      
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
-Return normal
+Return
+\end_layout
+
+\end_inset
+
+ double-negate
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
 ;
 \end_layout
 
-\begin_layout Plain Layout
+\end_inset
 
-    } {
-\end_layout
-
-\begin_layout Plain Layout
-
-      
-\backslash
-Return double-negate
-\backslash
-;
-\end_layout
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
-    }
+}
 \end_layout
 
 \end_inset
@@ -8060,10 +8953,6 @@ name "alg:Determining-the-optimal"
 
 \end_inset
 
-
-\end_layout
-
-\begin_layout Plain Layout
 
 \end_layout
 
@@ -8130,8 +9019,8 @@ Undriven
  value.
  Functionally, this does not differ significantly in practise from the originall
 y proposed 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Option[Boolean]
@@ -9850,19 +10739,6 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -11884,19 +12760,6 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -12012,20 +12875,11 @@ don't care
 
  values (not needed in this implementation, as we are only considering logical
  expressions that are defined in the syntax given above).
- The minterms give a non-minimal canonical representation of a formula (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-e.g.
-\backslash
-
-\end_layout
-
+ The minterms give a non-minimal canonical representation of a formula (e.g.
+\begin_inset space \space{}
 \end_inset
 
- for 
+for 
 \begin_inset Formula $f(A,B)=\sum m(0)$
 \end_inset
 
@@ -12046,6 +12900,7 @@ reference "alg:Quine-McCluskey----Logical"
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -12079,20 +12934,11 @@ implicant
 prime implicant
 \emph default
  is an implicant that is minimal in the number of terms that it contains
- (
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-i.e.
-\backslash
-
-\end_layout
-
+ (i.e.
+\begin_inset space \space{}
 \end_inset
 
- no more literals can be removed without it becoming a non-implicant)).
+no more literals can be removed without it becoming a non-implicant)).
  This is described in more detail in 
 \begin_inset CommandInset ref
 LatexCommand vref
@@ -12101,6 +12947,7 @@ reference "alg:Quine-McCluskey----Prime"
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -12118,6 +12965,7 @@ reference "alg:Quine-McCluskey----Essential"
 \end_inset
 
 .
+ 
 \end_layout
 
 \begin_layout Enumerate
@@ -12126,6 +12974,7 @@ Print/export the results using the list of variables to assign values, and
  This will also result in the returned expression's clauses already being
  in alphabetical order, making later optimisations based on connections
  of gates easier.
+ 
 \end_layout
 
 \begin_layout Standard
@@ -12828,19 +13677,6 @@ mts
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -13640,7 +14476,7 @@ If
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -13878,19 +14714,6 @@ status collapsed
 
 \backslash
 imtbl
-\end_layout
-
-\end_inset
-
-
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
 \end_layout
 
 \end_inset
@@ -15131,19 +15954,6 @@ mmts
 \end_layout
 
 \begin_layout Plain Layout
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-
-\backslash
-protect
-\end_layout
-
-\end_inset
-
-
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -15151,6 +15961,549 @@ Quine-McCluskey -- Essential and covering implicants
 \begin_inset CommandInset label
 LatexCommand label
 name "alg:Quine-McCluskey----Essential"
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+When processing a logical expression by hand, the usual method is to produce
+ a Karnaugh map, first discussed in 
+\begin_inset CommandInset citation
+LatexCommand cite
+key "karnaugh"
+
+\end_inset
+
+, and use manual techniques to quickly find minterms that cover as much
+ as possible.
+ For example, the Karnaugh maps for 
+\begin_inset Formula $(a\land b)\lor(\neg a\land\neg b\land c)$
+\end_inset
+
+, and 
+\begin_inset Formula $a\oplus b\oplus c$
+\end_inset
+
+ are produced in 
+\begin_inset CommandInset ref
+LatexCommand vref
+reference "tab:Karnaugh-Maps"
+
+\end_inset
+
+.
+ While the first expression, and its negation, decomposes nicely into a
+ series of clauses where each clause covers at least one other box, and
+ usually two, 
+\begin_inset Formula $a\oplus b\oplus c$
+\end_inset
+
+ is an example of a degenerate case without any such nice decomposition,
+ but rather, each clause produced covers one box at a time.
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\align center
+\begin_inset Tabular
+<lyxtabular version="3" rows="2" columns="3">
+<features rotate="0" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (table) {
+\backslash
+input{logexp.tex}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (table) {
+\backslash
+input{xortab.tex}};
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (table) {
+\backslash
+input{logexp.tex}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (topleft)  at ($(table.north west) !.45! (table.north east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (bottomleft)  at ($(table.south west) !.45! (table.south east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (topright)  at ($(table.north west) !.8! (table.north east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (bottomright)  at ($(table.south west) !.8! (table.south east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick,rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+  ($(table.south west) !.3! (table.south  east)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+    rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+	($(topleft.center) !.7! (bottomleft.center)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick,rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+  ($(table.south west) !.65! (table.south  east)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+    rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+	($(topright.center) !.5! (bottomright.center)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (table) {
+\backslash
+input{xortab.tex}};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (topleft)  at ($(table.north west) !.45! (table.north east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (bottomleft)  at ($(table.south west) !.45! (table.south east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (topright)  at ($(table.north west) !.8! (table.north east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+node (bottomright)  at ($(table.south west) !.8! (table.south east)$) {};
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick,rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+  ($(table.south west) !.3! (table.south  east)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+    rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+	($(topleft.center) !.7! (bottomleft.center)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick,rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+	($(topleft.center) !.725! (bottomleft.center)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+		rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+		($(table.east) !.375! (table.west)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick, rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+    ($(table.south west) !.65! (table.south east)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+      rectangle
+\end_layout
+
+\begin_layout Plain Layout
+
+	  ($(topright.center) !.725! (bottomright.center)$);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\begin_layout Plain Layout
+
+
+\backslash
+draw [red, ultra thick, rounded corners]
+\end_layout
+
+\begin_layout Plain Layout
+
+	  ($(topright.center) !.725! (bottomright.center)$)
+\end_layout
+
+\begin_layout Plain Layout
+
+	  rectangle (table.east);
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{tikzpicture}
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Karnaugh Maps
+\begin_inset CommandInset label
+LatexCommand label
+name "tab:Karnaugh-Maps"
 
 \end_inset
 
@@ -15196,23 +16549,10 @@ DrawCircuit
 
  Scala class to initially draw and then update the displayed circuit as
  the inputs are changed.
- The following algorithm is a na
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-"i
-\end_layout
-
-\end_inset
-
-ve version, designed for drawing transistors where each wire, other than
- the static 
-\begin_inset Flex Code
-status open
+ The following algorithm is a naïve version, designed for drawing transistors
+ where each wire, other than the static 
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -15221,8 +16561,8 @@ Source
 \end_inset
 
 , 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Drain
@@ -15231,8 +16571,8 @@ Drain
 \end_inset
 
 , and 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -16658,13 +17998,13 @@ status collapsed
 
 \end_inset
 
- 
+
 \end_layout
 
 \begin_layout Plain Layout
 The above, by symmetry, for the bottom transistor network
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -17593,13 +18933,57 @@ status collapsed
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-SetKwData{drawntransistors}{drawn-transistors}
+SetKwData
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+drawntransistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+drawn-transistors
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
@@ -17872,7 +19256,7 @@ status collapsed
 \begin_layout Plain Layout
 Traverse transistors to reset drawn-transistor property
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -17887,18 +19271,16 @@ status open
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Formula $\drawntransistors\gets\emptyset$
+\end_inset
+
+
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
-$
-\backslash
-drawntransistors
-\backslash
-gets
-\backslash
-emptyset$
+
 \backslash
 ;
 \end_layout
@@ -18146,15 +19528,50 @@ status collapsed
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-eIf{current-transistor.drawn-node$=
-\backslash
-emptyset$}{
+eIf
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+current-transistor.drawn-node
+\begin_inset Formula $=\emptyset$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
 \end_layout
 
 \end_inset
@@ -18201,26 +19618,16 @@ status collapsed
 \end_layout
 
 \begin_layout Plain Layout
+\begin_inset Formula $\drawntransistors\gets\drawntransistors\cup\{\text{current-transistor}\}$
+\end_inset
+
+
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
-$
-\backslash
-drawntransistors
-\backslash
-gets
-\backslash
-drawntransistors
-\backslash
-cup
-\backslash
-{
-\backslash
-text{current-transistor}
-\backslash
-}$
+
 \backslash
 ;
 \end_layout
@@ -18390,30 +19797,65 @@ status collapsed
 {
 \end_layout
 
+\end_inset
+
+ Connect 
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
-	Connect 
+
 \backslash
-prvsGt to current-transistor.drawn-node
+prvsGt
+\end_layout
+
+\end_inset
+
+ to current-transistor.drawn-node
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
 \backslash
 ;
 \end_layout
 
+\end_inset
+
+ current-transistor
+\begin_inset Formula $\gets\Source$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
 \begin_layout Plain Layout
 
-	current-transistor$
-\backslash
-gets
-\backslash
-Source$
+
 \backslash
 ;
 \end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
 }
 \end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -18506,13 +19948,13 @@ status collapsed
 
 \end_inset
 
- 
+
 \end_layout
 
 \begin_layout Plain Layout
 The above, by symmetry, for the bottom transistor network
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -18791,8 +20233,8 @@ name "alg:Optimised-Transistor-Drawing"
 \begin_layout Standard
 Unfortunately, this algorithm does not properly take into account overlapping
  transistors/wires, as they are drawn from the 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Result
@@ -18857,13 +20299,11 @@ status open
 \begin_layout Plain Layout
 \align center
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
 
-\backslash
-begin{center}
 \backslash
 begin{tikzpicture}[scale=0.4, every node/.style={x=1cm,y=1cm,scale=0.6,font=
 \backslash
@@ -18874,7 +20314,7 @@ small}]
 
 
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -19073,36 +20513,21 @@ draw (28,1.5) -- (28.5,1.5) -- (28.5,-1) -- (-3,-1) -> (-3,-2.5);
 
 
 \begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{tikzpicture}
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
- 
-\end_layout
-
-\begin_layout Plain Layout
-\begin_inset ERT
 status collapsed
 
 \begin_layout Plain Layout
 
 
 \backslash
-protect
+end{tikzpicture}
 \end_layout
 
 \end_inset
 
 
+\end_layout
+
+\begin_layout Plain Layout
 \begin_inset Caption Standard
 
 \begin_layout Plain Layout
@@ -19240,8 +20665,8 @@ Variable
  no need for formal semantic analysis of the entered expression, however,
  it is useful to register each variable, with the minimal semantic check
  that the reserved keywords 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 out
@@ -19250,20 +20675,13 @@ out
 \end_inset
 
 , 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-texttt{and}, and 
-\backslash
-texttt{or}
-\end_layout
-
-\end_inset
-
+\family typewriter
+and
+\family default
+, and 
+\family typewriter
+or
+\family default
  are not used in the entered expression.
 \end_layout
 
@@ -19274,18 +20692,11 @@ Once no more work can occur on the syntax tree, the compiler then starts
  within the code, or redundant operations often focusing on a small number
  of operations at any one time.
  This process is often called 
-\begin_inset Flex Emph
-status open
-
-\begin_layout Plain Layout
+\emph on
 peep-hole optimisation
-\end_layout
-
-\end_inset
-
+\emph default
  owing to the metaphor of only being able to see a small part of a scene
  at any one time through a peep-hole camera.
- 
 \end_layout
 
 \begin_layout Standard
@@ -19390,7 +20801,6 @@ reference "tab:Parsing-Test-Data"
 
 \begin_layout Standard
 \begin_inset Float table
-placement h
 wide false
 sideways false
 status open
@@ -19400,7 +20810,7 @@ status open
 \begin_inset Tabular
 <lyxtabular version="3" rows="18" columns="4">
 <features rotate="0" booktabs="true" tabularvalignment="middle" tabularwidth="100text%">
-<column alignment="none" valignment="top" special="@{\extracolsep{\fill}}l">
+<column alignment="none" valignment="top" special="@{\extracolsep{\fill}}@{\extracolsep{\fill}}l">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
@@ -19469,16 +20879,6 @@ Expected Output
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None 
 \size default
  
@@ -19492,16 +20892,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a and b 
 \size default
  
@@ -19515,16 +20905,6 @@ a and b
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 And(Variable(a), Variable(b))
 \end_layout
 
@@ -19556,16 +20936,6 @@ False
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !a and b 
 \size default
  
@@ -19579,16 +20949,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(And(Variable(a), Variable(b))
 \end_layout
 
@@ -19620,16 +20980,6 @@ True
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a and !b 
 \size default
  
@@ -19643,16 +20993,6 @@ a and !b
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 And(Variable(a), Not(Variable(b)))
 \end_layout
 
@@ -19666,16 +21006,6 @@ And(Variable(a), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 out
 \size default
  
@@ -19689,16 +21019,6 @@ out
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \size default
  
@@ -19712,16 +21032,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !a and !b
 \size default
  
@@ -19735,16 +21045,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(And(Variable(a), Not(Variable(b)))
 \end_layout
 
@@ -19758,16 +21058,6 @@ Not(And(Variable(a), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 test
 \size default
  
@@ -19781,16 +21071,6 @@ test
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Variable(test)
 \size default
  
@@ -19804,16 +21084,6 @@ Variable(test)
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (!a) and b 
 \size default
  
@@ -19827,16 +21097,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 And(Not(Variable(a)), Variable(b))
 \end_layout
 
@@ -19850,16 +21110,6 @@ And(Not(Variable(a)), Variable(b))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (
 \size default
  
@@ -19873,16 +21123,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \size default
  
@@ -19896,16 +21136,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a and (!b) 
 \size default
  
@@ -19919,16 +21149,6 @@ a and (!b)
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 And(Variable(a), Not(Variable(b)))
 \end_layout
 
@@ -19942,16 +21162,6 @@ And(Variable(a), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 )
 \size default
  
@@ -19965,16 +21175,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \size default
  
@@ -19988,16 +21188,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (!a) and !b
 \size default
  
@@ -20011,16 +21201,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 And(Not(Variable(a)), Not(Variable(b)))
 \end_layout
 
@@ -20034,16 +21214,6 @@ And(Not(Variable(a)), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 ()
 \size default
  
@@ -20057,16 +21227,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \size default
  
@@ -20080,16 +21240,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 or
 \size default
  
@@ -20103,16 +21253,6 @@ or
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \end_layout
 
@@ -20126,16 +21266,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a 
 \size default
  
@@ -20149,16 +21279,6 @@ a
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Variable(a) 
 \size default
  
@@ -20172,16 +21292,6 @@ Variable(a)
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a or
 \size default
  
@@ -20195,16 +21305,6 @@ a or
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \end_layout
 
@@ -20218,16 +21318,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (a)
 \size default
  
@@ -20241,16 +21331,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Variable(a)
 \size default
  
@@ -20264,16 +21344,6 @@ Variable(a)
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 or a
 \size default
  
@@ -20287,16 +21357,6 @@ or a
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None
 \end_layout
 
@@ -20310,16 +21370,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 ! 
 \size default
  
@@ -20333,16 +21383,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None 
 \size default
  
@@ -20356,16 +21396,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a or b
 \size default
  
@@ -20379,16 +21409,6 @@ a or b
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Or(Variable(a), Variable(b))
 \end_layout
 
@@ -20402,16 +21422,6 @@ Or(Variable(a), Variable(b))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !a 
 \size default
  
@@ -20425,16 +21435,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(Variable(a))
 \size default
  
@@ -20448,16 +21448,6 @@ Not(Variable(a))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !a or b 
 \size default
  
@@ -20471,16 +21461,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(Or(Variable(a), Variable(b)))
 \end_layout
 
@@ -20494,16 +21474,6 @@ Not(Or(Variable(a), Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (!a)
 \size default
  
@@ -20517,16 +21487,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(Variable(a))
 \size default
  
@@ -20540,16 +21500,6 @@ Not(Variable(a))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a or !b 
 \size default
  
@@ -20563,16 +21513,6 @@ a or !b
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Or(Variable(a), Not(Variable(b)))
 \end_layout
 
@@ -20586,16 +21526,6 @@ Or(Variable(a), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !(a)
 \size default
  
@@ -20609,16 +21539,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(Variable(a))
 \size default
  
@@ -20632,16 +21552,6 @@ Not(Variable(a))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 !a or !b
 \size default
  
@@ -20655,16 +21565,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Not(Or(Variable(a), Not(Variable(b))))
 \end_layout
 
@@ -20678,16 +21578,6 @@ Not(Or(Variable(a), Not(Variable(b))))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 and 
 \size default
  
@@ -20701,16 +21591,6 @@ and
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None 
 \size default
  
@@ -20724,16 +21604,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (!a) or b 
 \size default
  
@@ -20747,16 +21617,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Or(Not(Variable(a)), Variable(b))
 \end_layout
 
@@ -20770,16 +21630,6 @@ Or(Not(Variable(a)), Variable(b))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a and 
 \size default
  
@@ -20793,16 +21643,6 @@ a and
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None 
 \size default
  
@@ -20816,16 +21656,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 a or (!b) 
 \size default
  
@@ -20839,16 +21669,6 @@ a or (!b)
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Or(Variable(a), Not(Variable(b)))
 \end_layout
 
@@ -20862,16 +21682,6 @@ Or(Variable(a), Not(Variable(b)))
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 and a 
 \size default
  
@@ -20885,16 +21695,6 @@ and a
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 None 
 \size default
  
@@ -20908,16 +21708,6 @@ None
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 (!a) or !b
 \size default
  
@@ -20931,16 +21721,6 @@ status collapsed
 \begin_layout Plain Layout
 
 \size small
-\begin_inset ERT
-status collapsed
-
-\begin_layout Plain Layout
-
-{}
-\end_layout
-
-\end_inset
-
 Or(Not(Variable(a)), Not(Variable(b))))
 \end_layout
 
@@ -20995,7 +21775,6 @@ reference "tab:QMA-Test-Data"
 
 \begin_layout Standard
 \begin_inset Float table
-placement h
 wide false
 sideways false
 status open
@@ -21005,7 +21784,7 @@ status open
 \begin_inset Tabular
 <lyxtabular version="3" rows="18" columns="4">
 <features rotate="0" booktabs="true" tabularvalignment="middle" tabularwidth="100text%">
-<column alignment="none" valignment="top" special="@{\extracolsep{\fill}}l">
+<column alignment="none" valignment="top" special="@{\extracolsep{\fill}}@{\extracolsep{\fill}}l">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
 <column alignment="left" valignment="top">
@@ -21052,7 +21831,7 @@ Expected Output
 \begin_inset Text
 
 \begin_layout Plain Layout
-And(Not(Variable(a)), Variable(a))
+(!a) and a 
 \end_layout
 
 \end_inset
@@ -21061,16 +21840,7 @@ And(Not(Variable(a)), Variable(a))
 \begin_inset Text
 
 \begin_layout Plain Layout
-None
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" topline="true" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
+None 
 \end_layout
 
 \end_inset
@@ -21084,36 +21854,7 @@ None
 
 \end_inset
 </cell>
-</row>
-<row>
-<cell alignment="none" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-Or(Not(Variable(a)), Variable(a))
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-None
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
-
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" topline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21128,7 +21869,7 @@ None
 \begin_inset Text
 
 \begin_layout Plain Layout
-And(Variable(a), Variable(a))
+(!a) or a 
 \end_layout
 
 \end_inset
@@ -21137,7 +21878,7 @@ And(Variable(a), Variable(a))
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variable(a)
+None 
 \end_layout
 
 \end_inset
@@ -21151,7 +21892,7 @@ Variable(a)
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21166,7 +21907,7 @@ Variable(a)
 \begin_inset Text
 
 \begin_layout Plain Layout
-Or(Variable(a), Variable(a))
+a and a 
 \end_layout
 
 \end_inset
@@ -21175,7 +21916,7 @@ Or(Variable(a), Variable(a))
 \begin_inset Text
 
 \begin_layout Plain Layout
-Variable(a)
+a 
 \end_layout
 
 \end_inset
@@ -21189,7 +21930,7 @@ Variable(a)
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21201,10 +21942,58 @@ Variable(a)
 </row>
 <row>
 <cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+a or a 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+a 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="none" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+((!a) and b) or (a and (!b)) 
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="left" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
 Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
+ 
 \end_layout
 
 \end_inset
@@ -21213,21 +22002,12 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 \begin_inset Text
 
 \begin_layout Plain Layout
-Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
-\end_layout
-
-\end_inset
-</cell>
-<cell alignment="left" valignment="top" usebox="none">
-\begin_inset Text
-
-\begin_layout Plain Layout
 
 \end_layout
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21265,7 +22045,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21303,7 +22083,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21341,7 +22121,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21379,7 +22159,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21417,7 +22197,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21455,7 +22235,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21493,7 +22273,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21531,7 +22311,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21569,7 +22349,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21607,7 +22387,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21645,7 +22425,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" usebox="none">
+<cell alignment="none" valignment="top" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21683,7 +22463,7 @@ Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))
 
 \end_inset
 </cell>
-<cell alignment="left" valignment="top" bottomline="true" usebox="none">
+<cell alignment="none" valignment="top" bottomline="true" usebox="none">
 \begin_inset Text
 
 \begin_layout Plain Layout
@@ -21728,6 +22508,297 @@ name "tab:QMA-Test-Data"
 Transistor Generation and Drawing
 \end_layout
 
+\begin_layout Standard
+Due to the subjective nature of a ``good'' layout, the following diagrams
+ demonstrate the result of 
+\begin_inset Float table
+wide false
+sideways false
+status open
+
+\begin_layout Plain Layout
+\begin_inset Tabular
+<lyxtabular version="3" rows="8" columns="3">
+<features rotate="0" booktabs="true" tabularvalignment="middle">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top">
+<column alignment="center" valignment="top" width="0pt">
+<row>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Input
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Driven Output
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" topline="true" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+Undriven Output
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $\neg a$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Formula $(a\land b)\lor(\neg a\land\neg b\land c)$
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename networklow.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+\begin_inset Graphics
+	filename networkhigh.png
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+<row>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+<cell alignment="center" valignment="top" bottomline="true" usebox="none">
+\begin_inset Text
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+</cell>
+</row>
+</lyxtabular>
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Program Output
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Plain Layout
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
 \begin_layout Section
 Conclusions and Further Work
 \begin_inset CommandInset label
@@ -21759,6 +22830,7 @@ ey algorithm became a far higher priority, with drawing and a finalised
  of gates, as the output of the optimisation sequence was far easier to
  visualise, rather than attempting to traverse the representation of wires
  and transistors stored in the currently executing program's memory.
+ 
 \end_layout
 
 \begin_layout Description
@@ -21769,6 +22841,7 @@ Accuracy The program's visual output, as the drawing algorithm is structurally
  consistent and easily interpreted: due to the way that mxGraph positions
  vertices and edges, any attempts to reduce overlap would have caused the
  edges to shift and become disconnected.
+ 
 \end_layout
 
 \begin_layout Description
@@ -21787,6 +22860,7 @@ reference "fig:Standard-nor--and"
  Additionally, when a variable needs negating, the small not-gate is not
  shown, nor are the transistors necessary, as this would only complicate
  the number of diagrams needed, as well as their layout.
+ 
 \end_layout
 
 \begin_layout Description
@@ -21801,6 +22875,7 @@ Portability Beyond the bitmap based images that are produced by the program,
  Additionally, unlike 9-patch image files, stretching in one dimension will
  produce a skewed image, rather than sub-components resizing themselves
  intelligently.
+ 
 \end_layout
 
 \begin_layout Description
@@ -21811,7 +22886,7 @@ ding to each stage of the compilation, and then the current runtime state
  expression is seen, followed by after the completion of the first stage
  of the Quine-McCluskey algorithm, if the entered logical expression has
  a trivial normal form (
-\begin_inset Formula $\top\text{ or \bot}$
+\begin_inset Formula $\top\text{ or \ensuremath{\bot}}$
 \end_inset
 
 ).
@@ -21823,6 +22898,7 @@ ding to each stage of the compilation, and then the current runtime state
  some of these may not be properly formed, so it is a helpful check to have
  in place, as well as when prototyping the transistor production algorithm
  to ensure that the output was driven consistently.
+ 
 \end_layout
 
 \begin_layout Subsection
@@ -21860,11 +22936,11 @@ gate, where
 \begin_inset Float figure
 wide false
 sideways false
-status collapsed
+status open
 
 \begin_layout Plain Layout
 \begin_inset ERT
-status open
+status collapsed
 
 \begin_layout Plain Layout
 
@@ -21877,274 +22953,13 @@ unitlength}{0.015
 textwidth}
 \end_layout
 
-\begin_layout Plain Layout
-
-
-\backslash
-begin{center}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{picture}(25,27)(-2,-3) 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-begin{thicklines} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-multiput(0,0)(0,24){2}{
-\backslash
-line(1,0){18}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{thicklines} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-multiput(15,21)(0,-6){2}{
-\backslash
-ptrans} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-multiput(15,3)(0,6){2}{
-\backslash
-ntrans}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(15,0){
-\backslash
-blob} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(15,24){
-\backslash
-blob} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(-3,9){
-\backslash
-makebox(0,0){${
-\backslash
-it enb}$}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(3,9){
-\backslash
-blob} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(0,9){
-\backslash
-line(1,0){12}} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(3,9){
-\backslash
-line(0,1){6}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(3,15){
-\backslash
-line(1,0){4}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(11,15){
-\backslash
-notgate}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(5,21){
-\backslash
-notgate}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(5,21){
-\backslash
-line(1,0){7}} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(-3,21){
-\backslash
-makebox(0,0){${
-\backslash
-it in}$}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(6,21){
-\backslash
-blob} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(6,21){
-\backslash
-line(0,-1){5.7}} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(6,14.7){
-\backslash
-line(0,-1){5.4}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(6,8.7){
-\backslash
-line(0,-1){5.7}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(6,3){
-\backslash
-line(1,0){6}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(12,12){
-\backslash
-line(1,0){6}}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(21,12){
-\backslash
-makebox(0,0){${
-\backslash
-it out}$}} 
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-put(15,12){
-\backslash
-blob}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{picture}
-\end_layout
-
-\begin_layout Plain Layout
-
-
-\backslash
-end{center}
-\end_layout
-
-\end_inset
-
-
-\begin_inset Caption Standard
-
-\begin_layout Plain Layout
-Tri-state buffer
-\end_layout
-
-\end_inset
-
-
-\end_layout
-
 \end_inset
 
  
 \end_layout
 
-\begin_layout Standard
-Additionally, the structure of the transistors produced by the transistor
- placing algorithm 
+\begin_layout Plain Layout
+\align center
 \begin_inset ERT
 status collapsed
 
@@ -22152,7 +22967,55 @@ status collapsed
 
 
 \backslash
-nameref
+begin{picture}
+\end_layout
+
+\end_inset
+
+(25,27)(-2,-3) 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+begin{thicklines}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput
+\end_layout
+
+\end_inset
+
+(0,0)(0,24)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+2
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
 \end_layout
 
 \end_inset
@@ -22168,7 +23031,31 @@ status collapsed
 
 \end_inset
 
-alg:Converting-DNF-expression
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+18
 \begin_inset ERT
 status collapsed
 
@@ -22176,6 +23063,1367 @@ status collapsed
 
 }
 \end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{thicklines}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput
+\end_layout
+
+\end_inset
+
+(15,21)(0,-6)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+2
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ptrans
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+multiput
+\end_layout
+
+\end_inset
+
+(15,3)(0,6)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+2
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+ntrans
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(15,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+blob
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(15,24)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+blob
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(-3,9)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+makebox(0,0){
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula ${\it enb}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(3,9)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+blob
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(0,9)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+12
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(3,9)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(0,1)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+6
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(3,15)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+4
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(11,15)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+notgate
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(5,21)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+notgate
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(5,21)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+7
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(-3,21)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+makebox(0,0){
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula ${\it in}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(6,21)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+blob
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(6,21)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(0,-1)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+5.7
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(6,14.7)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(0,-1)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+5.4
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(6,8.7)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(0,-1)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+5.7
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(6,3)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+6
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(12,12)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+line
+\end_layout
+
+\end_inset
+
+(1,0)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+6
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(21,12)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+makebox(0,0){
+\end_layout
+
+\end_inset
+
+
+\begin_inset Formula ${\it out}$
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+put
+\end_layout
+
+\end_inset
+
+(15,12)
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+{
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+blob
+\end_layout
+
+\end_inset
+
+
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+}
+\end_layout
+
+\end_inset
+
+ 
+\begin_inset ERT
+status collapsed
+
+\begin_layout Plain Layout
+
+
+\backslash
+end{picture}
+\end_layout
+
+\end_inset
+
+ 
+\end_layout
+
+\begin_layout Plain Layout
+\begin_inset Caption Standard
+
+\begin_layout Plain Layout
+Tri-state buffer
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Additionally, the structure of the transistors produced by the transistor
+ placing algorithm 
+\begin_inset CommandInset ref
+LatexCommand nameref
+reference "alg:Converting-DNF-expression"
 
 \end_inset
 
@@ -22209,22 +24457,9 @@ Furthermore, exploring limits on the size of the circuits produced to more
  properly demonstrate the effect of resistance in the time taken for the
  current to flow across a transistor or through wires, assuming non-negligible
  resistance.
- A na
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-"i
-\end_layout
-
-\end_inset
-
-ve approach would involve the height of series of transistors being artificially
- limited, however, this would not take into account the length of connecting
- wires.
+ A naïve approach would involve the height of series of transistors being
+ artificially limited, however, this would not take into account the length
+ of connecting wires.
 \end_layout
 
 \begin_layout Standard
@@ -22237,14 +24472,7 @@ key "H88:Calculus"
 \end_inset
 
 , as discussed in a draft paper, where formulae
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-~
-\end_layout
-
+\begin_inset space ~
 \end_inset
 
 
@@ -22309,8 +24537,8 @@ The data produced by the view is currently only in a limited number of bitmap
 \begin_layout Standard
 A future implementation of the transistor-drawing algorithm should be reworked
  in order to draw the transistors from the 
-\begin_inset Flex Code
-status open
+\begin_inset Flex Flex:Code
+status collapsed
 
 \begin_layout Plain Layout
 Source
@@ -22319,18 +24547,9 @@ Source
 \end_inset
 
  and 
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-
-\backslash
-texttt{Drain}
-\end_layout
-
-\end_inset
-
+\family typewriter
+Drain
+\family default
  objects respectively, so as to ensure that grouped transistors are handled
  properly, without overlapping, however, this would also require a more
  detailed knowledge as to the structure and bounds of the generated network
@@ -22387,23 +24606,12 @@ Professor Geraint Jones, my supervisor, for his advice and support, as well
 \end_layout
 
 \begin_layout Standard
-\begin_inset ERT
-status open
-
-\begin_layout Plain Layout
-
-Matthew S
-\backslash
-"ojdin, Eleanor Kirk, and Stephen Heap for general support throughout the
- project.
-\end_layout
-
-\end_inset
-
-
+Matthew Söjdin, Eleanor Kirk, and Stephen Heap for general support throughout
+ the project.
 \end_layout
 
 \begin_layout Standard
+ 
 \begin_inset CommandInset bibtex
 LatexCommand bibtex
 bibfiles "citations"
