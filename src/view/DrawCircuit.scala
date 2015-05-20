@@ -50,10 +50,10 @@ case class DrawCircuit (val graph : mxGraph) {
       maxX = Math.max(maxX, currentX)
       val newOut = graph.insertVertex(parent, null, "output", -15, 0, maxX + 30, 1, "wireUndriven")
 
-      val drain = graph.insertVertex(parent, null, "drain", -15, (drainsYLimit + 2 * deltaY), maxX + 30, 1,
+      val drain = graph.insertVertex(parent, null, "drain", -15, drainsYLimit, maxX + 30, 1,
                                      "wireDriven")
 
-      val source = graph.insertVertex(parent, null, "source", -15, -1.0 * (sourcesYLimit + deltaY), maxX + 30, 1,
+      val source = graph.insertVertex(parent, null, "source", -15, -1.0 * sourcesYLimit, maxX + 30, 1,
                                       "wireDriven")
 
 
@@ -67,13 +67,13 @@ case class DrawCircuit (val graph : mxGraph) {
 
       for (sourceGate <- lastSources) {
         val x = graph.getCellGeometry(sourceGate).getCenterX
-        val dot = graph.insertVertex(parent, null, "", x, -1.0 * (sourcesYLimit + deltaY), 1, 1)
+        val dot = graph.insertVertex(parent, null, "", x, -1.0 * sourcesYLimit, 1, 1)
         graph.insertEdge(parent, null, "", sourceGate, dot, "wireOther")
       }
 
       for (drainGate <- lastDrains) {
         val x = graph.getCellGeometry(drainGate).getCenterX
-        val dot = graph.insertVertex(parent, null, "", x, drainsYLimit + 2 * deltaY, 1, 1)
+        val dot = graph.insertVertex(parent, null, "", x, drainsYLimit, 1, 1)
         graph.insertEdge(parent, null, "", drainGate, dot, "wireOther")
       }
 
@@ -160,57 +160,49 @@ case class DrawCircuit (val graph : mxGraph) {
         sourcesYLimit = scala.math.max(sourcesYLimit, y)
       } else {
         lastDrains += nodes.pop()
-        sourcesYLimit = scala.math.max(drainsYLimit, y)
+        drainsYLimit = scala.math.max(drainsYLimit, y)
       }
     } else {
       for (gate <- gates) {
         gate.drawnGate match {
           case Some(node : AnyRef) => {
-            {
-              {
-                val box = graph.getCellBounds(node)
-                val x = box.getCenterX
-                val y = box.getCenterY + (box.getHeight * (if (drawingTopNetwork) {
-                  -0.5
-                } else {
-                  0.5
-                }))
-                val point = graph insertVertex(parent, null, "", x, y, 0, 0)
-                graph.insertEdge(parent, null, "", nodes.pop(), node,
-                                 mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
-              }
-            }
+            val box = graph.getCellGeometry(node)
+            val x = box.getCenterX - deltaX * 2
+            val tempy = box.getCenterY + (box.getHeight * (if (drawingTopNetwork) {
+              -0.5
+            } else {
+              0.5
+            })) - deltaY
+            val point = graph insertVertex(parent, null, "", x, tempy, 0, 0)
+            graph.insertEdge(parent, null, "", nodes.pop(), node,
+                             mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_LINE)
           }
           case None => {
-            {
-              {
-                val previousNode = nodes.pop()
-                val node =
-                  graph.insertVertex(parent, null, gate.input.toString, currentX, if (drawingTopNetwork) {
-                    -(y + deltaY)
-                  } else {
-                    y
-                  }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
-                    "nmos"
-                  } else {
-                    "pmos"
-                  }) + (if (gate.get() == Undriven()) {
-                    "_de"
-                  } else {
-                    "_en"
-                  }))
-                gate.drawnGate = Some(node)
-                graph insertEdge
-                (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
-                nodes push node
-                drawNetwork(if (drawingTopNetwork) {
-                  gate.source.getSources
-                } else {
-                  gate.drain.getDrains
-                }, y + deltaY, drawingTopNetwork)
-                currentX += deltaX * 2
-              }
-            }
+            val previousNode = nodes.pop()
+            val node =
+              graph.insertVertex(parent, null, gate.input.toString, currentX, if (drawingTopNetwork) {
+                -(y + deltaY)
+              } else {
+                y
+              }, deltaX * 2.0, deltaY, (if (!drawingTopNetwork) {
+                "nmos"
+              } else {
+                "pmos"
+              }) + (if (gate.get() == Undriven()) {
+                "_de"
+              } else {
+                "_en"
+              }))
+            gate.drawnGate = Some(node)
+            graph insertEdge
+            (parent, null, "", previousNode, node, mxConstants.STYLE_SHAPE + "=" + mxConstants.SHAPE_IMAGE)
+            nodes push node
+            drawNetwork(if (drawingTopNetwork) {
+              gate.source.getSources
+            } else {
+              gate.drain.getDrains
+            }, y + deltaY, drawingTopNetwork)
+            currentX += deltaX * 2
           }
         }
       }
