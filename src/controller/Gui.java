@@ -1,9 +1,14 @@
 package controller;
 
+import com.mxgraph.io.mxCodec;
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.util.mxCellRenderer;
+import com.mxgraph.util.mxXmlUtils;
+import com.mxgraph.util.png.mxPngEncodeParam;
+import com.mxgraph.util.png.mxPngImageEncoder;
 import com.mxgraph.view.mxGraph;
 import com.mxgraph.view.mxGraphView;
 import helper.CMOSLayout;
@@ -23,6 +28,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
 /**
@@ -48,6 +57,7 @@ public class Gui {
     private JButton goButton;
     private JCheckBox outputCheckBox;
     private JPanel variableHolder;
+    private JButton exportButton;
     private HashMap<String, JCheckBox> nameBoxMap = new HashMap<String, JCheckBox>();
     private DrawCircuit drawCircuit;
 
@@ -66,7 +76,8 @@ public class Gui {
                                                   JOptionPane.ERROR_MESSAGE);
                 } else {
                     final Node result = parseResult.get();
-                    CMOSLayout.layout(result);
+                    String message = CMOSLayout.layout(result);
+                    JOptionPane.showMessageDialog(mainPanel, message, "Finished", JOptionPane.INFORMATION_MESSAGE);
                     final TreeMap<String, Object> map = Variable.getMap();
                     final Iterator<Tuple2<String, Object>> it = map.iterator();
                     visPanel.setSize(400, 300);
@@ -107,6 +118,51 @@ public class Gui {
                 outputCheckBox.setSelected(parseResult.get().get());
             }
         });
+        exportButton.addActionListener(new ActionListener() {
+            @Override public void actionPerformed (ActionEvent actionEvent) {
+                try {
+                    JFileChooser fileChooser = new JFileChooser();
+                    if (fileChooser.showSaveDialog(mainPanel) == JFileChooser.APPROVE_OPTION) {
+                        File file = fileChooser.getSelectedFile();
+                        String filename = file.getAbsolutePath();
+
+                        BufferedImage image = mxCellRenderer.createBufferedImage(graph, null, 1, Color.WHITE,
+                                                                                 graphComponent.isAntiAlias(), null,
+                                                                                 graphComponent.getCanvas());
+                        mxPngEncodeParam param = null;
+                        if (image != null) {
+                            param = mxPngEncodeParam.getDefaultEncodeParam(image);
+                        } else {
+                            JOptionPane.showMessageDialog(mainPanel, "Could not create image", "Error", JOptionPane
+                                                                                                                .ERROR_MESSAGE);
+                        }
+
+                        // Creates the URL-encoded XML data
+                        mxCodec codec = new mxCodec();
+                        String xml = URLEncoder.encode(mxXmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
+
+                        param.setCompressedText(new String[] { "graph", xml });
+
+                        // Saves as a PNG file
+                        FileOutputStream outputStream = new FileOutputStream(new File(filename));
+
+                        try {
+                            mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream, param);
+
+                            if (image != null) {
+                                encoder.encode(image);
+                            } else {
+                                System.out.println("No Image");
+                            }
+                        } finally {
+                            outputStream.close();
+                        }
+                    }
+                } catch (Exception e) {
+
+                }
+            }
+        });
     }
 
     public static void main (String[] args) {
@@ -130,39 +186,42 @@ public class Gui {
      */
     public final mxGraphComponent initGraph () {
         mxGraphComponent localGraphComponent = null;
-        //if (graph == null && graphComponent == null) {
-        graph = new mxGraph();
-        localGraphComponent = new mxGraphComponent(graph);
+        try {
+            graph = new mxGraph();
+            localGraphComponent = new mxGraphComponent(graph);
 
-        // Allow negative co-ordinates (makes drawing easier as bottom half can be negatively positioned)
-        graph.setAllowNegativeCoordinates(true);
-        // dangling edges are bad and result in all kinds of nasty things
-        graph.setAllowDanglingEdges(false);
-        // edge source and target are the same
-        graph.setAllowLoops(true);
-        // don't need this
-        graph.setCellsResizable(false);
-        // don't allow movement
-        graph.setCellsMovable(false);
-        // don't allow new connections
-        graph.setConnectableEdges(false);
-        // make editing labels more comfortable
-        localGraphComponent.setEnterStopsCellEditing(true);
-        // antialiasing \o/
-        localGraphComponent.setAntiAlias(true);
-        // set size
-        localGraphComponent.setSize(visPanel.getWidth(), visPanel.getHeight());
+            // Allow negative co-ordinates (makes drawing easier as bottom half can be negatively positioned)
+            graph.setAllowNegativeCoordinates(true);
+            // dangling edges are bad and result in all kinds of nasty things
+            graph.setAllowDanglingEdges(false);
+            // edge source and target are the same
+            graph.setAllowLoops(true);
+            // don't need this
+            graph.setCellsResizable(false);
+            // don't allow movement
+            graph.setCellsMovable(false);
+            // don't allow new connections
+            graph.setConnectableEdges(false);
+            // make editing labels more comfortable
+            localGraphComponent.setEnterStopsCellEditing(true);
+            // antialiasing \o/
+            localGraphComponent.setAntiAlias(true);
+            // set size
+            localGraphComponent.setSize(visPanel.getWidth(), visPanel.getHeight());
 
-        graph.setAutoOrigin(true);
+            graph.setAutoOrigin(true);
 
-        // define a parallel layout for the edges
-        layout = new mxParallelEdgeLayout(graph);
-        drawCircuit = new DrawCircuit(graph);
-        drawCircuit.draw();
+            // define a parallel layout for the edges
+            layout = new mxParallelEdgeLayout(graph);
+            drawCircuit = new DrawCircuit(graph);
+            drawCircuit.draw();
 
-        resizeGraphView(localGraphComponent);
-
-        return localGraphComponent;
+            resizeGraphView(localGraphComponent);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(mainPanel, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            return localGraphComponent;
+        }
     }
 
     private void resizeGraphView (mxGraphComponent localGraphComponent) {
@@ -227,6 +286,12 @@ public class Gui {
         outputCheckBox.setEnabled(false);
         outputCheckBox.setText("out");
         variableHolder.add(outputCheckBox);
+        final JPanel panel2 = new JPanel();
+        panel2.setLayout(new BorderLayout(0, 0));
+        inputPanel.add(panel2, BorderLayout.SOUTH);
+        exportButton = new JButton();
+        exportButton.setText("Export");
+        panel2.add(exportButton, BorderLayout.NORTH);
     }
 
     /** @noinspection ALL */
