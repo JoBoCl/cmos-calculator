@@ -50,21 +50,22 @@ object CMOSLayout {
     }
   }
 
-  def layout(expr: model.Node): Integer = {
+  def layout(expr: model.Node): String = {
     val normal = tryLayout(expr)
     val doubleNegate = tryLayout(Not(expr)) + 2
 
-    if (normal < doubleNegate) {
+    if (normal <= doubleNegate) {
       tryLayout(expr)
-      return normal
+      return normal + "transistors used"
     } else {
-      return doubleNegate
+      return doubleNegate + "transistors used, with two to negate the output"
     }
   }
 
   def tryLayout(expr : model.Node) : Integer = {
     Result.clear;
     totalGates = 0;
+    negations.clear()
 
     LogicalFunction.quineMcCluskey(expr) match {
       case Some(x) => {
