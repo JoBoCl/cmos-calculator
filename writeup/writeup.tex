@@ -1784,16 +1784,14 @@ arbitrary assignments used to indicate this.
 \begin{center}
 \begin{table}
 \begin{tabularx}{\linewidth}{XXXc}
-\toprule 
-Input                                      & Driven Output                                  & Undriven Output                                 & Transistors \\
+\toprule
+Input                                       & Driven Output                                  & Undriven Output                                 & Transistors \\
 \midrule
-$\neg a$                                   & \includegraphics[width=\linewidth]{notdriven}  & \includegraphics[width=\linewidth]{notundriven} & 2 \tabularnewline
-$(a\land b)\lor(\neg a\land\neg b\land c)$ & \includegraphics[width=\linewidth]{networklow} & \includegraphics[width=\linewidth]{networkhigh} & 17 \tabularnewline
-$a \land b \land c$                        & \includegraphics[width=\linewidth]{conjhigh}   & \includegraphics[width=\linewidth]{conjlow}     & $6+2$ \tabularnewline
-$a \lor b \lor c$                        & \includegraphics[width=\linewidth]{disjhigh}   & \includegraphics[width=\linewidth]{disjlow}     & $6+2$ \tabularnewline
-                                           &                                                & \tabularnewline
-                                           &                                                & \tabularnewline
-                                           &                                                & \tabularnewline
+$\neg a$                                    &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{notdriven}}  & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{notundriven}} & 2 \tabularnewline
+$(a\land b)\lor(\neg a\land\neg b\land c)$  &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{networklow}} & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{networkhigh}} & 17 \tabularnewline
+$a \land b \land c$                         &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{conjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{conjlow}}     & $6+2$ \tabularnewline
+$a \lor b \lor c$                           &  \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjlow}}     & $6+2$ \tabularnewline
+$(a \lor b \lor c) \land (a \lor b \lor c)$ &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjlow}}     & $6+2$ \tabularnewline
 \bottomrule
 \end{tabularx}
 \caption{Program Output\label{tab:vis}}
