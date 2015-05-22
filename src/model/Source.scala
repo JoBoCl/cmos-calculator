@@ -3,7 +3,7 @@ package model
 /**
  * Created by joshua on 17/12/14.
  */
-object Source extends Wire with Output {
+object Source extends Wire {
   override def removeGate (transistor : Transistor) : Unit = {
     drains = drains diff Array(transistor)
   }

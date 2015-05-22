@@ -23,7 +23,11 @@ object LogicalFunction {
   }
 
   def quineMcCluskey(expr : Node) : Option[Node] = {
-    Parser.variableParser(convertToMinTerms(expr))
+    try {
+      Parser.variableParser(convertToMinTerms(expr))
+    } catch {
+      case _ => return None
+    }
   }
 
   def convertToMinTerms(expr : Node) : String = {
@@ -53,12 +57,6 @@ object LogicalFunction {
       }
     }
     return qmm.method(numericalValues, Nil, qmm.letters(variables))
-  }
-
-  def main(args : Array[String]) {
-    //println(convertToMinTerms(Parser.variableParser("(a and b) or (a and !b) or (!a and b)") match { case Some(x)
-    // => x }))
-    println(convertToMinTerms(Parser.variableParser("(a and !c) or (!a and b)") match { case Some(x) => x }))
   }
 }
 

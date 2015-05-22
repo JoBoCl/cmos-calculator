@@ -2,7 +2,7 @@
 
 %% LyX 2.1.3 created this file.  For more info, see http://www.lyx.org/.
 %% Do not edit unless you really know what you are doing.
-\documentclass[12pt,british,ruled,noend,slide]{article}
+\documentclass[12pt,british,a4paper,ruled,noend,slide]{article}
 \renewcommand{\sfdefault}{lmss}
 \renewcommand{\ttdefault}{lmtt}
 \usepackage[utf8]{inputenc}
@@ -32,6 +32,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
 %% Because html converters don't know tabularnewline
 \providecommand{\tabularnewline}{\\}
+\renewcommand{\arraystretch}{1.2}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
 \newcommand{\code}[1]{\texttt{#1}}
@@ -608,6 +609,33 @@ being used will then be analysed. The program that has then been produced
 will finally be compared against the stated objectives, with possible
 further work then listed.
 
+Projects of a much greater scope already exist in the real world, for example,
+the third iteration of the Simulation Program with Integrated Circuit Emphasis
+(SPICE3) simulates circuits with up to 43 different types of transistor,
+however, requires a specifically formatted input that is rather difficult to
+read for new users.  There are also many Very-large-scale integration programs,
+which deal with CMOS, however, as the name suggests, thsee are more appropriate
+for large projects, such as CPU design.  As previously discussed, there are also
+many applications where you may use logic gates to implement larger functions,
+however, these rarely include details about the transistors used.
+
+This program will attempt to combine the ease of use of simple logical expressions
+while producing an easily understandable representation of the output needed.  As such,
+it will not concern itself with the precise layout of wires between the different inputs.
+
+\subsection{Typical Use}
+
+On starting the application, the user will typically enter a well-formed
+logical expression, as described using the grammar above, with a non-trivial
+canonical representation (i.e.\ $\mathit{expr}\neq\top,\bot$). This
+will then be parsed and converted to a canonical form (DNF) which
+will then be processed to produce a series of transistors to implement
+the desired logical expression. This will then be rendered, with gates
+highlighted red to indicate drivenness, and a list of variables provided.
+The user can then change the assignment of these variables by toggling
+a checkbox, and this change will then be reflected in the rendered
+set of gates.
+
 
 \subsection{Document Conventions}
 
@@ -621,11 +649,110 @@ either some implementation level object or class, or the grammar used
 by the parser as opposed to the standard blackboard mathematical symbols,
 or text entered into the application or used for testing.
 
+\section{Requirements and Design}
 
-\subsection{Definitions}
 
 
-\subsubsection{Logical Expressions}
+\subsection{Requirements}
+
+The program would be expected to satisfy the following minimal requirements
+in order for it to be considered successful: 
+\begin{description}
+\item [{Accuracy}] any representation of CMOS produced must correctly implement
+the logical expression that has been entered, and the visual output
+of the expression should match the model that has been stored. 
+\item [{Representation}] the produced visualisation should be intuitive
+to read: each element should be presented separately from the others,
+and clearly labelled. Any gate carrying potential should be clearly
+highlighted. 
+\item [{Portability}] the visual output produced by the program should
+be available to the user in a variety of formats. 
+\item [{Interactivity}] the program should produce sensible warnings when
+an expression that is not possible to parse has been entered. Once
+a CMOS representation has been constructed, it should be possible
+for the user to interact with the publicly visible inputs (the variables
+named in the initial expression), with updates delivered with a minimal
+amount of latency. Should the user wish to view the change in state
+due to the latency of the transistors, this should be visible, and
+at a variable speed. 
+\end{description}
+\subsection{Design}
+
+In order to fulfil the above specifications, it was obvious that a
+graphical interface would be required, so that the user could quickly
+interact with the program and determine the variable assignments intuitively,
+and to have their actions quickly reflected in the circuit diagram.
+Initially, due to the quality of the output produced by \LaTeX{} diagrams,
+using the Tikz engine to produce the output and importing temporary
+files was considered, given the success of projects such as TikzEdt\cite{tikzedt},
+however, as it would not be possible to assume that any system would
+have the necessary libraries and programs installed, it was determined
+that this would not be a feasible method to consider. Additionally,
+by using a Java-based drawing library, animations would be easier,
+should the project be extended to include them, as opposed to a \LaTeX{}
+based solution, which is, by definition, designed for static documents.
+
+Given the nature of the project, the model-view-controller paradigm
+allows a sensible division of labour, also allowing for extensibility
+and clear separation of the purpose of the model and the interface.
+
+\begin{figure}
+\begin{centering}
+\begin{tikzpicture}[scale=1, every node/.style={scale=1,font=\small}]
+\draw  (0,0) rectangle (10,6) node (v16) {};
+\draw  (0.5,0.5) rectangle (4,5.5);
+\draw  (4.5,0.5) rectangle (9.5,5.5) node (v15) {};
+\draw  (1,5) rectangle (3,4.5);
+\draw  (3,5) rectangle (3.5,4.5);
+\node at (3.25,4.75) {Go};
+\node at (2,4.75) {Expression};
+\node at (2.5,3.75) {Variable$_0$};
+\node at (2.5,3.25) {Variable$_1$};
+\node at (2.5,2.75) {Variable$_2$};
+\node at (2.5,2.25) {Variable$_3$};
+\node at (2.5,1.75) {Variable$_4$};
+\node at (2.5,1.25) {Variable$_5$};
+\node at (7,3) {Diagram};
+\draw  (1,4) node (v7) {} rectangle (3.5,3.5);
+\draw  (1,3) node (v1) {} rectangle (3.5,3.5);
+\draw  (3.5,2.5) node (v2) {} rectangle (v1);
+\draw  (1,2) node (v3) {} rectangle (v2);
+\draw  (3.5,1.5) node (v4) {} rectangle (v3);
+\draw  (1,1) rectangle (v4);
+\draw  (1.5,3.5) node (v8) {} rectangle (1,4);
+\draw  (1.5,3) node (v10) {} rectangle (1,3.5) node (v5) {};
+\draw  (1.5,2.5) node (v11) {} rectangle (v1);
+\draw  (1.5,2) node (v13) {} rectangle (1,2.5) node (v9) {};
+\draw  (1.5,1.5) node (v12) {} rectangle (1,2);
+\draw  (1.5,1) rectangle (1,1.5) node (v14) {};
+\node (v6) at (1.5,4) {};
+\draw  (v5) edge (v6);
+\draw  (v7) edge (v8);
+\draw  (v9) edge (v10);
+\draw  (v1) edge (v11);
+\draw  (v12) edge (v3);
+\draw  (v13) edge (v14);
+\draw  (8.5,6) rectangle (9,5.5);
+\draw  (9,6) rectangle (v15);
+\draw  (9.5,6) node (v18) {} rectangle (10,5.5) node (v17) {};
+\draw  (v15) edge (v16);
+\draw  (v17) edge (v18);
+\draw  (9.1,5.9) rectangle (9.4,5.6);
+\draw  (8.6,5.7) rectangle (8.9,5.6);
+\draw  (9,1) rectangle (7,1.5); \node at (8,1.25) {Export};\end{tikzpicture} 
+\par\end{centering}
+
+\caption{Initial Design}
+\end{figure}
+
+
+
+
+
+\section{Definitions}
+
+
+\subsection{Logical Expressions}
 
 A logical expression is built from a combination of constants, literals,
 conjunctions, disjunctions and negations\cite{intlog}, using a grammar described
@@ -650,7 +777,7 @@ within this text to denote the notions true and false, respectively,
 and are represented in the program by the strings \code{0} and \code{1}
 respectively. Additionally, the order that the various production
 rules are listed also gives an order of precedence, with negations
-binding more tightly than disjunctions and conjunctions. Each variable
+taking a higher precedence in the parse tree than disjunctions and conjunctions. Each variable
 within the expression that is used is given an assignment by an evaluation
 function, commonly called $\mathcal{A}:\mathcal{V}\rightarrow\{\top,\bot\}$\label{eq:assi},
 with the set of variables typically denoted as $\mathcal{V}$. A logical
@@ -669,7 +796,7 @@ to equation \ref{eq:conj})
 to equation \ref{eq:cons}) 
 \end{itemize}
 
-\subsubsection{CMOS Transistors}
+\subsection{CMOS Transistors}
 
 As the name would indicate, CMOS is made up of two distinct, complementary
 parts\cite{digsys}: a P-transistor can only carry high potential
@@ -823,117 +950,6 @@ $\mathit{out}=\lnot(a\vee b)$%
 
 
 
-\section{Requirements and Design}
-
-
-\subsection{Requirements}
-
-The program would be expected to satisfy the following minimal requirements
-in order for it to be considered successful: 
-\begin{description}
-\item [{Accuracy}] any representation of CMOS produced must correctly implement
-the logical expression that has been entered, and the visual output
-of the expression should match the model that has been stored. 
-\item [{Representation}] the produced visualisation should be intuitive
-to read: each element should be presented separately from the others,
-and clearly labelled. Any gate carrying potential should be clearly
-highlighted. 
-\item [{Portability}] the visual output produced by the program should
-be available to the user in a variety of formats. 
-\item [{Interactivity}] the program should produce sensible warnings when
-an expression that is not possible to parse has been entered. Once
-a CMOS representation has been constructed, it should be possible
-for the user to interact with the publicly visible inputs (the variables
-named in the initial expression), with updates delivered with a minimal
-amount of latency. Should the user wish to view the change in state
-due to the latency of the transistors, this should be visible, and
-at a variable speed. 
-\end{description}
-Given the nature of the project, the model-view-controller paradigm
-allows a sensible division of labour, also allowing for extensibility
-and clear separation of the purpose of the model and the interface.
-
-
-\subsection{Design}
-
-In order to fulfil the above specifications, it was obvious that a
-graphical interface would be required, so that the user could quickly
-interact with the program and determine the variable assignments intuitively,
-and to have their actions quickly reflected in the circuit diagram.
-Initially, due to the quality of the output produced by \LaTeX{} diagrams,
-using the Tikz engine to produce the output and importing temporary
-files was considered, given the success of projects such as TikzEdt\cite{tikzedt},
-however, as it would not be possible to assume that any system would
-have the necessary libraries and programs installed, it was determined
-that this would not be a feasible method to consider. Additionally,
-by using a Java-based drawing library, animations would be easier,
-should the project be extended to include them, as opposed to a \LaTeX{}
-based solution, which is, by definition, designed for static documents.
-
-\begin{figure}
-\begin{centering}
-\begin{tikzpicture}[scale=1, every node/.style={scale=1,font=\small}]
-\draw  (0,0) rectangle (10,6) node (v16) {};
-\draw  (0.5,0.5) rectangle (4,5.5);
-\draw  (4.5,0.5) rectangle (9.5,5.5) node (v15) {};
-\draw  (1,5) rectangle (3,4.5);
-\draw  (3,5) rectangle (3.5,4.5);
-\node at (3.25,4.75) {Go};
-\node at (2,4.75) {Expression};
-\node at (2.5,3.75) {Variable$_0$};
-\node at (2.5,3.25) {Variable$_1$};
-\node at (2.5,2.75) {Variable$_2$};
-\node at (2.5,2.25) {Variable$_3$};
-\node at (2.5,1.75) {Variable$_4$};
-\node at (2.5,1.25) {Variable$_5$};
-\node at (7,3) {Diagram};
-\draw  (1,4) node (v7) {} rectangle (3.5,3.5);
-\draw  (1,3) node (v1) {} rectangle (3.5,3.5);
-\draw  (3.5,2.5) node (v2) {} rectangle (v1);
-\draw  (1,2) node (v3) {} rectangle (v2);
-\draw  (3.5,1.5) node (v4) {} rectangle (v3);
-\draw  (1,1) rectangle (v4);
-\draw  (1.5,3.5) node (v8) {} rectangle (1,4);
-\draw  (1.5,3) node (v10) {} rectangle (1,3.5) node (v5) {};
-\draw  (1.5,2.5) node (v11) {} rectangle (v1);
-\draw  (1.5,2) node (v13) {} rectangle (1,2.5) node (v9) {};
-\draw  (1.5,1.5) node (v12) {} rectangle (1,2);
-\draw  (1.5,1) rectangle (1,1.5) node (v14) {};
-\node (v6) at (1.5,4) {};
-\draw  (v5) edge (v6);
-\draw  (v7) edge (v8);
-\draw  (v9) edge (v10);
-\draw  (v1) edge (v11);
-\draw  (v12) edge (v3);
-\draw  (v13) edge (v14);
-\draw  (8.5,6) rectangle (9,5.5);
-\draw  (9,6) rectangle (v15);
-\draw  (9.5,6) node (v18) {} rectangle (10,5.5) node (v17) {};
-\draw  (v15) edge (v16);
-\draw  (v17) edge (v18);
-\draw  (9.1,5.9) rectangle (9.4,5.6);
-\draw  (8.6,5.7) rectangle (8.9,5.6);
-\draw  (9,1) rectangle (7,1.5); \node at (8,1.25) {Export};\end{tikzpicture} 
-\par\end{centering}
-
-\caption{Initial Design}
-\end{figure}
-
-
-
-\subsection{Typical Use}
-
-On starting the application, the user will typically enter a well-formed
-logical expression, as described using the grammar above, with a non-trivial
-canonical representation (i.e.\ $\mathit{expr}\neq\top,\bot$). This
-will then be parsed and converted to a canonical form (DNF) which
-will then be processed to produce a series of transistors to implement
-the desired logical expression. This will then be rendered, with gates
-highlighted red to indicate drivenness, and a list of variables provided.
-The user can then change the assignment of these variables by toggling
-a checkbox, and this change will then be reflected in the rendered
-set of gates.
-
 
 \section{Implementation}
 
@@ -1017,50 +1033,35 @@ and low potential downwards and upwards called \code{WireHigh} and
 \node at (0,-3) {NTrans};
 \draw [->] plot[smooth, tension=.7] coordinates {(0,1) (0,2)};
 \draw [->] plot[smooth, tension=.7] coordinates {(0,-1) (0,-2)};
-
-
-
-
 \draw  (10.5,0) ellipse (1.5 and 1);
-\draw  (10.5,4) ellipse (1.5 and 1);
-\draw  (10.5,-4) ellipse (1.5 and 1);
-\node at (10.5,4) {Output};
 \node at (10.5,0) {Wire};
-\node at (10.5,-4) {Input};
-
 \draw  (7,-1) rectangle (4,1);
 \draw  (14,-1) rectangle (17,1);
 \node at (5.5,0) {WireHigh};
 \node at (15.5,0) {WireLow};
-\draw [thick] (4,5) rectangle (7,3);
-\draw [thick] (4,-5) rectangle (7,-3);
+\draw [thick] (9,5) rectangle (12,3);
+\draw [thick] (9,-5) rectangle (12,-3);
 \draw [thick] (14,3) rectangle (17,5);
-\node at (5.5,4) {Source};
-\node at (5.5,-4) {Drain};
+\node at (10.5,4) {Source};
+\node at (10.5,-4) {Drain};
 \node at (15.5,4) {Output};
-\draw  [->] plot[smooth, tension=.9] coordinates {(10, 4-0.94280904158) (9.5,2) (7,0.5)};
-\draw  [->] plot[smooth, tension=.9] coordinates {(9,4) (7,4)};
-\draw  [->] plot[smooth, tension=.9] coordinates {(12,4) (14,4)};
-\draw  [->] plot[smooth, tension=.9] coordinates {(11, 4-0.94280904158) (11.5,2) (14,0.5)};
+\draw  [->] plot[smooth, tension=.9] coordinates {(10.5,1) (10.5,3)};
 % x = 10,   y = -(2 sqrt(2))/3
 \draw  [->] plot[smooth, tension=.9] coordinates {(9,0) (7,0)};
 \draw  [->] plot[smooth, tension=.9] coordinates {(12,0) (14,0)};
-\draw  [->] plot[smooth, tension=.9] coordinates {(10, -3.057190958) (9.5,-2) (7,-0.5)};
 
-\draw  [->] plot[smooth, tension=.9] coordinates {(11, -3.057190958) (11.5,-2) (14,-0.5)};
-\draw  [<-] plot[smooth, tension=.9] coordinates {(9,-4) (7,-4)};
+\draw  [<-] plot[smooth, tension=.9] coordinates {(10.5,-3) (10.5,-1)};
 
 \draw  [->] plot[smooth, tension=0.9] coordinates {(11, 0.94280904158) (12,2) (14,3.5)};
 
-\draw  [->] plot[smooth, tension=.7] coordinates {(12,-4) (17,-3) (18,-0.5) (16.5,3)};
 \end{tikzpicture} 
-\par\end{centering}
+\end{centering}
 
 \caption{Gate and Wire Class Relations}
 \end{figure}
 
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects} \SetKwData{prvsGt}{previous-gate}\SetKwData{Result}{Result}\SetKwData{Source}{Source}\SetKwData{Drain}{Drain}
 
@@ -1069,8 +1070,7 @@ in Disjunctive Normal Form}
 
 \Output{None}
 
-\SideEffects{\code{Result} has a set of transistors connected that
-implement $E$} \BlankLine
+\SideEffects{Transistor network produced on \Result} \BlankLine
 
 clear \Result\; \prvsGt $\gets()$\; \ForEach{$c_{i}\in E=c_{1}\lor c_{2}\lor\ldots\lor c_{n}$}{
 \ForEach{$l_{i}\in c_{i}=l_{1}\land l_{2}\land\ldots\land l_{m}$}{
@@ -1113,13 +1113,13 @@ bein connected to the drain twice, however, by merging both sets of
 gates, connections are then formed such that \code{Result} is always
 driven.
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects}
 
 \SetKwData{Result}{Result}\SetKwData{totalGates}{total-gates}
 \Input{Starting wire, top/bottom network indicator} \Output{None}
-\SideEffects{Minimised number of transistors in network, updated
+\SideEffects{Minimised number of transistors in network\\Updated
 totals to reflect this} \BlankLine \If{wire $\neq$ \Result}{
 $\mathit{gates}:\mathcal{V}\rightarrow\text{Transistor}\gets\emptyset$\;
 \eIf{checkingTopNetwork}{gate-list $\gets$ wire.getDrains}{gate-list
@@ -1151,7 +1151,7 @@ structure to implement \code{Result} as a single static object, and
 in half of the cases, the worst-case of three passes will not be needed.
 This is discussed in more detail in \vref{alg:Determining-the-optimal}.
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects}
 
@@ -1187,7 +1187,7 @@ from the originally proposed \code{Option{[}Boolean{]}} implementation.
 The pseudo-code in \vref{alg:Traversing-transistors-to}, and \vref{alg:Helper-methods-Drivenness}
 describe in further detail the steps required to determine drivenness.
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects} \SetKwData{prvsGt}{previous-transistor}\SetKwData{Result}{Result}\SetKwData{Source}{Source}\SetKwData{Drain}{Drain}
 \SetKwData{ptransistor}{P-transistor}\SetKwData{ntransistor}{N-transistor}\SetKwData{wh}{WireHigh}\SetKwData{wl}{WireLow}
@@ -1205,7 +1205,7 @@ $r$}
 \end{algorithm}
 
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output} \SetKwData{prvsGt}{previous-transistor}\SetKwData{Result}{Result}\SetKwData{Source}{Source}\SetKwData{Drain}{Drain}
 \SetKwData{ptransistor}{P-transistor}\SetKwData{ntransistor}{N-transistor}\SetKwData{wh}{WireHigh}\SetKwData{wl}{WireLow}
 \SetKwData{high}{High}\SetKwData{low}{Low}\SetKwData{und}{Undriven}\SetKwFunction{gstatus}{transistor-Status}\SetKwFunction{wstatus}{Wire-Status}
@@ -1277,7 +1277,7 @@ also result in the returned expression's clauses already being in
 alphabetical order, making later optimisations based on connections
 of gates easier. 
 \end{enumerate}
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwData{expr}{Expression}
 \SetKwData{mts}{Minterms} \Input{Logical Expression} \Output{List
 of minterms} \BlankLine Get from $\mathcal{V}$ from \expr\; Variable
@@ -1292,7 +1292,7 @@ list $\gets v+\text{Variable list}$\;}
 \end{algorithm}
 
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwData{expr}{Expression}
 \SetKwData{mts}{minterms}\SetKwData{imtbl}{implicant-table}
 \Input{List of minterms \mts} \Output{List of prime implicants}
@@ -1308,7 +1308,7 @@ mark $i$ as prime\; } } } \Return marked entries in \imtbl\caption{Quine-McClusk
 \end{algorithm}
 
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwData{expr}{Expression}
 \SetKwData{mts}{Minterms}\SetKwData{pimps}{prime-implicants}\SetKwData{mtsimp}{minterm-imp-table}
 \SetKwData{mmts}{minimised-minterms}\SetKwData{cmts}{covered-minterms}\SetKwData{cimps}{chosen-implicants}
@@ -1409,12 +1409,12 @@ wire, other than the static \code{Source}, \code{Drain}, and \code{Result}
 has precisely one transistor attached. This is described in more detail
 in \vref{alg:Transistor-Drawing-Algorithm}.
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects} \SetKwData{prvsGt}{previous-transistor}\SetKwData{Result}{Result}\SetKwData{Source}{Source}\SetKwData{Drain}{Drain}
 \SetKwData{graph}{Graph}\SetKwData{ntransistor}{N-transistor}\SetKwData{ptransistor}{P-transistor}\SetKwData{lasttransistors}{last-transistors}
 \SetKwFunction{gstatus}{transistor-Status}\SetKwData{und}{Undriven}
-\Input{Graph object to draw on (all other data accessed statically)}
+\Input{Graph object to modify}
 \Output{None} \SideEffects{Graph updated with visual representation
 of transistors} \BlankLine
 
@@ -1475,12 +1475,12 @@ however, as the presence of drawn transistors needs to be removed,
 using a visitation pattern not dissimilar to the method used to determine
 drivenness. This is described in more detail in \vref{alg:Optimised-Transistor-Drawing}.
 
-\begin{algorithm}
+\begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects} \SetKwData{prvsGt}{previous-transistor}\SetKwData{Result}{Result}\SetKwData{Source}{Source}\SetKwData{Drain}{Drain}
 \SetKwData{graph}{Graph}\SetKwData{ntransistor}{N-transistor}\SetKwData{ptransistor}{P-transistor}\SetKwData{lasttransistors}{last-transistors}\SetKwData{drawntransistors}{drawn-transistors}
 \SetKwFunction{gstatus}{transistor-Status}\SetKwData{und}{Undriven}
-\Input{Graph object to draw on (all other data accessed statically)}
+\Input{Graph object to modify}
 \Output{None} \SideEffects{Graph updated with visual representation
 of transistors} \BlankLine
 
@@ -1693,31 +1693,48 @@ binding correctly. The contents of \vref{tab:Parsing-Test-Data} list
 the sample test data and expected outcomes.
 
 \begin{table}
-\begin{centering}
-\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}}@{\extracolsep{\fill}}@{\extracolsep{\fill}}llll}
-\toprule 
-Input  & Expected Output  & Input  & Expected Output\tabularnewline
-\midrule 
-{\small{}``''}  & {\small{}None }  & {\small{}a and b }  & {\small{}And(Variable(a), Variable(b))}\tabularnewline
-0  & False  & {\small{}!a and b }  & {\small{}Not(And(Variable(a), Variable(b))}\tabularnewline
-1  & True  & {\small{}a and !b }  & {\small{}And(Variable(a), Not(Variable(b)))}\tabularnewline
-{\small{}out}  & {\small{}None}  & {\small{}!a and !b}  & {\small{}Not(And(Variable(a), Not(Variable(b)))}\tabularnewline
-{\small{}test}  & {\small{}Variable(test)}  & {\small{}(!a) and b }  & {\small{}And(Not(Variable(a)), Variable(b))}\tabularnewline
-{\small{}(}  & {\small{}None}  & {\small{}a and (!b) }  & {\small{}And(Variable(a), Not(Variable(b)))}\tabularnewline
-{\small{})}  & {\small{}None}  & {\small{}(!a) and !b}  & {\small{}And(Not(Variable(a)), Not(Variable(b)))}\tabularnewline
-{\small{}()}  & {\small{}None}  & {\small{}or}  & {\small{}None}\tabularnewline
-{\small{}a }  & {\small{}Variable(a) }  & {\small{}a or}  & {\small{}None}\tabularnewline
-{\small{}(a)}  & {\small{}Variable(a)}  & {\small{}or a}  & {\small{}None}\tabularnewline
-{\small{}! }  & {\small{}None }  & {\small{}a or b}  & {\small{}Or(Variable(a), Variable(b))}\tabularnewline
-{\small{}!a }  & {\small{}Not(Variable(a))}  & {\small{}!a or b }  & {\small{}Not(Or(Variable(a), Variable(b)))}\tabularnewline
-{\small{}(!a)}  & {\small{}Not(Variable(a))}  & {\small{}a or !b }  & {\small{}Or(Variable(a), Not(Variable(b)))}\tabularnewline
-{\small{}!(a)}  & {\small{}Not(Variable(a))}  & {\small{}!a or !b}  & {\small{}Not(Or(Variable(a), Not(Variable(b))))}\tabularnewline
-{\small{}and }  & {\small{}None }  & {\small{}(!a) or b }  & {\small{}Or(Not(Variable(a)), Variable(b))}\tabularnewline
-{\small{}a and }  & {\small{}None }  & {\small{}a or (!b) }  & {\small{}Or(Variable(a), Not(Variable(b)))}\tabularnewline
-{\small{}and a }  & {\small{}None }  & {\small{}(!a) or !b}  & {\small{}Or(Not(Variable(a)), Not(Variable(b))))}\tabularnewline
-\bottomrule
-\end{tabular*}
+\begin{centering}\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+            \toprule
+Input       & Expected Output                         \tabularnewline
+            \midrule
+``''        & None                                    \tabularnewline
+0           & False                                   \tabularnewline
+1           & True                                    \tabularnewline
+out         & None                                    \tabularnewline
+test        & Variable(test)                          \tabularnewline
+(           & None                                    \tabularnewline
+)           & None                                    \tabularnewline
+()          & None                                    \tabularnewline
+a           & Variable(a)                             \tabularnewline
+(a)         & Variable(a)                             \tabularnewline
+!           & None                                    \tabularnewline
+!a          & Not(Variable(a))                        \tabularnewline
+(!a)        & Not(Variable(a))                        \tabularnewline
+!(a)        & Not(Variable(a))                        \tabularnewline
+and         & None                                    \tabularnewline
+a and       & None                                    \tabularnewline
+and a       & None                                    \tabularnewline
+a and b     & And(Variable(a), Variable(b))           \tabularnewline
+!a and b    & Not(And(Variable(a), Variable(b))       \tabularnewline
+a and !b    & And(Variable(a), Not(Variable(b)))      \tabularnewline
+!a and !b   & Not(And(Variable(a), Not(Variable(b)))  \tabularnewline
+(!a) and b  & And(Not(Variable(a)), Variable(b))      \tabularnewline
+a and (!b)  & And(Variable(a), Not(Variable(b)))      \tabularnewline
+(!a) and !b & And(Not(Variable(a)), Not(Variable(b))) \tabularnewline
+or          & None                                    \tabularnewline
+a or        & None                                    \tabularnewline
+or a        & None                                    \tabularnewline
+a or b      & Or(Variable(a), Variable(b))            \tabularnewline
+!a or b     & Not(Or(Variable(a), Variable(b)))       \tabularnewline
+a or !b     & Or(Variable(a), Not(Variable(b)))       \tabularnewline
+!a or !b    & Not(Or(Variable(a), Not(Variable(b))))  \tabularnewline
+(!a) or b   & Or(Not(Variable(a)), Variable(b))       \tabularnewline
+a or (!b)   & Or(Variable(a), Not(Variable(b)))       \tabularnewline
+(!a) or !b  & Or(Not(Variable(a)), Not(Variable(b)))) \tabularnewline \bottomrule
+\end{tabularx}
 \par\end{centering}
+\normalsize
 
 \caption{Parsing Test Data\label{tab:Parsing-Test-Data}}
 \end{table}
@@ -1730,33 +1747,26 @@ The contents of \vref{tab:QMA-Test-Data} list the sample test data
 and expected outcomes.
 
 \begin{table}
-\begin{centering}
-\begin{tabular*}{1\textwidth}{@{\extracolsep{\fill}}@{\extracolsep{\fill}}@{\extracolsep{\fill}}llll}
-\toprule 
-Input  & Expected Output  & Input  & Expected Output\tabularnewline
-\midrule 
-(!a) and a  & None  &  & \tabularnewline
-(!a) or a  & None  &  & \tabularnewline
-a and a  & a  &  & \tabularnewline
-a or a  & a  &  & \tabularnewline
-((!a) and b) or (a and (!b))  & Or(And(Variable(a), Not(Variable(b))), And(Not(Variable(a)), Variable(b))  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
- &  &  & \tabularnewline
-\bottomrule
-\end{tabular*}
+\begin{centering}\small
+\begin{tabularx}{\linewidth}{@{}lX@{}}
+                                      \toprule
+Input                                 & Expected Output                                                                                                         \tabularnewline
+                                      \midrule
+(!a) and a                            & None                                                                                                                    \tabularnewline
+(!a) or a                             & None                                                                                                                    \tabularnewline
+a and and a and a                     & Variable(a)                                                                                                             \tabularnewline
+a or a or a or a                      & Variable(a)                                                                                                             \tabularnewline
+((!a) and b) or (a and (!b))          & Or(And(Variable(a),  Not(Variable(b))),  And(Not(Variable(a)),  Variable(b)))                                           \tabularnewline
+!((a and b) or ((!a) and (!b) and c)) & Or(Or(And(Not(Variable(b)), Variable(a)), And(Not(Variable(c)), Not(Variable(a)))), And(Variable(b), Not(Variable(a)))) \tabularnewline
+a and b and c                         & And(Variable(c), And(Variable(b), Variable(a)))                                                                         \tabularnewline
+c and b and a                         & And(Variable(c), And(Variable(b), Variable(a)))                                                                         \tabularnewline
+(a and b and c) or (a and b and c)    & And(Variable(c), And(Variable(b), Variable(a)))                                                                         \tabularnewline
+                                      \bottomrule
+\end{tabularx}
 \par\end{centering}
+\normalsize
 
-\caption{Parsing Test Data\label{tab:QMA-Test-Data}}
+\caption{Quine-McCluskey Algorithm Test Data\label{tab:QMA-Test-Data}}
 \end{table}
 
 
@@ -1768,22 +1778,24 @@ demonstrate the result of entering the following expressions.  When the number o
 transistors needed is formatted as $n+2$, this is used to indicate that less transistors
 are needed to produce the negation of the expression and negate this, rather than
 to produce the original expression.  For clarity, in the case of a tie, the original
-expression is preferred.
+expression is preferred.  The visual output shown is used to demonstrate the difference
+between the networks of transistors when the output is driven high or driven low, with
+arbitrary assignments used to indicate this.
 \begin{center}
 \begin{table}
-\begin{tabular}[\linewidth]{cccc}
+\begin{tabularx}{\linewidth}{XXXc}
 \toprule 
-Input & Driven Output & Undriven Output & Transistors \\
+Input                                      & Driven Output                                  & Undriven Output                                 & Transistors \\
 \midrule
-$\neg a$ & \includegraphics[width=0.15\linewidth]{notdriven} & \includegraphics[width=0.15\linewidth]{notundriven} & 2 \tabularnewline
-$(a\land b)\lor(\neg a\land\neg b\land c)$ & \includegraphics[width=0.25\linewidth]{networklow} & \includegraphics[width=0.25\linewidth]{networkhigh} & 17 \tabularnewline
-$a \land b \land c$ &\includegraphics[width=0.25\linewidth]{conjhigh} & \includegraphics[width=0.25\linewidth]{conjlow} & $6+2$ \tabularnewline
- &  & \tabularnewline
- &  & \tabularnewline
- &  & \tabularnewline
- &  & \tabularnewline
+$\neg a$                                   & \includegraphics[width=\linewidth]{notdriven}  & \includegraphics[width=\linewidth]{notundriven} & 2 \tabularnewline
+$(a\land b)\lor(\neg a\land\neg b\land c)$ & \includegraphics[width=\linewidth]{networklow} & \includegraphics[width=\linewidth]{networkhigh} & 17 \tabularnewline
+$a \land b \land c$                        & \includegraphics[width=\linewidth]{conjhigh}   & \includegraphics[width=\linewidth]{conjlow}     & $6+2$ \tabularnewline
+$a \lor b \lor c$                        & \includegraphics[width=\linewidth]{disjhigh}   & \includegraphics[width=\linewidth]{disjlow}     & $6+2$ \tabularnewline
+                                           &                                                & \tabularnewline
+                                           &                                                & \tabularnewline
+                                           &                                                & \tabularnewline
 \bottomrule
-\end{tabular}
+\end{tabularx}
 \caption{Program Output\label{tab:vis}}
 \end{table}
 \end{center}
@@ -1964,14 +1976,23 @@ output, which then cannot be validly encoded as a logical expression.
 There are a number of people, without whose assistance over the past
 year, this project would not have been possible.
 
+Professor Peter Jeavons, my college tutor, both for his support over
+the course of my degree and in the past year.
+
 Professor Geraint Jones, my supervisor, for his advice and support,
-as well as the diagrams of the N-transistors and P-transistors seen
+as well as some of the standard diagrams of the N-transistors and P-transistors seen
 in this document.
 
-Matthew Sj\"odin, Eleanor Kirk, and Stephen Heap for general support
+James Wallis, and Andrew Wright, the other two Computer Science students
+in St Anne's, for their unwavering friendship over the last three year, and
+continued support.
+
+Matthew Sj\"odin, Eleanor Kirk, Lucy Wright, and Stephen Heap for general support
 throughout the project.
 
- \bibliographystyle{plain}
+The rest of my family and friends, and all others without whom this project would not have been possible.
+
+\bibliographystyle{plain}
 \bibliography{citations}
 
 \clearpage
@@ -1987,25 +2008,13 @@ throughout the project.
 \lstinputlisting[language=scala,caption=Drain.scala]{../src/model/Drain.scala}
 \lstinputlisting[language=scala,caption=Driven.scala]{../src/model/Driven.scala}
 \lstinputlisting[language=scala,caption=High.scala]{../src/model/High.scala}
-\lstinputlisting[language=scala,caption=Iff.scala]{../src/model/Iff.scala}
-\lstinputlisting[language=scala,caption=Implicant.scala]{../src/model/Implicant.scala}
-\lstinputlisting[language=scala,caption=Impl.scala]{../src/model/Impl.scala}
-\lstinputlisting[language=scala,caption=Input.scala]{../src/model/Input.scala}
-\lstinputlisting[language=scala,caption=LogicalFunction.scala]{../src/model/LogicalFunction.scala}
 \lstinputlisting[language=scala,caption=Low.scala]{../src/model/Low.scala}
 \lstinputlisting[language=scala,caption=Node.scala]{../src/model/Node.scala}
 \lstinputlisting[language=scala,caption=Not.scala]{../src/model/Not.scala}
 \lstinputlisting[language=scala,caption=NTrans.scala]{../src/model/NTrans.scala}
 \lstinputlisting[language=scala,caption=Or.scala]{../src/model/Or.scala}
-\lstinputlisting[language=scala,caption=Output.scala]{../src/model/Output.scala}
-\lstinputlisting[language=scala,caption=Paren.scala]{../src/model/Paren.scala}
-\lstinputlisting[language=scala,caption=ParserTest.scala]{../src/model/test/ParserTest.scala}
-\lstinputlisting[language=scala,caption=PITable.scala]{../src/model/PITable.scala}
 \lstinputlisting[language=scala,caption=Potential.scala]{../src/model/Potential.scala}
-\lstinputlisting[language=scala,caption=PrimeImplicant.scala]{../src/model/PrimeImplicant.scala}
 \lstinputlisting[language=scala,caption=PTrans.scala]{../src/model/PTrans.scala}
-\lstinputlisting[language=scala,caption=qmm.scala]{../src/model/qmm.scala}
-\lstinputlisting[language=scala,caption=QuineMcCluskeyTest.scala]{../src/model/test/QuineMcCluskeyTest.scala}
 \lstinputlisting[language=scala,caption=Result.scala]{../src/model/Result.scala}
 \lstinputlisting[language=scala,caption=Source.scala]{../src/model/Source.scala}
 \lstinputlisting[language=scala,caption=Transistor.scala]{../src/model/Transistor.scala}
@@ -2014,6 +2023,15 @@ throughout the project.
 \lstinputlisting[language=scala,caption=WireHigh.scala]{../src/model/WireHigh.scala}
 \lstinputlisting[language=scala,caption=WireLow.scala]{../src/model/WireLow.scala}
 \lstinputlisting[language=scala,caption=Wire.scala]{../src/model/Wire.scala}
+\end{multicols}
+\clearpage
+\lstinputlisting[language=scala,caption=Implicant.scala]{../src/model/Implicant.scala}
+\lstinputlisting[language=scala,caption=LogicalFunction.scala]{../src/model/LogicalFunction.scala}
+\lstinputlisting[language=scala,caption=ParserTest.scala]{../src/model/test/ParserTest.scala}
+\lstinputlisting[language=scala,caption=PITable.scala]{../src/model/PITable.scala}
+\lstinputlisting[language=scala,caption=PrimeImplicant.scala]{../src/model/PrimeImplicant.scala}
+\lstinputlisting[language=scala,caption=qmm.scala]{../src/model/qmm.scala}
+\lstinputlisting[language=scala,caption=QuineMcCluskeyTest.scala]{../src/model/test/QuineMcCluskeyTest.scala}
 \subsection{View}
 \lstinputlisting[language=scala,caption=DrawCircuit.scala]{../src/view/DrawCircuit.scala}
 \subsection{Controller}
@@ -2022,7 +2040,6 @@ throughout the project.
 \lstinputlisting[language=scala,caption=CMOSLayout.scala]{../src/helper/CMOSLayout.scala}
 \lstinputlisting[language=scala,mathescape=false,caption=LogicalExpression.scala]{../src/helper/LogicalExpression.scala}
 \lstinputlisting[language=scala,caption=Parser.scala]{../src/helper/Parser.scala}
-\end{multicols}
 \end{landscape}
 \end{document}
 

@@ -1,6 +1,6 @@
 package model
 
-object Result extends Wire with Input with Output {
+object Result extends Wire {
   override def removeGate (transistor : Transistor) : Unit = {
     sources = sources diff Array(transistor)
     drains = drains diff Array(transistor)

@@ -1,7 +1,0 @@
-package model
-
-/**
- *
- */
-trait Input {
-}
