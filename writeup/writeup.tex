@@ -16,6 +16,7 @@
 \usepackage{booktabs}
 \usepackage{pdflscape}
 \usepackage{mathtools}
+\usepackage{caption, subcaption}
 \usepackage{algorithm2e}
 \usepackage{amsmath}
 \usepackage{amssymb}
@@ -696,7 +697,7 @@ Given the nature of the project, the model-view-controller paradigm
 allows a sensible division of labour, also allowing for extensibility
 and clear separation of the purpose of the model and the interface.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{centering}
 \begin{tikzpicture}[scale=1, every node/.style={scale=1,font=\small}]
 \draw  (0,0) rectangle (10,6) node (v16) {};
@@ -824,7 +825,7 @@ a simplified version of the N-transistor: the potential is only carried
 ($s\text{ matches }d$) when the input $g$ is powered, losing the
 notion that only low potential flows from the drain to the source.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{centering}
 \sntrans \begin{picture}(4.5,6)\end{picture} \sptrans 
 \par\end{centering}
@@ -910,7 +911,7 @@ and we therefore derive
 The networks seen in \vref{fig:Standard-nor--and} are standard implementations
 of nand- and nor-gates.
 
-\begin{figure}
+\begin{figure}[h]
 \setlength{\unitlength}{0.015\textwidth}
 
 \begin{centering}
@@ -967,7 +968,7 @@ of the grammar of the language of propositional logic, the parameters
 taken by each class that is not an atom are nodes, and these are then
 evaluated recursively.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{centering}
 \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
 \draw (0,2) node (v0) { Node } ellipse (1.5 and 1);
@@ -1021,7 +1022,7 @@ Finally, there are two wire classes responsible for carrying high
 and low potential downwards and upwards called \code{WireHigh} and
 \code{WireLow}, respectively.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{centering}
 \begin{tikzpicture}[scale=0.6, every node/.style={scale=0.6}]
 
@@ -1097,6 +1098,8 @@ in favour of a separation of the logical and ``physical'' models,
 where the transistors were joined by wires and received potentials
 as inputs.
 
+The operation is, in the worst case, exponential in the number of variables used, $\mathcal O \left( 2^n\right)$.  The expression $\oplus_{i=1}^n v_i$ will have $2^{n-1}$ clauses, each containing $n$ variables which must each be individually processed by the transistor-generation algorithm.
+
 Once an initial array of transistors has been generated, the program
 then minimises the number of transistors produced, by traversing from
 \code{Source} to \code{Result}, followed by from \code{Drain} to
@@ -1151,6 +1154,8 @@ structure to implement \code{Result} as a single static object, and
 in half of the cases, the worst-case of three passes will not be needed.
 This is discussed in more detail in \vref{alg:Determining-the-optimal}.
 
+In the worst case, for the drain having $2^n$ connections of $n$ variables, as seen in the case of repeated application of the xor function, at the $i^\text{th}$ stage, $2^{i-1}$ transistors may be combined, effectively forming a binary tree. Let $T:\mathbb N \rightarrow \mathbb R$ be the number of steps required to process $n$ nodes in the worst case,  this give $T(2^n) = T(k) = \mathcal O (k) + 2T\left(\sfrac k2\right)$, which by the Master Theorem, first discussed in \cite{bentley1980general}, therefore runs in $\Theta\left(k\log k\right) = \mathcal O \left(n2^n\right)$.  However, by application of the Birthday Problem, assuming that $\mathcal O \left(2^{\sqrt{n}}\right) $ entries are needed for a collision in a space of $2^n$ elements, this makes finding duplicate gates much less likely, and substantially reduces the number of wires that must be explored.
+
 \begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
 Effects}
@@ -1186,6 +1191,8 @@ value. Functionally, this does not differ significantly in practise
 from the originally proposed \code{Option{[}Boolean{]}} implementation.
 The pseudo-code in \vref{alg:Traversing-transistors-to}, and \vref{alg:Helper-methods-Drivenness}
 describe in further detail the steps required to determine drivenness.
+
+This runs in constant time, within some factor of $\sfrac32$, as each side of the network must be processed.
 
 \begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
@@ -1224,7 +1231,7 @@ on wire} $r\gets\und$\; \If{wire is \Source}{$r\gets\high$}
 \caption{Helper methods to determine drivenness\label{alg:Helper-methods-Drivenness}}
 \end{algorithm}
 
-
+In the worst case, the entirety of the network of gates must be explored, as it may be that the side carrying high potential is undriven, and the ``last'' sequence of transistors on the side carrying low potential is the only one to be driven, and by similar reasoning as seen above, for the worst case of $\oplus_{i=1}^n v_i$, will require iterating over $\mathcal O\left(n2^{\sfrac{n}{2}}\right)$ gates
 
 \subsubsection{Helpers}
 
@@ -1237,8 +1244,7 @@ advantage of allowing efficient parsing by using memoization to reduce
 the number of times that a production rule needs testing. This parsing
 library uses a domain-specific language to assist in the definition
 of the grammar to be parsed to ensure that the abstract representation
-of the grammar matches the implementation as closely as possible.
-
+of the grammar matches the implementation as closely as possible.  The parsing runs in time linear to the length of the input.
 
 \paragraph{Normal Forms\label{sub:Normal-Forms}}
 
@@ -1326,6 +1332,7 @@ as possible\; $\mmts\gets\mmts\cup\{c\}$\; } \Return \mmts
 \caption{Quine-McCluskey -- Essential and covering implicants\label{alg:Quine-McCluskey----Essential}}
 \end{algorithm}
 
+As discussed in Quine and McCluskey's papers, this algorithm runs in $\mathcal O\left(3^n\right)$, in the worst case, $\left(\mathcal{O}\left(\sfrac{3^{n}}{n}\right)\right)$ prime implicants will be generated alone.  The problem that it solves is effectively in NP, though sub-exponential approximation algorithms are available.
 
 When processing a logical expression by hand, the usual method is
 to produce a Karnaugh map, first discussed in \cite{karnaugh}, and
@@ -1548,7 +1555,7 @@ and the gate-reduction algorithms to work together more effectively
 are discussed in \vref{sec:Conclusions-and-Further}.
 
 
-\section{Comparison to a Compiler}
+\clearpage\section{Comparison to a Compiler}
 
 The usual definition of a compiler is ``a program that can read a
 program in one language and translate it into an equivalent program
@@ -1559,7 +1566,7 @@ into something low-level that can then be directly executed by a machine.
 The structure of a compiler can be thought of as the composition of
 a series of functions, each with a distinct focus, as shown in \prettyref{fig:Compiler-Structure}.
 
-\begin{figure}
+\begin{figure}[h]
 \begin{centering}
 \begin{tikzpicture}[scale=0.4, every node/.style={x=1cm,y=1cm,scale=0.6,font=\small}]
 
@@ -1665,7 +1672,7 @@ so too does this program produce a minimised final output by examining
 the wires nearest to it.
 
 
-\section{Testing}
+\clearpage\section{Testing}
 
 
 \subsection{General Testing Strategy}
@@ -1778,12 +1785,11 @@ demonstrate the result of entering the following expressions.  When the number o
 transistors needed is formatted as $n+2$, this is used to indicate that less transistors
 are needed to produce the negation of the expression and negate this, rather than
 to produce the original expression.  For clarity, in the case of a tie, the original
-expression is preferred.  The visual output shown is used to demonstrate the difference
+expression is preferred.  The visual output \footnote{Reproduced in appendix} shown is used to demonstrate the difference
 between the networks of transistors when the output is driven high or driven low, with
 arbitrary assignments used to indicate this.
-\begin{center}
 \begin{table}
-\begin{tabularx}{\linewidth}{XXXc}
+\begin{tabularx}{\linewidth}{p{2cm}XXr}
 \toprule
 Input                                       & Driven Output                                  & Undriven Output                                 & Transistors \\
 \midrule
@@ -1792,12 +1798,13 @@ $(a\land b)\lor(\neg a\land\neg b\land c)$  &   \noindent\parbox[c]{\hsize}{\inc
 $a \land b \land c$                         &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{conjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{conjlow}}     & $6+2$ \tabularnewline
 $a \lor b \lor c$                           &  \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjlow}}     & $6+2$ \tabularnewline
 $(a \lor b \lor c) \land (a \lor b \lor c)$ &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjhigh}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{disjlow}}     & $6+2$ \tabularnewline
+$a \oplus b \oplus c$ &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{xordri}}   & \noindent\parbox[c]{\hsize}{\includegraphics[width=\linewidth]{xorund}}     & $6+2$ \tabularnewline
 \bottomrule
 \end{tabularx}
 \caption{Program Output\label{tab:vis}}
 \end{table}
-\end{center}
-\section{Conclusions and Further Work\label{sec:Conclusions-and-Further}}
+
+\clearpage\section{Conclusions and Further Work\label{sec:Conclusions-and-Further}}
 \subsection{Conclusions}
 
 The project has achieved much of the scope that it had originally
@@ -1874,7 +1881,7 @@ state being invalid, whereas the standard tri-state buffer \cite{digsys}gate,
 where $\mathit{enb}\rightarrow(\mathit{in}\leftrightarrow\mathit{out})$,
 and $\neg\mathit{enb}$ results in the output wire being undriven.
 
-\begin{figure}
+\begin{figure}[h]
 \setlength{\unitlength}{0.015\textwidth} 
 
 \begin{centering}
@@ -1926,6 +1933,11 @@ in \vref{eq:pgate} are updated as follows:
 where the presence of $\delta v$ is used to indicate that $v$ is
 driven, either high or low, if $\delta v$ also holds.
 
+Finally, a future project may focus on converting the model and various
+helpers to use multi-threaded implementations to speed up the various algorithms,
+especially the transistor-generation algorithm, as each sequential group of transistors
+could be independently generated and can therefore be added in some thread-safe manner to
+the shared \code{Result}, \code{Source}, and/or \code{Drain} objects.  Operations traversing are also prime candidates for parallelisation, using a controller-slave pattern.
 
 \subsubsection{View}
 
@@ -1962,14 +1974,13 @@ them and derive an expression for a valid arrangement of transistors
 would be a logical extension of the current functionality, though
 it is likely that any output produced would, unless the number of
 variables was limited, not be in any normal form, due to the cost
-of running the Quine-McCluskey algorithm (in the worst case, $\left(\mathcal{O}\left(\sfrac{3^{n}}{n}\right)\right)$
-prime implicants will be generated alone). Additionally, unless the
+of running the Quine-McCluskey algorithm (in the worst case, $\left(\mathcal{O}\left(\sfrac{3^{n}}{n}\right)\right)$ prime implicants will be generated alone). Additionally, unless the
 graph was encoded with the rules required for valid CMOS structures,
 it would be trivial for users to produce graphs that may have undriven
 output, which then cannot be validly encoded as a logical expression.
 
 
-\section{Acknowledgements}
+\clearpage\section{Acknowledgements}
 
 There are a number of people, without whose assistance over the past
 year, this project would not have been possible.
@@ -1996,7 +2007,7 @@ The rest of my family and friends, and all others without whom this project woul
 \clearpage
 \begin{landscape}
 \appendix
-\section{Appendix}
+\clearpage\section{Listings}
 \begin{multicols}{2}
 \lstlistoflistings
 \subsection{Model}
@@ -2006,6 +2017,8 @@ The rest of my family and friends, and all others without whom this project woul
 \lstinputlisting[language=scala,caption=Drain.scala]{../src/model/Drain.scala}
 \lstinputlisting[language=scala,caption=Driven.scala]{../src/model/Driven.scala}
 \lstinputlisting[language=scala,caption=High.scala]{../src/model/High.scala}
+\lstinputlisting[language=scala,caption=Implicant.scala]{../src/model/Implicant.scala}
+\lstinputlisting[language=scala,caption=LogicalFunction.scala]{../src/model/LogicalFunction.scala}
 \lstinputlisting[language=scala,caption=Low.scala]{../src/model/Low.scala}
 \lstinputlisting[language=scala,caption=Node.scala]{../src/model/Node.scala}
 \lstinputlisting[language=scala,caption=Not.scala]{../src/model/Not.scala}
@@ -2023,8 +2036,6 @@ The rest of my family and friends, and all others without whom this project woul
 \lstinputlisting[language=scala,caption=Wire.scala]{../src/model/Wire.scala}
 \end{multicols}
 \clearpage
-\lstinputlisting[language=scala,caption=Implicant.scala]{../src/model/Implicant.scala}
-\lstinputlisting[language=scala,caption=LogicalFunction.scala]{../src/model/LogicalFunction.scala}
 \lstinputlisting[language=scala,caption=ParserTest.scala]{../src/model/test/ParserTest.scala}
 \lstinputlisting[language=scala,caption=PITable.scala]{../src/model/PITable.scala}
 \lstinputlisting[language=scala,caption=PrimeImplicant.scala]{../src/model/PrimeImplicant.scala}
@@ -2039,5 +2050,49 @@ The rest of my family and friends, and all others without whom this project woul
 \lstinputlisting[language=scala,mathescape=false,caption=LogicalExpression.scala]{../src/helper/LogicalExpression.scala}
 \lstinputlisting[language=scala,caption=Parser.scala]{../src/helper/Parser.scala}
 \end{landscape}
+\clearpage
+\clearpage\section{Test Results}
+The following are the images seen in \vref{tab:vis}, with details of the assignment required.
+\begin{figure}[h]
+        \centering
+        \begin{subfigure}{0.3\textwidth}
+			\includegraphics[width=\linewidth]{notdriven}
+\caption{$\mathcal A (a) = \bot$}
+        \end{subfigure}
+~
+        \begin{subfigure}{0.3\textwidth}
+\includegraphics[width=\linewidth]{notundriven}
+\caption{$\mathcal A (a) = \top$}
+        \end{subfigure}
+\caption{$\neg a$}
+\end{figure}
+\begin{figure}[h!] \centering \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{networklow}
+\caption{$\mathcal A (a) = \bot, \mathcal A (b) = \bot, \mathcal A (c) = \top$} \end{subfigure} ~ \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{networkhigh}
+\caption{$\mathcal A (a) = \top, \mathcal A (b) = \top, \mathcal A (c) = \top$} \end{subfigure}
+\caption{$(a \land b)\lor(\neg a \land \neg b \land c)$}
+\end{figure}
+\begin{figure}[h!] \centering \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{conjhigh}
+\caption{$\mathcal A (a) = \bot, \mathcal A (b) = \top, \mathcal A (c) = \top$} \end{subfigure} ~ \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{conjlow}
+\caption{$\mathcal A (a) = \top, \mathcal A (b) = \top, \mathcal A (c) = \top$} \end{subfigure} 
+\caption{$a \land b \land c$ with negation applied to the result}
+\end{figure}
+\begin{figure}[h!] \centering \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{disjhigh}
+\caption{$\mathcal A (a) = \bot, \mathcal A (b) = \bot, \mathcal A (c) = \top$} \end{subfigure} ~ \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{disjlow}
+\caption{$\mathcal A (a) = \top, \mathcal A (b) = \top, \mathcal A (c) = \top$} \end{subfigure} 
+\caption{$a \lor b \lor c$ and $(a \lor b \lor c) \land (a \lor b \lor c)$ with negation applied to the result}
+\end{figure}
+\begin{figure}[h!] \centering \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{xordri}
+\caption{$\mathcal A (a) = \top, \mathcal A (b) = \top, \mathcal A (c) = \top$} \end{subfigure} ~ \begin{subfigure}{0.47\textwidth}
+\includegraphics[width=\linewidth]{xorund}
+\caption{$\mathcal A (a) = \bot, \mathcal A (b) = \bot, \mathcal A (c) = \bot$} \end{subfigure} 
+\caption{$a \oplus b\oplus c$}
+\end{figure}
 \end{document}
 
