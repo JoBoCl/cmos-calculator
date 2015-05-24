@@ -557,7 +557,7 @@
 
 \clearpage{}
 \begin{abstract}
-The aim of this project was to build a CMOS simulator, with the following
+The aim of this project was to build a system to simulate the interaction of CMOS transistors, with the following
 interactive elements: 
 \begin{itemize}
 \item Simplification and CMOS implementation of arbitrary logical expressions 
@@ -585,25 +585,23 @@ CMOS output.
 
 The idea of logical functions is familiar to many, and even a schoolchild
 can grasp the concept of a box receiving true/false inputs and producing
-a true/false output, and lots of these boxes in interesting combinations
+a true/false output, and how lots of these boxes in interesting combinations
 can yield more interesting functions. Through introducing these concepts,
 and producing more and more intricate diagrams, they can then see
 how more complicated ideas, such as addition and subtraction are implemented,
 and maybe how these are used in the modern computers used today. However,
 what is rarely discussed is what is inside these boxes: they are usually
 presented as the lowest level inputs and treated as the basic building
-blocks. The layer underneath this is built up of Complementary Metal-Oxide
+blocks of a computer's processor. The layer underneath this is built up of Complementary Metal-Oxide
 Semiconductors, henceforth referred to as CMOS. The treatment of this
 document mainly concerns producing this sequence of transistors from
-plain string through a series of intermediary formats, until a visual
+a plain string through a series of intermediary formats, until a visual
 representation is produced.
 
-Initially, this document will define key concepts, such as the fundamental
-propositional logic syntax and semantic meanings usually associated
+Initially, this document will discuss the requirements of and use cases of a program to reason about CMOS, and we will then 
+define key concepts, such as the fundamental propositional logic syntax and the semantic meanings usually associated
 with logic gates, and the definition of the two different transistors
-that form CMOS. We will then go on to discuss the requirements and
-use cases of a program to present these ideas before defining the
-algorithms to be used. On closer inspection, their composition has
+that form CMOS. After this, the algorithms to be used will be defined. On closer inspection, their composition has
 a behaviour not entirely dissimilar to that of a compiler, and the
 subsequent design of the program upon realising this was the paradigm
 being used will then be analysed. The program that has then been produced
@@ -629,7 +627,7 @@ it will not concern itself with the precise layout of wires between the differen
 On starting the application, the user will typically enter a well-formed
 logical expression, as described using the grammar above, with a non-trivial
 canonical representation (i.e.\ $\mathit{expr}\neq\top,\bot$). This
-will then be parsed and converted to a canonical form (DNF) which
+will then be parsed and internally converted to a canonical form (DNF) which
 will then be processed to produce a series of transistors to implement
 the desired logical expression. This will then be rendered, with gates
 highlighted red to indicate drivenness, and a list of variables provided.
@@ -768,14 +766,14 @@ e & =\neg e=\texttt{!e}\label{eq:neg}\\
 v & \in\Sigma\\
 c & =\top\mid\bot=\texttt{0}\mid\texttt{1}
 \end{align}
-where $\Sigma$ is some accepted alphabet of variables (
-in this program, as described by the Perl-Compatible Regex \verb&^(?!out|and|or$)([A-Za-z0-9]+)&
+where $\Sigma$ is some accepted alphabet of variables (in 
+this program, as described by the Perl-Compatible Regex \verb&^(?!out|and|or$)([A-Za-z0-9]+)&,
 that is, every alphanumeric phrase, with the exception of the single
 word \verb+out+, which has been reserved for specific use within
-the program, and \verb+and+ and \verb+or+ which are keywords in
+the program, as well as \verb+and+ and \verb+or+ which are keywords in
 the logical expression language). $\top\text{ and }\bot$ are used
 within this text to denote the notions true and false, respectively,
-and are represented in the program by the strings \code{0} and \code{1}
+and are represented in the program by the strings \code{1} and \code{0}
 respectively. Additionally, the order that the various production
 rules are listed also gives an order of precedence, with negations
 taking a higher precedence in the parse tree than disjunctions and conjunctions. Each variable
@@ -785,11 +783,10 @@ with the set of variables typically denoted as $\mathcal{V}$. A logical
 expression $E$ is then evaluated recursively based on the following
 rules: 
 \begin{itemize}
-\item $E=F\land G$: $E$ is evaluated as true iff $F$ is true and $G$
-is true (corresponding to equation \ref{eq:neg}) 
+\item $E=\neg F$: $E$ is evaluated as true iff $F$ is false (corresponding to equation \ref{eq:neg}) 
 \item $E=F\lor G$: $E$ is evaluated as true iff $F$ is true or $G$ is
 true (corresponding to equation \ref{eq:disj}) 
-\item $E=\neg F$: $E$ is evaluated as true iff $F$ is false (corresponding
+\item $E=F \land G$: $E$ is evaluated as true iff $F$ is true and $G$ is true (corresponding
 to equation \ref{eq:conj}) 
 \item $E=v$ for some $v\in\Sigma$ is evaluated as true iff $\mathcal{A}(v)=\top$
 (corresponding to equation \ref{eq:var}) 
@@ -809,7 +806,7 @@ referred to as $V_{dd},$ and in this document, referred to at an
 implementation level as \code{Drain}), and a high potential (commonly
 referred to as $V_{ss},$ and in this document, referred to at an
 implementation level as \code{Source}), with a third wire used as
-the output wire.
+the output wire, referred to in this document as \code{Result}.
 
 \begin{eqnarray}
 P(g,s,d) & = & \neg g\rightarrow(s\leftrightarrow d)\label{eq:pgate}\\
@@ -962,7 +959,7 @@ $\mathit{out}=\lnot(a\vee b)$%
 
 Every object that is used to represent logical expressions inherits
 from some common \code{Node} object that requires accessors to determine
-if the given fragment evaluates to true, as defined in \nameref{eq:neg}
+if the given fragment evaluates to true, as defined in \vref{eq:neg}
 onwards. As would be expected given the recursive nature of the design
 of the grammar of the language of propositional logic, the parameters
 taken by each class that is not an atom are nodes, and these are then
@@ -994,21 +991,6 @@ evaluated recursively.
 
 \caption{Logical Expression Class Relations}
 \end{figure}
-
-
-Expressions are then parsed using Scala's Packrat parsing library.
-During parsing, each new variable is registered with a static map
-stored in the \code{Variable} object, that takes the place of the
-assignment function $\mathcal{A}$, as discussed in \nameref{eq:assi}.
-After parsing, but before the gate implementation (see \nameref{sub:Gates-and-Wires}),
-a modified version of the Quine-McCluskey algorithm (see \nameref{sub:Normal-Forms})
-is applied to the parsed expression to minimise it and produce a canonical
-form.
-
-The running time of the Packrat parser is consistently linear in the
-size of the input received, albeit at the cost of increased storage
-capacity, regardless of the specific grammar used.
-
 
 \subsubsection{Transistors and Wires\label{sub:Gates-and-Wires}}
 
@@ -1111,10 +1093,10 @@ could work outwards from the \code{Result} wire, however, it is likely
 that only one of these passes may be performed, as applying it in
 both directions may result in transistors being connected that should
 not be, e.g.\ $a\oplus b\oplus c$ will result in $a$ and $\neg a$
-being connected to the \code{Souce} twice, and $c$ and $\neg c$
-bein connected to the drain twice, however, by merging both sets of
+being connected to the \code{Source} twice, and $c$ and $\neg c$
+being connected to the drain twice, however, by merging both sets of
 gates, connections are then formed such that \code{Result} is always
-driven.
+driven, either with a low or high potential.
 
 \begin{algorithm}[ht!]
 \SetKwInOut{Input}{Input}\SetKwInOut{Output}{Output}\SetKwInOut{SideEffects}{Side
@@ -1180,7 +1162,7 @@ $\text{double-negate}\gets\tryLayout{$\neg\expr$} + 2$\;
 \end{algorithm}
 
 
-Initially, potential was going to be simulated using the \code{Option{[}Boolean{]}} type,
+Initially, potential was going to be modelled using the \code{Option{[}Boolean{]}} type,
 with \code{Some(true)} and \code{Some(false)} to indicate high and
 low potential separately, and \code{Nothing} to simulate a transistor or wire that is not driven.
 This approach has also been reworked, to
@@ -1238,13 +1220,23 @@ In the worst case, the entirety of the network of gates must be explored, as it 
 
 \paragraph{Parsing\label{sub:Parsing}}
 
-The Packrat parsing library is one of the many libraries available
-in Scala for parsing purposes.\cite{packrat} This library has the
+Expressions are then parsed using Scala's Packrat parsing library \cite{packrat}.
+During parsing, each new variable is registered with a static map
+stored in the \code{Variable} object, that takes the place of the
+assignment function $\mathcal{A}$, as discussed in \vref{eq:assi}.
+After parsing, but before the gate implementation (see \vref{sub:Gates-and-Wires}),
+a modified version of the Quine-McCluskey algorithm (see \vref{sub:Normal-Forms})
+is applied to the parsed expression to minimise it and produce a canonical
+form.
+
+The running time of the Packrat parser is consistently linear in the
+size of the input received, albeit at the cost of increased storage
+capacity, regardless of the specific grammar used.  This library has the
 advantage of allowing efficient parsing by using memoization to reduce
 the number of times that a production rule needs testing. This parsing
 library uses a domain-specific language to assist in the definition
 of the grammar to be parsed to ensure that the abstract representation
-of the grammar matches the implementation as closely as possible.  The parsing runs in time linear to the length of the input.
+of the grammar matches the implementation as closely as possible. 
 
 \paragraph{Normal Forms\label{sub:Normal-Forms}}
 
@@ -1810,8 +1802,8 @@ $a \oplus b \oplus c$ &   \noindent\parbox[c]{\hsize}{\includegraphics[width=\li
 The project has achieved much of the scope that it had originally
 set out to, however, the order of completion of different subcomponents
 of the program needed changing quite substantially. Initially, the
-order of completion of the modules was intended to be parser, transistor-generator,
-gate-drawer, optimisations (including Quine-McCluskey-related functions),
+order of completion of the modules was intended to be parser, then transistor-generator,
+followed by gate-drawer, and then optimisations (including Quine-McCluskey-related functions),
 however, it quickly became apparent that laying out the transistors
 would be far quicker and simpler if the input was in some sort of
 normal form first, therefore, finding an implementation of the Quine-McCluskey
@@ -1877,9 +1869,9 @@ This project has deliberately focused on defining logical expressions
 using strictly binary values, and precisely adhering to the standard
 rules for laying out CMOS diagrams, without any deviations. It has
 been assumed that the output wire will always be driven, with an undriven
-state being invalid, whereas the standard tri-state buffer \cite{digsys}gate,
+state being invalid, whereas the standard tri-state buffer~\cite{digsys}, seen in \vref{fig:tri},
 where $\mathit{enb}\rightarrow(\mathit{in}\leftrightarrow\mathit{out})$,
-and $\neg\mathit{enb}$ results in the output wire being undriven.
+and $\neg\mathit{enb}$ results in the output wire being undriven, is a commonly used gate.
 
 \begin{figure}[h]
 \setlength{\unitlength}{0.015\textwidth} 
@@ -1897,12 +1889,12 @@ and $\neg\mathit{enb}$ results in the output wire being undriven.
 \put(15,12){\blob} \end{picture} 
 \par\end{centering}
 
-\caption{Tri-state buffer}
+\caption{Tri-state buffer\label{fig:tri}}
 \end{figure}
 
 
 Additionally, the structure of the transistors produced by the transistor
-placing algorithm \nameref{alg:Converting-DNF-expression} is more
+placing algorithm in \vref{alg:Converting-DNF-expression} is more
 constrained than the transistors that may be drawn.
 
 Decreasing the verbosity of the required input should also be a priority
@@ -1941,9 +1933,8 @@ the shared \code{Result}, \code{Source}, and/or \code{Drain} objects.  Operation
 
 \subsubsection{View}
 
-The data produced by the view is currently only in a limited number
-of bitmap image formats, whereas a future version of this software
-should be able to produce a wider variety of formats, and ideally,
+The data produced by the view is currently only exported in the PNG format, which is easily convertible to other bitmap formats, whereas a future version of this software
+should be able to produce output in a wider variety of formats, and ideally,
 especially for reports like this, \LaTeX{}-compatible output, or Dia
 compatible output.
 
